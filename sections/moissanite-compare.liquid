@@ -1,0 +1,412 @@
+{%- comment -%}
+  Moissanite vs. Diamond comparison section
+  Built for the "אתר רון" theme (Dawn based). Fully editable from the theme editor.
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign s = section.settings
+-%}
+
+{%- style -%}
+  #mc-{{ sid }} {
+    --mc-bg: {{ s.bg_color }};
+    --mc-text: {{ s.text_color }};
+    --mc-gold-1: {{ s.gold_start }};
+    --mc-gold-2: {{ s.gold_end }};
+    --mc-card-bg: {{ s.card_bg }};
+    --mc-featured-bg: {{ s.featured_bg }};
+    --mc-featured-badge-bg-1: {{ s.featured_badge_bg }};
+    --mc-featured-badge-bg-2: {{ s.featured_badge_bg | color_lighten: 18 }};
+    --mc-featured-badge-text: {{ s.featured_badge_text }};
+    --mc-other-badge-bg: {{ s.other_badge_bg }};
+    --mc-other-badge-text: {{ s.other_badge_text }};
+    --mc-cta-bg-1: {{ s.cta_bg }};
+    --mc-cta-bg-2: {{ s.cta_bg | color_lighten: 14 }};
+    --mc-cta-text: {{ s.cta_text_color }};
+    --mc-radius: {{ s.card_radius }}px;
+    --mc-hand-width: {{ s.hand_width }}px;
+    --mc-hand-opacity: {{ s.hand_opacity | divided_by: 100.0 }};
+    padding-top: {{ s.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ s.padding_bottom | times: 0.75 | round: 0 }}px;
+    background: var(--mc-bg);
+    color: var(--mc-text);
+    position: relative;
+    overflow: hidden;
+    direction: rtl;
+    text-align: center;
+    font-family: var(--font-body-family);
+  }
+  @media screen and (min-width: 750px) {
+    #mc-{{ sid }} {
+      padding-top: {{ s.padding_top }}px;
+      padding-bottom: {{ s.padding_bottom }}px;
+    }
+  }
+
+  #mc-{{ sid }} .mc__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 104rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* ---------- Decorative hand image ---------- */
+  #mc-{{ sid }} .mc__hand {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: var(--mc-hand-width);
+    max-width: 45%;
+    opacity: var(--mc-hand-opacity);
+    pointer-events: none;
+    z-index: 0;
+    line-height: 0;
+  }
+  #mc-{{ sid }} .mc__hand img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  @media screen and (max-width: 749px) {
+    #mc-{{ sid }} .mc__hand {
+      {% if s.hide_hand_mobile %}display: none;{% else %}max-width: 55%; width: 220px;{% endif %}
+    }
+  }
+
+  /* ---------- Heading block ---------- */
+  #mc-{{ sid }} .mc__subtitle {
+    margin: 0 0 0.6rem;
+    font-size: 1.9rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  #mc-{{ sid }} .mc__heading {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading-family);
+    font-size: 4.6rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--mc-text);
+  }
+  #mc-{{ sid }} .mc__heading em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--mc-gold-2), var(--mc-gold-1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--mc-gold-1);
+  }
+  #mc-{{ sid }} .mc__desc {
+    margin: 0 auto 8.5rem;
+    max-width: 80rem;
+    font-size: 1.8rem;
+    line-height: 1.5;
+  }
+  #mc-{{ sid }} .mc__desc p { margin: 0; }
+
+  /* ---------- Comparison card ---------- */
+  #mc-{{ sid }} .mc__card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 100rem;
+    margin: 0 auto;
+    background: var(--mc-card-bg);
+    border-radius: var(--mc-radius);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+  }
+  #mc-{{ sid }} .mc__card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-start: 0;
+    width: 50%;
+    background: var(--mc-featured-bg);
+    border-start-start-radius: var(--mc-radius);
+    border-end-start-radius: var(--mc-radius);
+    pointer-events: none;
+  }
+  #mc-{{ sid }} .mc__cell {
+    position: relative;
+    padding: 0 2rem;
+  }
+
+  /* diamond image row */
+  #mc-{{ sid }} .mc__gem {
+    height: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  #mc-{{ sid }} .mc__gem-img {
+    width: 12rem;
+    height: 12rem;
+    margin-top: -6rem;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.12));
+  }
+  #mc-{{ sid }} .mc__gem-img svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* titles */
+  #mc-{{ sid }} .mc__title {
+    padding: 2.5rem 2rem 2rem;
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  /* rows */
+  #mc-{{ sid }} .mc__row {
+    padding: 2.4rem 2rem;
+    font-size: 1.8rem;
+    line-height: 1.3;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  #mc-{{ sid }} .mc__row--featured {
+    font-weight: 700;
+  }
+
+  /* price badges */
+  #mc-{{ sid }} .mc__badge-cell {
+    padding: 2.4rem 2rem 3.6rem;
+  }
+  #mc-{{ sid }} .mc__badge {
+    display: inline-block;
+    direction: ltr;
+    unicode-bidi: isolate;
+    padding: 1.4rem 4.2rem;
+    border-radius: 1.2rem;
+    font-family: var(--font-heading-family);
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  #mc-{{ sid }} .mc__badge--featured {
+    background: linear-gradient(135deg, var(--mc-featured-badge-bg-1), var(--mc-featured-badge-bg-2));
+    color: var(--mc-featured-badge-text);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  }
+  #mc-{{ sid }} .mc__badge--other {
+    background: var(--mc-other-badge-bg);
+    color: var(--mc-other-badge-text);
+  }
+
+  /* ---------- CTA bar ---------- */
+  #mc-{{ sid }} .mc__cta {
+    display: block;
+    max-width: 78rem;
+    margin: 4.4rem auto 0;
+    padding: 2.4rem 3rem;
+    border-radius: 1.4rem;
+    background: linear-gradient(135deg, var(--mc-cta-bg-1) 0%, var(--mc-cta-bg-2) 100%);
+    color: var(--mc-cta-text);
+    font-family: var(--font-heading-family);
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-decoration: none;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+  }
+  #mc-{{ sid }} a.mc__cta:hover { opacity: 0.92; }
+
+  /* ---------- Mobile ---------- */
+  @media screen and (max-width: 749px) {
+    #mc-{{ sid }} .mc__inner { padding: 0 1.2rem; }
+    #mc-{{ sid }} .mc__subtitle { font-size: 1.5rem; }
+    #mc-{{ sid }} .mc__heading { font-size: 3rem; }
+    #mc-{{ sid }} .mc__desc { font-size: 1.45rem; margin-bottom: 6rem; }
+    #mc-{{ sid }} .mc__cell { padding: 0 0.8rem; }
+    #mc-{{ sid }} .mc__gem { height: 4rem; }
+    #mc-{{ sid }} .mc__gem-img { width: 8rem; height: 8rem; margin-top: -4rem; }
+    #mc-{{ sid }} .mc__title { font-size: 1.9rem; padding: 1.4rem 0.6rem 1.2rem; }
+    #mc-{{ sid }} .mc__row { font-size: 1.35rem; padding: 1.5rem 0.6rem; }
+    #mc-{{ sid }} .mc__badge-cell { padding: 1.6rem 0.6rem 2.4rem; }
+    #mc-{{ sid }} .mc__badge { font-size: 1.9rem; padding: 1.1rem 2.2rem; }
+    #mc-{{ sid }} .mc__cta { font-size: 1.7rem; padding: 1.6rem 1.6rem; margin-top: 2.8rem; border-radius: 1rem; }
+  }
+{%- endstyle -%}
+
+{%- capture gem_fallback -%}
+  <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="mc-g1-{{ sid }}" cx="50%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="60%" stop-color="#dfe7f2"/>
+        <stop offset="100%" stop-color="#9fb3cc"/>
+      </radialGradient>
+    </defs>
+    <circle cx="60" cy="60" r="58" fill="url(#mc-g1-{{ sid }})"/>
+    <g fill="none" stroke="#7f93ad" stroke-width="1.6" stroke-linejoin="round">
+      <polygon points="60,14 100,44 60,106 20,44" fill="#eaf0f8"/>
+      <polygon points="36,44 84,44 60,106" fill="#d3ddeb"/>
+      <polyline points="20,44 36,44 60,14 84,44 100,44"/>
+      <polyline points="36,44 48,14 72,14 84,44"/>
+      <line x1="48" y1="14" x2="60" y2="44"/>
+      <line x1="72" y1="14" x2="60" y2="44"/>
+      <line x1="20" y1="44" x2="60" y2="44"/>
+      <line x1="100" y1="44" x2="60" y2="44"/>
+    </g>
+  </svg>
+{%- endcapture -%}
+
+<div id="mc-{{ sid }}" class="mc" {{ section.shopify_attributes }}>
+  {%- if s.hand_image != blank -%}
+    <div class="mc__hand">
+      {{ s.hand_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: '' }}
+    </div>
+  {%- endif -%}
+
+  <div class="mc__inner">
+    {%- if s.subtitle != blank -%}
+      <p class="mc__subtitle">{{ s.subtitle | escape }}</p>
+    {%- endif -%}
+
+    {%- if s.heading != blank or s.heading_highlight != blank -%}
+      <h2 class="mc__heading">
+        {{ s.heading | escape }}
+        {%- if s.heading_highlight != blank %} <em>{{ s.heading_highlight | escape }}</em>{% endif -%}
+      </h2>
+    {%- endif -%}
+
+    {%- if s.description != blank -%}
+      <div class="mc__desc">{{ s.description }}</div>
+    {%- endif -%}
+
+    <div class="mc__card">
+      {%- comment -%} Row 0: gem images {%- endcomment -%}
+      <div class="mc__cell mc__gem">
+        {%- if s.featured_image != blank -%}
+          {{ s.featured_image | image_url: width: 300 | image_tag: class: 'mc__gem-img', loading: 'lazy', alt: s.featured_title }}
+        {%- else -%}
+          <div class="mc__gem-img">{{ gem_fallback }}</div>
+        {%- endif -%}
+      </div>
+      <div class="mc__cell mc__gem">
+        {%- if s.other_image != blank -%}
+          {{ s.other_image | image_url: width: 300 | image_tag: class: 'mc__gem-img', loading: 'lazy', alt: s.other_title }}
+        {%- else -%}
+          <div class="mc__gem-img">{{ gem_fallback }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Row 1: column titles {%- endcomment -%}
+      <h3 class="mc__cell mc__title mc__title--featured">{{ s.featured_title | escape }}</h3>
+      <h3 class="mc__cell mc__title mc__title--other">{{ s.other_title | escape }}</h3>
+
+      {%- comment -%} Comparison rows {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        <div class="mc__cell mc__row mc__row--featured" {{ block.shopify_attributes }}>{{ block.settings.featured_text | escape }}</div>
+        <div class="mc__cell mc__row mc__row--other">{{ block.settings.other_text | escape }}</div>
+      {%- endfor -%}
+
+      {%- comment -%} Price badges {%- endcomment -%}
+      <div class="mc__cell mc__badge-cell">
+        {%- if s.featured_price != blank -%}
+          <span class="mc__badge mc__badge--featured">{{ s.featured_price | escape }}</span>
+        {%- endif -%}
+      </div>
+      <div class="mc__cell mc__badge-cell">
+        {%- if s.other_price != blank -%}
+          <span class="mc__badge mc__badge--other">{{ s.other_price | escape }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if s.cta_text != blank -%}
+      {%- if s.cta_link != blank -%}
+        <a class="mc__cta" href="{{ s.cta_link }}">{{ s.cta_text | escape }}</a>
+      {%- else -%}
+        <div class="mc__cta">{{ s.cta_text | escape }}</div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "השוואת מואסנייט",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer", "custom.popup"]
+  },
+  "settings": [
+    { "type": "header", "content": "כותרות" },
+    { "type": "text", "id": "subtitle", "label": "כותרת עליונה קטנה", "default": "מה זה בכלל מואסנייט מעבדה?" },
+    { "type": "text", "id": "heading", "label": "כותרת ראשית", "default": "אותה נוכחות" },
+    { "type": "text", "id": "heading_highlight", "label": "חלק מודגש בזהב", "default": "בעשירית מחיר!" },
+    { "type": "richtext", "id": "description", "label": "טקסט תיאור", "default": "<p>אבן חן אמיתית תוצרת ארה\"ב, שמפזרת יותר אור מיהלום. הנה הנתונים האמיתיים, בלי מסיכות.</p>" },
+
+    { "type": "header", "content": "עמודה מודגשת (ימין)" },
+    { "type": "image_picker", "id": "featured_image", "label": "תמונת אבן" },
+    { "type": "text", "id": "featured_title", "label": "כותרת עמודה", "default": "מואסנייט IF1" },
+    { "type": "text", "id": "featured_price", "label": "מחיר (תגית)", "default": "₪1,499" },
+
+    { "type": "header", "content": "עמודה רגילה (שמאל)" },
+    { "type": "image_picker", "id": "other_image", "label": "תמונת אבן" },
+    { "type": "text", "id": "other_title", "label": "כותרת עמודה", "default": "יהלום טבעי בסיסי" },
+    { "type": "text", "id": "other_price", "label": "מחיר (תגית)", "default": "+₪15,000" },
+
+    { "type": "header", "content": "פס תחתון (CTA)" },
+    { "type": "text", "id": "cta_text", "label": "טקסט", "default": "מכשיר Diamond Tester לא רואה בהבדלים!" },
+    { "type": "url", "id": "cta_link", "label": "קישור (לא חובה)" },
+
+    { "type": "header", "content": "תמונת רקע דקורטיבית" },
+    { "type": "image_picker", "id": "hand_image", "label": "תמונה (יד עם צמידים)", "info": "מומלץ PNG עם רקע שקוף. מוצג בפינה הימנית התחתונה." },
+    { "type": "range", "id": "hand_width", "label": "רוחב תמונה בדסקטופ", "min": 200, "max": 800, "step": 20, "unit": "px", "default": 520 },
+    { "type": "range", "id": "hand_opacity", "label": "שקיפות", "min": 10, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "checkbox", "id": "hide_hand_mobile", "label": "הסתר במובייל", "default": true },
+
+    { "type": "header", "content": "צבעים" },
+    { "type": "color", "id": "bg_color", "label": "רקע סקשן", "default": "#f7f6f3" },
+    { "type": "color", "id": "text_color", "label": "צבע טקסט", "default": "#111111" },
+    { "type": "color", "id": "gold_start", "label": "זהב - גוון בהיר", "default": "#c9a24f" },
+    { "type": "color", "id": "gold_end", "label": "זהב - גוון כהה", "default": "#8a6a2e" },
+    { "type": "color", "id": "card_bg", "label": "רקע כרטיס", "default": "#ffffff" },
+    { "type": "color", "id": "featured_bg", "label": "רקע עמודה מודגשת", "default": "#f5ead6" },
+    { "type": "color", "id": "featured_badge_bg", "label": "תגית מחיר מודגשת - רקע", "default": "#111111" },
+    { "type": "color", "id": "featured_badge_text", "label": "תגית מחיר מודגשת - טקסט", "default": "#ffffff" },
+    { "type": "color", "id": "other_badge_bg", "label": "תגית מחיר רגילה - רקע", "default": "#f5ead6" },
+    { "type": "color", "id": "other_badge_text", "label": "תגית מחיר רגילה - טקסט", "default": "#111111" },
+    { "type": "color", "id": "cta_bg", "label": "פס תחתון - רקע", "default": "#0f0f0f" },
+    { "type": "color", "id": "cta_text_color", "label": "פס תחתון - טקסט", "default": "#ffffff" },
+
+    { "type": "header", "content": "עיצוב וריווח" },
+    { "type": "range", "id": "card_radius", "label": "עיגול פינות כרטיס", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "שורת השוואה",
+      "settings": [
+        { "type": "text", "id": "featured_text", "label": "טקסט בעמודה המודגשת", "default": "ברק פי 2.4" },
+        { "type": "text", "id": "other_text", "label": "טקסט בעמודה הרגילה", "default": "ברק בסיסי" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "השוואת מואסנייט",
+      "blocks": [
+        { "type": "row", "settings": { "featured_text": "ברק פי 2.4", "other_text": "ברק בסיסי" } },
+        { "type": "row", "settings": { "featured_text": "צבע D ניקיון VVS1", "other_text": "צבע וניקיון משתנה" } },
+        { "type": "row", "settings": { "featured_text": "קושי 9.25 בסולם מוס", "other_text": "קושי 10 בסולם מוס" } },
+        { "type": "row", "settings": { "featured_text": "תעודת IGI בינלאומית", "other_text": "תעודה בינלאומית" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
