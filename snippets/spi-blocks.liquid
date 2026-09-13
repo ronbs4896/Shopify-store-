@@ -273,7 +273,12 @@
         </div>
         {%- if block.settings.show_installments and inst_count > 1 -%}
           {%- capture inst_money -%}<b>{% render 'seora-money', amount: inst_amount, symbol: sym %}</b>{%- endcapture -%}
-          <p class="spi-installments">{{ block.settings.installments_text | escape | replace: '{count}', inst_count | replace: '{amount}', inst_money }}</p>
+          {%- liquid
+            assign inst_text = block.settings.installments_text | escape
+            assign inst_text = inst_text | replace: '{count}', inst_count
+            assign inst_text = inst_text | replace: '{amount}', inst_money
+          -%}
+          <p class="spi-installments">{{ inst_text }}</p>
         {%- endif -%}
       </div>
 
