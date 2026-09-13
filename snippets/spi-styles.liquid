@@ -1,0 +1,214 @@
+{%- comment -%} Styles for main-product-seora. Receives: section {%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign sid = section.id
+-%}
+{%- style -%}
+  .section-{{ sid }}-padding {
+    padding-top: {{ s.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ s.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ sid }}-padding {
+      padding-top: {{ s.padding_top }}px;
+      padding-bottom: {{ s.padding_bottom }}px;
+    }
+  }
+
+  #spi-{{ sid }} {
+    --spi-gold: {{ s.accent_color }};
+    --spi-gold-2: {{ s.accent_color | color_darken: 12 }};
+    --spi-dark: {{ s.dark_color }};
+    --spi-text: {{ s.text_color }};
+    --spi-muted: {{ s.text_color | color_mix: '#ffffff', 55 }};
+    --spi-sale: {{ s.sale_color }};
+    --spi-green: {{ s.success_color }};
+    --spi-border: rgba(0, 0, 0, 0.12);
+    --spi-radius: 1.2rem;
+    direction: rtl;
+    text-align: right;
+    color: var(--spi-text);
+    font-family: var(--font-body-family);
+  }
+  #spi-{{ sid }} .spi > * + * { margin-top: 2.2rem; }
+  #spi-{{ sid }} .spi > * { margin-bottom: 0; }
+  #spi-{{ sid }} .spi h1, #spi-{{ sid }} .spi h2, #spi-{{ sid }} .spi h3, #spi-{{ sid }} .spi p { margin: 0; }
+
+  /* ---- badges ---- */
+  #spi-{{ sid }} .spi-badges { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+  #spi-{{ sid }} .spi-badge {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    padding: 0.9rem 1.6rem; border-radius: 0.8rem;
+    font-size: 1.5rem; font-weight: 700; line-height: 1; white-space: nowrap;
+  }
+  #spi-{{ sid }} .spi-badge__dot { width: 0.9rem; height: 0.9rem; border-radius: 50%; background: var(--spi-green); box-shadow: 0 0 0 0.3rem rgba(46, 158, 79, 0.25); }
+  #spi-{{ sid }} .spi-stock { display: inline-flex; }
+
+  /* ---- title ---- */
+  #spi-{{ sid }} .spi-title {
+    font-family: var(--font-heading-family);
+    font-size: {{ s.title_size }}px; font-weight: 800; line-height: 1.2; letter-spacing: -0.01em;
+  }
+
+  /* ---- rating ---- */
+  #spi-{{ sid }} .spi-rating { display: flex; align-items: center; gap: 0.9rem; font-size: 1.7rem; }
+  #spi-{{ sid }} .spi-stars { position: relative; display: inline-flex; direction: ltr; line-height: 0; }
+  #spi-{{ sid }} .spi-stars svg { width: 2.2rem; height: 2.2rem; display: block; }
+  #spi-{{ sid }} .spi-stars__bg { color: #e3e0d8; display: inline-flex; }
+  #spi-{{ sid }} .spi-stars__fg { position: absolute; inset: 0; overflow: hidden; color: var(--spi-star); display: inline-flex; white-space: nowrap; }
+  #spi-{{ sid }} .spi-rating__value { font-weight: 700; }
+  #spi-{{ sid }} .spi-rating__count { color: var(--spi-muted); }
+
+  /* ---- features ---- */
+  #spi-{{ sid }} .spi-features { display: flex; flex-direction: column; gap: 1.6rem; list-style: none; padding: 0; margin: 0; }
+  #spi-{{ sid }} .spi-feature { display: flex; align-items: center; gap: 1.2rem; font-size: 1.8rem; line-height: 1.35; }
+  #spi-{{ sid }} .spi-feature__icon { flex: 0 0 auto; width: 2.6rem; height: 2.6rem; color: var(--spi-gold); }
+  #spi-{{ sid }} .spi-feature__icon svg { width: 100%; height: 100%; display: block; }
+
+  /* ---- variant picker ---- */
+  #spi-{{ sid }} .spi-picker { display: block; }
+  #spi-{{ sid }} .spi-opt { border: 0; padding: 0; margin: 0 0 2.2rem; max-width: none; }
+  #spi-{{ sid }} .spi-opt:last-of-type { margin-bottom: 0; }
+  #spi-{{ sid }} .spi-opt__label {
+    display: block; padding: 0; margin: 0 0 1.2rem;
+    font-size: 1.9rem; font-weight: 800; letter-spacing: 0; text-transform: none; color: var(--spi-text);
+  }
+  #spi-{{ sid }} .spi-opt__label .spi-opt__value { color: var(--spi-gold); font-weight: 800; margin-inline-start: 0.4rem; }
+  #spi-{{ sid }} .spi-opt__values { display: flex; flex-wrap: wrap; gap: 1.6rem; align-items: flex-start; }
+  #spi-{{ sid }} .spi-opt--swatch .spi-opt__values { gap: 2rem; }
+
+  /* reset theme pill styles on our labels */
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-swatch,
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-pill {
+    margin: 0; letter-spacing: 0; box-shadow: none; background: none; border: 0; padding: 0;
+    font-size: 2rem; font-weight: 500; line-height: 1; position: relative; display: inline-flex;
+    align-items: center; justify-content: center; cursor: pointer; transition: border-color .15s, background .15s, color .15s, box-shadow .15s;
+  }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label::before { display: none; }
+
+  /* swatches */
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-swatch {
+    width: {{ s.swatch_size }}px; height: {{ s.swatch_size }}px; border-radius: 50%;
+    background: var(--swatch, #ddd); box-shadow: inset 0 0 0 1px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.08);
+  }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-swatch:hover { box-shadow: 0 0 0 0.3rem #fff, 0 0 0 0.45rem rgba(0,0,0,.25); }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio']:checked + label.spi-swatch,
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio']:focus-visible + label.spi-swatch {
+    box-shadow: 0 0 0 0.3rem #fff, 0 0 0 0.55rem var(--spi-dark);
+  }
+
+  /* pills */
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-pill {
+    flex: 1 1 0; min-width: 0; max-width: {{ s.pill_min_width }}px; min-height: {{ s.pill_height }}px; padding: 1.2rem 1.6rem;
+    border: 1px solid var(--spi-border); border-radius: 1rem; background: #fff; color: var(--spi-text); white-space: nowrap;
+  }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-pill:hover { border-color: var(--spi-dark); }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio']:checked + label.spi-pill {
+    background: var(--spi-dark); color: #fff; border-color: var(--spi-dark); box-shadow: none;
+  }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio']:focus-visible + label.spi-pill { box-shadow: 0 0 0 0.3rem #fff, 0 0 0 0.5rem var(--spi-dark); }
+  #spi-{{ sid }} .spi-pill__tag {
+    position: absolute; bottom: -1.3rem; left: 50%; transform: translateX(-50%);
+    padding: 0.45rem 1.1rem; border-radius: 0.5rem; background: var(--spi-gold); color: #fff;
+    font-size: 1.3rem; font-weight: 700; line-height: 1; white-space: nowrap; letter-spacing: 0;
+  }
+  #spi-{{ sid }} .spi-opt--buttons .spi-opt__values { padding-bottom: 1.4rem; }
+
+  /* disabled / sold out values */
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'].disabled + label.spi-pill,
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio']:disabled + label.spi-pill {
+    color: var(--spi-muted); border-style: dashed; text-decoration: line-through;
+  }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'].disabled + label.spi-swatch { opacity: .45; }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'].disabled + label::after,
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio']:disabled + label::after {
+    content: ''; position: absolute; top: 50%; left: 50%; height: 120%; width: 0; border: 0; border-left: 1px solid rgba(0,0,0,.35);
+    transform: translate(-50%, -50%) rotate(45deg); box-shadow: none; clip-path: none; z-index: 2;
+  }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'].disabled + label.spi-pill::after { display: none; }
+  #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'].disabled:checked + label.spi-pill { color: rgba(255,255,255,.7); }
+
+  /* ---- bundle ---- */
+  #spi-{{ sid }} .spi-bundle__heading { font-size: 1.9rem; color: var(--spi-muted); margin-bottom: 1.2rem; }
+  #spi-{{ sid }} .spi-bundle__card {
+    position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+    padding: 2.4rem 2rem 2.4rem 2.4rem; border: 1px solid var(--spi-border); border-radius: var(--spi-radius); background: #fff;
+  }
+  #spi-{{ sid }} .spi-bundle__main { display: contents; cursor: pointer; }
+  #spi-{{ sid }} .spi-bundle__check {
+    appearance: none; -webkit-appearance: none; width: 2.6rem; height: 2.6rem; margin: 0; cursor: pointer;
+    border: 1px solid rgba(0,0,0,.25); border-radius: 0.6rem; background: #fff; display: inline-grid; place-content: center; flex: 0 0 auto;
+  }
+  #spi-{{ sid }} .spi-bundle__check::before { content: ''; width: 1.4rem; height: 1.4rem; transform: scale(0); transition: transform .12s; background: var(--spi-dark); clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); }
+  #spi-{{ sid }} .spi-bundle__check:checked { border-color: var(--spi-dark); }
+  #spi-{{ sid }} .spi-bundle__check:checked::before { transform: scale(1); }
+  #spi-{{ sid }} .spi-bundle__body { display: flex; align-items: center; gap: 1.6rem; min-width: 0; }
+  #spi-{{ sid }} .spi-bundle__img { flex: 0 0 auto; width: 11rem; height: 11rem; border: 1px solid var(--spi-border); border-radius: 0.8rem; overflow: hidden; background: #fff; display: grid; place-items: center; }
+  #spi-{{ sid }} .spi-bundle__img img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  #spi-{{ sid }} .spi-bundle__name { font-size: 2rem; font-weight: 500; }
+  #spi-{{ sid }} .spi-bundle__variant { margin-top: .8rem; font-size: 1.4rem; padding: .5rem .9rem; border: 1px solid var(--spi-border); border-radius: .6rem; background: #fff; color: var(--spi-text); max-width: 100%; }
+  #spi-{{ sid }} .spi-bundle__prices { text-align: left; display: flex; flex-direction: column; gap: .6rem; align-self: end; }
+  #spi-{{ sid }} .spi-bundle__sale { font-family: var(--font-heading-family); font-size: 2.3rem; font-weight: 800; color: var(--spi-sale); direction: ltr; unicode-bidi: isolate; }
+  #spi-{{ sid }} .spi-bundle__compare { font-size: 1.6rem; color: var(--spi-muted); direction: ltr; unicode-bidi: isolate; }
+  #spi-{{ sid }} .spi-bundle__link { position: absolute; top: 1.6rem; left: 2.4rem; font-size: 1.5rem; font-weight: 700; color: var(--spi-gold); text-decoration: underline; text-underline-offset: .3rem; }
+  #spi-{{ sid }} .spi-bundle__badge {
+    position: absolute; bottom: -1.3rem; right: 2rem; padding: .5rem 1.2rem; border-radius: .5rem;
+    background: var(--spi-gold); color: #fff; font-size: 1.4rem; font-weight: 700; line-height: 1; white-space: nowrap;
+  }
+  #spi-{{ sid }} .spi-bundle--checked .spi-bundle__card { border-color: var(--spi-dark); box-shadow: 0 0 0 1px var(--spi-dark); }
+
+  /* ---- price ---- */
+  #spi-{{ sid }} .spi-price__row { display: flex; align-items: center; flex-wrap: wrap; gap: 1.6rem; }
+  #spi-{{ sid }} .spi-price__sale { font-family: var(--font-heading-family); font-size: {{ s.price_size }}px; font-weight: 800; line-height: 1; color: var(--spi-sale); direction: ltr; unicode-bidi: isolate; }
+  #spi-{{ sid }} .spi-price__sale--regular { color: var(--spi-text); }
+  #spi-{{ sid }} .spi-price__compare { font-size: 2.2rem; color: var(--spi-muted); text-decoration: line-through; direction: ltr; unicode-bidi: isolate; }
+  #spi-{{ sid }} .spi-price__save { display: inline-flex; gap: .5rem; padding: .9rem 1.4rem; border-radius: .6rem; background: var(--spi-green); color: #fff; font-size: 1.6rem; font-weight: 700; line-height: 1; }
+  #spi-{{ sid }} .spi-price__save span { direction: ltr; unicode-bidi: isolate; }
+  #spi-{{ sid }} .spi-installments { margin-top: 1.2rem; font-size: 1.8rem; color: var(--spi-muted); }
+  #spi-{{ sid }} .spi-installments b { font-weight: 500; direction: ltr; unicode-bidi: isolate; display: inline-block; margin: 0 .3rem; }
+  #spi-{{ sid }} .spi-price.hidden, #spi-{{ sid }} .spi-stock.hidden { display: none; }
+  #spi-{{ sid }} [hidden] { display: none !important; }
+
+  /* ---- buy buttons ---- */
+  #spi-{{ sid }} .product-form { margin: 0; }
+  #spi-{{ sid }} .product-form__buttons { display: block; }
+  #spi-{{ sid }} .lm-main-button {
+    background: {{ s.button_bg }}; color: {{ s.button_text_color }}; border-radius: {{ s.button_radius }}px;
+    font-weight: 700; letter-spacing: 0;
+  }
+  #spi-{{ sid }} .lm-main-button::after { box-shadow: none; }
+  #spi-{{ sid }} .lm-main-button:not([disabled]):hover { filter: brightness(1.12); }
+  #spi-{{ sid }} .lm-main-button:not([disabled]):hover::after { box-shadow: none; }
+  #spi-{{ sid }} .product-form__submit { margin-bottom: 1rem; }
+
+  /* ---- text / accordion ---- */
+  #spi-{{ sid }} .spi-text { font-size: 1.6rem; line-height: 1.6; }
+  #spi-{{ sid }} .spi-accordion summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.4rem 0; cursor: pointer; font-size: 1.7rem; font-weight: 700; border-top: 1px solid var(--spi-border); list-style: none; }
+  #spi-{{ sid }} .spi-accordion summary::-webkit-details-marker { display: none; }
+  #spi-{{ sid }} .spi-accordion summary svg { width: 1.4rem; height: 1.4rem; transition: transform .2s; flex: 0 0 auto; }
+  #spi-{{ sid }} .spi-accordion[open] summary svg { transform: rotate(180deg); }
+  #spi-{{ sid }} .spi-accordion__content { padding: 0 0 1.6rem; font-size: 1.6rem; line-height: 1.6; }
+
+  /* ---- mobile ---- */
+  @media screen and (max-width: 749px) {
+    #spi-{{ sid }} .spi > * + * { margin-top: 1.5rem; }
+    #spi-{{ sid }} .spi-badge { font-size: 1.3rem; padding: .8rem 1.2rem; }
+    #spi-{{ sid }} .spi-title { font-size: {{ s.title_size | times: 0.7 | round: 0 }}px; }
+    #spi-{{ sid }} .spi-rating { font-size: 1.5rem; }
+    #spi-{{ sid }} .spi-feature { font-size: 1.5rem; gap: 1rem; }
+    #spi-{{ sid }} .spi-feature__icon { width: 2.2rem; height: 2.2rem; }
+    #spi-{{ sid }} .spi-opt__label { font-size: 1.6rem; }
+    #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-swatch { width: {{ s.swatch_size | times: 0.7 | round: 0 }}px; height: {{ s.swatch_size | times: 0.7 | round: 0 }}px; }
+    #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-pill { max-width: none; min-height: {{ s.pill_height | times: 0.7 | round: 0 }}px; font-size: 1.6rem; padding: 1rem 1.2rem; }
+    #spi-{{ sid }} .spi-opt--buttons .spi-opt__values { gap: 1rem; }
+    #spi-{{ sid }} .spi-bundle__card { grid-template-columns: auto 1fr; padding: 2rem 1.4rem 2rem 1.6rem; gap: 1.2rem; }
+    #spi-{{ sid }} .spi-bundle__img { width: 7.5rem; height: 7.5rem; }
+    #spi-{{ sid }} .spi-bundle__name { font-size: 1.6rem; }
+    #spi-{{ sid }} .spi-bundle__prices { grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 1.2rem; justify-content: flex-start; margin-top: .4rem; }
+    #spi-{{ sid }} .spi-bundle__sale { font-size: 2rem; }
+    #spi-{{ sid }} .spi-bundle__link { top: 1rem; left: 1.4rem; font-size: 1.3rem; }
+    #spi-{{ sid }} .spi-price__sale { font-size: {{ s.price_size | times: 0.75 | round: 0 }}px; }
+    #spi-{{ sid }} .spi-price__compare { font-size: 1.8rem; }
+    #spi-{{ sid }} .spi-installments { font-size: 1.5rem; }
+  }
+{%- endstyle -%}

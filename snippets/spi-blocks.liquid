@@ -1,0 +1,308 @@
+{%- comment -%}
+  Block renderer for main-product-seora.
+  Receives: section, product, cv (current variant), sid, sym, on_sale, product_form_id
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+-%}
+{%- for block in section.blocks -%}
+  {%- case block.type -%}
+
+    {%- when '@app' -%}
+      {% render block %}
+
+    {%- when 'badges' -%}
+      <div class="spi-badges" {{ block.shopify_attributes }}>
+        {%- if block.settings.badge_text != blank -%}
+          <span class="spi-badge" style="background: {{ block.settings.badge_bg }}; color: {{ block.settings.badge_color }};">{{ block.settings.badge_text | escape }}</span>
+        {%- endif -%}
+        {%- if block.settings.badge2_text != blank -%}
+          <span class="spi-badge" style="background: {{ block.settings.badge2_bg }}; color: {{ block.settings.badge2_color }};">{{ block.settings.badge2_text | escape }}</span>
+        {%- endif -%}
+        {%- if block.settings.show_stock -%}
+          <div id="Inventory-{{ sid }}" class="spi-stock" role="status" data-bg="{{ block.settings.stock_bg }}" data-color="{{ block.settings.stock_color }}">
+            {%- if cv.available -%}
+              <span class="spi-badge spi-badge--in" style="background: {{ block.settings.stock_bg }}; color: {{ block.settings.stock_color }};"><i class="spi-badge__dot" style="background: {{ block.settings.dot_color }}; box-shadow: 0 0 0 0.3rem {{ block.settings.dot_color | color_modify: 'alpha', 0.25 }};"></i>{{ s.stock_in_text | escape }}</span>
+            {%- else -%}
+              <span class="spi-badge spi-badge--out" style="background: {{ block.settings.stock_bg }}; color: {{ block.settings.stock_color }};">{{ s.stock_out_text | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+    {%- when 'title' -%}
+      <h1 class="spi-title" {{ block.shopify_attributes }}>{{ product.title | escape }}</h1>
+
+    {%- when 'rating' -%}
+      {%- liquid
+        assign rating = block.settings.rating
+        assign count = block.settings.count
+        if block.settings.source == 'metafield' and product.metafields.reviews.rating.value != blank
+          assign rating = product.metafields.reviews.rating.value.rating
+          assign count = product.metafields.reviews.rating_count
+        endif
+        assign pct = rating | times: 20.0 | at_most: 100 | at_least: 0
+      -%}
+      <div class="spi-rating" style="--spi-star: {{ block.settings.star_color }};" {{ block.shopify_attributes }}>
+        {%- capture star -%}<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.95 6.2 6.8.85-5 4.75 1.3 6.75L12 17.7l-6.05 3.35 1.3-6.75-5-4.75 6.8-.85z"/></svg>{%- endcapture -%}
+        <span class="spi-stars" role="img" aria-label="{{ rating }} / 5">
+          <span class="spi-stars__bg">{{ star }}{{ star }}{{ star }}{{ star }}{{ star }}</span>
+          <span class="spi-stars__fg" style="width: {{ pct }}%;">{{ star }}{{ star }}{{ star }}{{ star }}{{ star }}</span>
+        </span>
+        <span class="spi-rating__value">{{ rating }}/5</span>
+        {%- if count != blank -%}
+          <span class="spi-rating__count">({{ count }} {{ block.settings.count_label | escape }})</span>
+        {%- endif -%}
+      </div>
+
+    {%- when 'feature' -%}
+      {%- liquid
+        assign prev_index = forloop.index0 | minus: 1
+        assign prev_block = section.blocks[prev_index]
+        assign next_block = section.blocks[forloop.index]
+        assign open_list = true
+        if forloop.index0 > 0 and prev_block.type == 'feature'
+          assign open_list = false
+        endif
+        assign close_list = true
+        if next_block.type == 'feature'
+          assign close_list = false
+        endif
+      -%}
+      {%- if open_list -%}<ul class="spi-features">{%- endif -%}
+        <li class="spi-feature" {{ block.shopify_attributes }}>
+          <span class="spi-feature__icon" style="color: {{ block.settings.icon_color }};">
+            {%- case block.settings.icon -%}
+              {%- when 'diamond' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M7 3h10l4 5.5L12 21 3 8.5 7 3z"/><path d="M3 8.5h18M9.5 8.5L12 21l2.5-12.5M7 3l2.5 5.5M17 3l-2.5 5.5"/></svg>
+              {%- when 'certificate' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="9" r="6"/><path d="M12 6.2l.9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2L9.1 8.3l2-.3z"/><path d="M8.5 14.2L7 21l5-2.5 5 2.5-1.5-6.8"/></svg>
+              {%- when 'shield' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2.5l7.5 3v6c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5v-6l7.5-3z"/><path d="M8.7 12.2l2.2 2.2 4.4-4.6"/></svg>
+              {%- when 'check' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.3l2.5 2.5 5-5.3"/></svg>
+              {%- when 'truck' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M2.5 6h11v10h-11zM13.5 9.5h4l3 3.5v3h-7z"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
+              {%- when 'gift' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 9h17v3h-17zM5 12v8.5h14V12M12 9v11.5"/><path d="M12 9c-1.5-1-4.5-4-3-5.5S12 6 12 9c0-3 1.5-6.5 3-5.5S13.5 8 12 9z"/></svg>
+              {%- when 'sparkles' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M10 3.5l1.6 4.4L16 9.5l-4.4 1.6L10 15.5l-1.6-4.4L4 9.5l4.4-1.6zM18 13l.9 2.6 2.6.9-2.6.9L18 20l-.9-2.6-2.6-.9 2.6-.9z"/></svg>
+              {%- when 'ring' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="14" r="6.5"/><path d="M9.5 6.5L12 3l2.5 3.5-2.5 2.2z"/></svg>
+              {%- when 'heart' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 20.5s-8-4.9-8-11A4.5 4.5 0 0112 7a4.5 4.5 0 018 2.5c0 6.1-8 11-8 11z"/></svg>
+              {%- when 'star' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l2.8 5.8 6.4.8-4.7 4.4 1.2 6.3L12 17.3l-5.7 3 1.2-6.3L2.8 9.6l6.4-.8z"/></svg>
+              {%- when 'lock' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 018 0v3"/></svg>
+              {%- when 'refresh' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M20 12a8 8 0 01-14.2 5M4 12a8 8 0 0114.2-5"/><path d="M4 17.5V13h4.5M20 6.5V11h-4.5"/></svg>
+              {%- when 'clock' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+              {%- when 'water' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/></svg>
+              {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.3l2.5 2.5 5-5.3"/></svg>
+            {%- endcase -%}
+          </span>
+          <span class="spi-feature__text">{{ block.settings.text }}</span>
+        </li>
+      {%- if close_list -%}</ul>{%- endif -%}
+
+    {%- when 'variant_picker' -%}
+      {%- unless product.has_only_default_variant -%}
+        {%- liquid
+          assign swatch_names = block.settings.swatch_options | split: ','
+          assign swatch_lines = block.settings.swatch_map | newline_to_br | split: '<br />'
+          assign bestseller_values = block.settings.bestseller_value | split: ','
+        -%}
+        <variant-radios
+          id="variant-radios-{{ sid }}"
+          class="no-js-hidden spi-picker"
+          data-section="{{ sid }}"
+          data-url="{{ product.url }}"
+          {{ block.shopify_attributes }}
+        >
+          {%- for option in product.options_with_values -%}
+            {%- liquid
+              assign is_swatch = false
+              for n in swatch_names
+                assign n_clean = n | strip | downcase
+                assign o_clean = option.name | strip | downcase
+                if n_clean == o_clean
+                  assign is_swatch = true
+                endif
+              endfor
+            -%}
+            <fieldset class="js product-form__input spi-opt {% if is_swatch %}spi-opt--swatch{% else %}spi-opt--buttons{% endif %}">
+              <legend class="form__label spi-opt__label">{{ option.name | escape }}: <span class="spi-opt__value">{{ option.selected_value | escape }}</span></legend>
+              <div class="spi-opt__values">
+                {%- for value in option.values -%}
+                  {%- liquid
+                    assign option_disabled = true
+                    for variant in product.variants
+                      if variant.available
+                        case option.position
+                          when 1
+                            if variant.option1 == value
+                              assign option_disabled = false
+                            endif
+                          when 2
+                            if variant.option1 == cv.option1 and variant.option2 == value
+                              assign option_disabled = false
+                            endif
+                          when 3
+                            if variant.option1 == cv.option1 and variant.option2 == cv.option2 and variant.option3 == value
+                              assign option_disabled = false
+                            endif
+                        endcase
+                      endif
+                    endfor
+                    assign input_id = sid | append: '-' | append: option.position | append: '-' | append: forloop.index0
+                  -%}
+                  <input
+                    type="radio"
+                    id="{{ input_id }}"
+                    name="{{ option.name | escape }}"
+                    value="{{ value | escape }}"
+                    {% if option.selected_value == value %}checked{% endif %}
+                    {% if option_disabled %}class="disabled"{% endif %}
+                  >
+                  {%- if is_swatch -%}
+                    {%- liquid
+                      assign swatch_bg = ''
+                      assign value_key = value | strip | downcase | append: ':'
+                      for line in swatch_lines
+                        assign line_clean = line | strip
+                        assign line_lower = line_clean | downcase
+                        if swatch_bg == '' and line_lower contains value_key
+                          assign parts = line_clean | split: ':'
+                          assign first = parts[0] | strip | downcase
+                          assign key_no_colon = value | strip | downcase
+                          if first == key_no_colon
+                            assign swatch_bg = line_clean | remove_first: parts[0] | remove_first: ':' | strip
+                          endif
+                        endif
+                      endfor
+                      if swatch_bg == ''
+                        assign swatch_bg = value | handle
+                      endif
+                    -%}
+                    <label for="{{ input_id }}" class="spi-swatch" style="--swatch: {{ swatch_bg }};" title="{{ value | escape }}">
+                      <span class="visually-hidden">{{ value | escape }}</span>
+                    </label>
+                  {%- else -%}
+                    <label for="{{ input_id }}" class="spi-pill">
+                      {{ value | escape }}
+                      {%- for bv in bestseller_values -%}
+                        {%- assign bv_clean = bv | strip -%}
+                        {%- if bv_clean != blank and bv_clean == value -%}
+                          <span class="spi-pill__tag">{{ block.settings.bestseller_text | escape }}</span>
+                        {%- endif -%}
+                      {%- endfor -%}
+                      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+                    </label>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+          <script type="application/json">
+            {{ product.variants | json }}
+          </script>
+        </variant-radios>
+      {%- endunless -%}
+
+    {%- when 'bundle' -%}
+      {%- liquid
+        assign addon = block.settings.product
+        assign pct = block.settings.discount_pct
+      -%}
+      {%- if addon != blank and addon.available -%}
+        {%- liquid
+          assign av = addon.selected_or_first_available_variant
+          assign main_compare = cv.compare_at_price | default: cv.price
+          assign addon_compare = av.compare_at_price | default: av.price
+          assign sum_price = cv.price | plus: av.price
+          assign sum_compare = main_compare | plus: addon_compare
+          assign factor = 100 | minus: pct
+          assign bundle_price = sum_price | times: factor | divided_by: 100.0 | round
+          assign bundle_label = block.settings.label | default: addon.title
+          assign badge_text = block.settings.badge_text | replace: '{pct}', pct
+        -%}
+        <div class="spi-bundle" data-pct="{{ pct }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <p class="spi-bundle__heading">{{ block.settings.heading | escape }}</p>
+          {%- endif -%}
+          <div class="spi-bundle__card">
+            {%- if badge_text != blank -%}<span class="spi-bundle__badge">{{ badge_text }}</span>{%- endif -%}
+            {%- if block.settings.link_text != blank -%}
+              <a class="spi-bundle__link" href="{{ addon.url }}" target="_blank" rel="noopener">{{ block.settings.link_text | escape }}</a>
+            {%- endif -%}
+            <input type="checkbox" class="spi-bundle__check" id="spi-bundle-{{ block.id }}" aria-label="{{ bundle_label | escape }}">
+            <div class="spi-bundle__body">
+              <label class="spi-bundle__img" for="spi-bundle-{{ block.id }}">
+                {%- if addon.featured_image -%}
+                  {{ addon.featured_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: addon.title }}
+                {%- endif -%}
+              </label>
+              <div class="spi-bundle__info">
+                <label class="spi-bundle__name" for="spi-bundle-{{ block.id }}">{{ bundle_label | escape }}</label>
+                {%- if addon.variants.size > 1 -%}
+                  <select class="spi-bundle__variant" aria-label="{{ addon.options.first | escape }}">
+                    {%- for v in addon.variants -%}
+                      <option value="{{ v.id }}" data-price="{{ v.price }}" data-compare="{{ v.compare_at_price | default: v.price }}" {% if v.available == false %}disabled{% endif %} {% if v.id == av.id %}selected{% endif %}>{{ v.title | escape }}{% if v.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}</option>
+                    {%- endfor -%}
+                  </select>
+                {%- else -%}
+                  <input type="hidden" class="spi-bundle__variant" value="{{ av.id }}" data-price="{{ av.price }}" data-compare="{{ addon_compare }}">
+                {%- endif -%}
+              </div>
+            </div>
+            <div class="spi-bundle__prices">
+              <span class="spi-bundle__sale">{% render 'seora-money', amount: bundle_price, symbol: sym %}</span>
+              <s class="spi-bundle__compare">{% render 'seora-money', amount: sum_compare, symbol: sym %}</s>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+    {%- when 'price' -%}
+      {%- liquid
+        assign saved = cv.compare_at_price | minus: cv.price
+        assign inst_count = block.settings.installments | at_least: 1
+        assign inst_amount = cv.price | divided_by: inst_count
+      -%}
+      <div id="price-{{ sid }}" class="spi-price" role="status" {{ block.shopify_attributes }}
+        data-save-text="{{ block.settings.save_text | escape }}"
+        data-installments="{{ inst_count }}"
+        data-installments-text="{{ block.settings.installments_text | escape }}"
+        data-show-installments="{{ block.settings.show_installments }}"
+      >
+        <div class="spi-price__row">
+          <span class="spi-price__sale{% unless on_sale %} spi-price__sale--regular{% endunless %}">{% render 'seora-money', amount: cv.price, symbol: sym %}</span>
+          <s class="spi-price__compare"{% unless on_sale %} hidden{% endunless %}>{% render 'seora-money', amount: cv.compare_at_price, symbol: sym %}</s>
+          {%- if block.settings.save_text != blank -%}
+            <span class="spi-price__save"{% unless on_sale %} hidden{% endunless %}>{{ block.settings.save_text | escape }}<span>{% render 'seora-money', amount: saved, symbol: sym %}</span></span>
+          {%- endif -%}
+        </div>
+        {%- if block.settings.show_installments and inst_count > 1 -%}
+          {%- capture inst_money -%}<b>{% render 'seora-money', amount: inst_amount, symbol: sym %}</b>{%- endcapture -%}
+          <p class="spi-installments">{{ block.settings.installments_text | escape | replace: '{count}', inst_count | replace: '{amount}', inst_money }}</p>
+        {%- endif -%}
+      </div>
+
+    {%- when 'buy_buttons' -%}
+      {%- render 'buy-buttons',
+        block: block,
+        product: product,
+        product_form_id: product_form_id,
+        section_id: sid,
+        show_pickup_availability: block.settings.show_pickup
+      -%}
+
+    {%- when 'text' -%}
+      <div class="spi-text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+
+    {%- when 'collapsible_tab' -%}
+      <details class="spi-accordion" {{ block.shopify_attributes }} {% if block.settings.open %}open{% endif %}>
+        <summary>
+          <span>{{ block.settings.heading | default: block.settings.page.title | escape }}</span>
+          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+        </summary>
+        <div class="spi-accordion__content rte">
+          {{ block.settings.content }}
+          {{ block.settings.page.content }}
+        </div>
+      </details>
+
+    {%- when 'custom_liquid' -%}
+      <div {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>
+
+  {%- endcase -%}
+{%- endfor -%}

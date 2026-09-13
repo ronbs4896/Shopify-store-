@@ -1,0 +1,15 @@
+{%- comment -%}
+  Formats a price in cents as "₪1,499" (whole) or "₪2,039.15" (with cents).
+  Accepts: amount (cents), symbol (default ₪)
+{%- endcomment -%}
+{%- liquid
+  assign sym = symbol | default: '₪'
+  assign cents = amount | default: 0 | round
+  assign rem = cents | modulo: 100
+  if rem == 0
+    assign out = cents | money_without_trailing_zeros
+  else
+    assign out = cents | money
+  endif
+  assign out = out | remove: '₪' | remove: 'ILS' | remove: 'NIS' | strip
+-%}{{ sym }}{{ out }}

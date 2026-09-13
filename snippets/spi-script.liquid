@@ -1,0 +1,190 @@
+{%- comment -%} Client-side logic for main-product-seora {%- endcomment -%}
+<script>
+  (function () {
+    if (customElements.get('seora-product-info')) return;
+
+    class SeoraProductInfo extends HTMLElement {
+      connectedCallback() {
+        this.symbol = this.dataset.symbol || '₪';
+        this.picker = this.querySelector('variant-radios');
+        const json = this.picker && this.picker.querySelector('script[type="application/json"]');
+        this.variants = json ? JSON.parse(json.textContent) : [];
+        this.currentVariant = this.variants.find((v) => String(v.id) === String(this.dataset.variantId)) || null;
+
+        this.addEventListener('change', (e) => {
+          const t = e.target;
+          if (t.matches('variant-radios input[type="radio"]')) {
+            // let the theme's variant-radios handler run first, then sync our UI
+            setTimeout(() => this.onVariantChange(), 0);
+          } else if (t.matches('.spi-bundle__check')) {
+            this.toggleBundle();
+          } else if (t.matches('.spi-bundle__variant')) {
+            this.updateBundle();
+          }
+        });
+
+        this.productForm = this.querySelector('product-form');
+        if (this.productForm) {
+          this.productForm.addEventListener('submit', (e) => this.onSubmit(e), true);
+        }
+        this.updateBundle();
+      }
+
+      money(cents) {
+        const n = Math.round(Number(cents) || 0);
+        const whole = n % 100 === 0;
+        const amount = (n / 100).toLocaleString('en-US', {
+          minimumFractionDigits: whole ? 0 : 2,
+          maximumFractionDigits: 2,
+        });
+        return this.symbol + amount;
+      }
+
+      getSelectedVariant() {
+        if (this.picker && this.picker.currentVariant !== undefined) return this.picker.currentVariant || null;
+        if (!this.picker) return this.currentVariant;
+        const chosen = Array.from(this.picker.querySelectorAll('fieldset')).map((f) => {
+          const r = f.querySelector('input:checked');
+          return r ? r.value : null;
+        });
+        return this.variants.find((v) => v.options.every((o, i) => o === chosen[i])) || null;
+      }
+
+      onVariantChange() {
+        const v = this.getSelectedVariant();
+        this.currentVariant = v;
+        if (!v) return;
+        this.dataset.variantId = v.id;
+        this.updateLabels();
+        this.updatePrice(v);
+        this.updateStock(v);
+        this.updateBundle();
+      }
+
+      updateLabels() {
+        if (!this.picker) return;
+        this.picker.querySelectorAll('fieldset').forEach((f) => {
+          const r = f.querySelector('input:checked');
+          const label = f.querySelector('.spi-opt__value');
+          if (r && label) label.textContent = r.value;
+        });
+      }
+
+      updatePrice(v) {
+        const box = this.querySelector('.spi-price');
+        if (!box) return;
+        const onSale = v.compare_at_price && v.compare_at_price > v.price;
+        const sale = box.querySelector('.spi-price__sale');
+        const compare = box.querySelector('.spi-price__compare');
+        const save = box.querySelector('.spi-price__save');
+        if (sale) {
+          sale.textContent = this.money(v.price);
+          sale.classList.toggle('spi-price__sale--regular', !onSale);
+        }
+        if (compare) {
+          compare.textContent = this.money(v.compare_at_price || 0);
+          compare.hidden = !onSale;
+        }
+        if (save) {
+          save.hidden = !onSale;
+          const span = save.querySelector('span');
+          if (span && onSale) span.textContent = this.money(v.compare_at_price - v.price);
+        }
+        const inst = box.querySelector('.spi-installments');
+        const count = parseInt(box.dataset.installments || '0', 10);
+        if (inst && count > 1) {
+          const tpl = box.dataset.installmentsText || '';
+          inst.innerHTML = tpl
+            .replace('{count}', String(count))
+            .replace('{amount}', '<b>' + this.money(v.price / count) + '</b>');
+        }
+        box.classList.remove('hidden');
+      }
+
+      updateStock(v) {
+        const box = this.querySelector('.spi-stock');
+        if (!box) return;
+        const badge = box.querySelector('.spi-badge');
+        if (!badge) return;
+        const inText = this.dataset.stockIn || '';
+        const outText = this.dataset.stockOut || '';
+        const dot = badge.querySelector('.spi-badge__dot');
+        if (v.available) {
+          badge.classList.add('spi-badge--in');
+          badge.classList.remove('spi-badge--out');
+          if (dot) dot.hidden = false;
+          badge.lastChild.textContent = inText;
+        } else {
+          badge.classList.remove('spi-badge--in');
+          badge.classList.add('spi-badge--out');
+          if (dot) dot.hidden = true;
+          badge.lastChild.textContent = outText;
+        }
+        box.classList.remove('hidden');
+      }
+
+      toggleBundle() {
+        const wrap = this.querySelector('.spi-bundle');
+        const check = this.querySelector('.spi-bundle__check');
+        if (wrap && check) wrap.classList.toggle('spi-bundle--checked', check.checked);
+      }
+
+      updateBundle() {
+        const wrap = this.querySelector('.spi-bundle');
+        if (!wrap) return;
+        const v = this.currentVariant || this.getSelectedVariant();
+        const addonEl = wrap.querySelector('.spi-bundle__variant');
+        if (!v || !addonEl) return;
+        const opt = addonEl.tagName === 'SELECT' ? addonEl.options[addonEl.selectedIndex] : addonEl;
+        const addonPrice = parseInt(opt.dataset.price, 10) || 0;
+        const addonCompare = parseInt(opt.dataset.compare, 10) || addonPrice;
+        const pct = parseFloat(wrap.dataset.pct) || 0;
+        const mainCompare = v.compare_at_price || v.price;
+        const bundlePrice = Math.round((v.price + addonPrice) * (100 - pct) / 100);
+        const bundleCompare = mainCompare + addonCompare;
+        const sale = wrap.querySelector('.spi-bundle__sale');
+        const compare = wrap.querySelector('.spi-bundle__compare');
+        if (sale) sale.textContent = this.money(bundlePrice);
+        if (compare) {
+          compare.textContent = this.money(bundleCompare);
+          compare.hidden = bundleCompare <= bundlePrice;
+        }
+      }
+
+      onSubmit(evt) {
+        const check = this.querySelector('.spi-bundle__check');
+        const addonEl = this.querySelector('.spi-bundle__variant');
+        if (!check || !check.checked || !addonEl || this._bundleAdding) return;
+        const addonId = addonEl.value;
+        if (!addonId) return;
+
+        evt.preventDefault();
+        evt.stopImmediatePropagation();
+        this._bundleAdding = true;
+
+        const submit = this.productForm.querySelector('[type="submit"]');
+        if (submit) submit.classList.add('loading');
+
+        fetch((window.routes && window.routes.cart_add_url ? window.routes.cart_add_url : '/cart/add') + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          body: JSON.stringify({ items: [{ id: parseInt(addonId, 10), quantity: 1 }] }),
+        })
+          .catch((e) => console.error('bundle add failed', e))
+          .then(() => {
+            // now let the theme's product-form add the main product and open the cart drawer
+            if (typeof this.productForm.onSubmitHandler === 'function') {
+              this.productForm.onSubmitHandler(evt);
+            } else {
+              this.productForm.querySelector('form').submit();
+            }
+          })
+          .finally(() => {
+            this._bundleAdding = false;
+          });
+      }
+    }
+
+    customElements.define('seora-product-info', SeoraProductInfo);
+  })();
+</script>
