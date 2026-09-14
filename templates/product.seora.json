@@ -156,29 +156,29 @@
         "row_1": {
           "type": "row",
           "settings": {
-            "featured_text": "ברק פי 2.4",
-            "other_text": "ברק בסיסי"
+            "featured_text": "החזר אור פי 2.4",
+            "other_text": "ברק בסיסי ותלוי אבן"
           }
         },
         "row_2": {
           "type": "row",
           "settings": {
             "featured_text": "צבע D ניקיון VVS1",
-            "other_text": "צבע וניקיון משתנה"
+            "other_text": "צבע וניקיון משתנים"
           }
         },
         "row_3": {
           "type": "row",
           "settings": {
-            "featured_text": "קושי 9.25 בסולם מוס",
+            "featured_text": "קושי 9.5 בסולם מוס",
             "other_text": "קושי 10 בסולם מוס"
           }
         },
         "row_4": {
           "type": "row",
           "settings": {
-            "featured_text": "תעודת IGI בינלאומית",
-            "other_text": "תעודה בינלאומית"
+            "featured_text": "תעודה GRA בינלאומית",
+            "other_text": "תעודות משתנות ומבלבלות"
           }
         }
       },
@@ -193,7 +193,7 @@
         "heading": "אותה נוכחות",
         "heading_highlight": "בעשירית מחיר!",
         "description": "<p>אבן חן אמיתית תוצרת ארה\"ב, שמפזרת יותר אור מיהלום. הנה הנתונים האמיתיים, בלי מסיכות.</p>",
-        "featured_title": "מואסנייט IF1",
+        "featured_title": "מוסאנייט IF1",
         "featured_price": "₪1,499",
         "other_title": "יהלום טבעי בסיסי",
         "other_price": "+₪15,000",
