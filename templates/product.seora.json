@@ -192,6 +192,7 @@
         "subtitle": "מה זה בכלל מואסנייט מעבדה?",
         "heading": "אותה נוכחות",
         "heading_highlight": "בעשירית מחיר!",
+        "highlight_underline": true,
         "description": "<p>אבן חן אמיתית תוצרת ארה\"ב, שמפזרת יותר אור מיהלום. הנה הנתונים האמיתיים, בלי מסיכות.</p>",
         "featured_title": "מוסאנייט IF1",
         "featured_price": "₪1,499",
@@ -215,7 +216,9 @@
         "cta_text_color": "#ffffff",
         "card_radius": 24,
         "padding_top": 64,
-        "padding_bottom": 64
+        "padding_bottom": 64,
+        "featured_image": "shopify://shop_images/seora-compare-moissanite.png",
+        "other_image": "shopify://shop_images/seora-compare-diamond.png"
       }
     },
     "shoppable_video_new_yQVWcy": {

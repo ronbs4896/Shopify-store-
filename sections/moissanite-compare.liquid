@@ -83,7 +83,7 @@
     letter-spacing: 0.02em;
   }
   #mc-{{ sid }} .mc__heading {
-    margin: 0 0 1rem;
+    margin: 0 0 2.2rem;
     font-family: var(--font-heading-family);
     font-size: 4.6rem;
     font-weight: 800;
@@ -91,14 +91,32 @@
     letter-spacing: -0.01em;
     color: var(--mc-text);
   }
-  #mc-{{ sid }} .mc__heading em {
+  #mc-{{ sid }} .mc__heading .mc__hl {
+    font: inherit;
     font-style: normal;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.08em;
     background: linear-gradient(90deg, var(--mc-gold-2), var(--mc-gold-1));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: var(--mc-gold-1);
   }
+  {%- if s.highlight_underline %}
+  #mc-{{ sid }} .mc__heading .mc__hl::after {
+    content: '';
+    position: absolute;
+    left: 0.05em;
+    right: 0.05em;
+    bottom: -0.12em;
+    height: 0.12em;
+    border-radius: 1em;
+    background: linear-gradient(90deg, var(--mc-gold-2), var(--mc-gold-1));
+  }
+  {%- endif %}
   #mc-{{ sid }} .mc__desc {
     margin: 0 auto 8.5rem;
     max-width: 80rem;
@@ -275,7 +293,7 @@
     {%- if s.heading != blank or s.heading_highlight != blank -%}
       <h2 class="mc__heading">
         {{ s.heading | escape }}
-        {%- if s.heading_highlight != blank %} <em>{{ s.heading_highlight | escape }}</em>{% endif -%}
+        {%- if s.heading_highlight != blank %} <span class="mc__hl">{{ s.heading_highlight | escape }}</span>{% endif -%}
       </h2>
     {%- endif -%}
 
@@ -346,6 +364,7 @@
     { "type": "text", "id": "subtitle", "label": "כותרת עליונה קטנה", "default": "מה זה בכלל מואסנייט מעבדה?" },
     { "type": "text", "id": "heading", "label": "כותרת ראשית", "default": "אותה נוכחות" },
     { "type": "text", "id": "heading_highlight", "label": "חלק מודגש בזהב", "default": "בעשירית מחיר!" },
+    { "type": "checkbox", "id": "highlight_underline", "label": "קו זהב מתחת לחלק המודגש", "default": true },
     { "type": "richtext", "id": "description", "label": "טקסט תיאור", "default": "<p>אבן חן אמיתית תוצרת ארה\"ב, שמפזרת יותר אור מיהלום. הנה הנתונים האמיתיים, בלי מסיכות.</p>" },
 
     { "type": "header", "content": "עמודה מודגשת (ימין)" },
