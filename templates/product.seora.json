@@ -87,8 +87,8 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "cart_btn_height": 5.2,
-            "cart_btn_font": 17,
+            "cart_btn_height": 4.8,
+            "cart_btn_font": 15,
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
             "skip_cart": false,
@@ -169,11 +169,11 @@
         "button_bg": "#111111",
         "button_text_color": "#ffffff",
         "button_radius": 10,
-        "title_size": 40,
-        "price_size": 48,
-        "swatch_size": 80,
-        "pill_height": 92,
-        "pill_min_width": 200,
+        "title_size": 30,
+        "price_size": 34,
+        "swatch_size": 56,
+        "pill_height": 58,
+        "pill_min_width": 160,
         "media_size": "medium",
         "media_position": "left",
         "gallery_layout": "thumbnail",
@@ -483,7 +483,7 @@
         "cta_link": "",
         "cta_sub": "משלוח מהיר עד 5 ימי עסקים",
         "padding_top": 72,
-        "padding_bottom": 48
+        "padding_bottom": 72
       }
     },
     "seora_materials": {
@@ -536,8 +536,9 @@
         "cta_action": "auto",
         "cta_link": "",
         "cta_sub": "",
-        "padding_top": 48,
-        "padding_bottom": 72
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "bg_color": "#faf8f4"
       }
     },
     "seora_reviews": {
@@ -767,7 +768,7 @@
         "button_color": "#ffffff",
         "eyebrow": "יש לך שאלה?",
         "heading": "שאלות נפוצות",
-        "text": "<p>לא מצאת תשובה? כתבו לנו ב-hello@seora.co.il או בוואטסאפ 052-319-9277.</p>",
+        "text": "<p>לא מצאת תשובה? כתבו לנו ב-<a href=\"mailto:hello@seora.co.il\">hello@seora.co.il</a> או בוואטסאפ <a href=\"https://wa.me/972523199277\">052-319-9277</a>.</p>",
         "open_first": true,
         "single_open": true,
         "schema_markup": true,

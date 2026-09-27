@@ -9,6 +9,7 @@
     {%- if ss.accent_color != blank %} --scro-accent: {{ ss.accent_color }};{% endif %}
     {%- if ss.button_bg != blank %} --scro-btn-bg: {{ ss.button_bg }};{% endif %}
     {%- if ss.button_color != blank %} --scro-btn-fg: {{ ss.button_color }};{% endif %}
+    {%- if ss.bg_color != blank and ss.bg_color != 'rgba(0,0,0,0)' %} background: {{ ss.bg_color }};{% endif %}
     padding-top: {{ pt | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ pb | times: 0.75 | round: 0 }}px;
   }
