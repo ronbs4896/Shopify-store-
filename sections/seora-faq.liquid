@@ -1,0 +1,87 @@
+{%- comment -%} ŚEORA - FAQ: heading + CTA on one side, questions on the other {%- endcomment -%}
+{{ 'seora-cro.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'seora-cro.js' | asset_url }}" defer="defer"></script>
+{%- assign s = section.settings -%}
+{% render 'seora-section-vars', section: section %}
+<div id="scro-{{ section.id }}" class="scro scro-faq gradient color-{{ s.color_scheme }}">
+  <div class="page-width">
+    <div class="scro-faq__grid">
+      <div class="scro-faq__aside">
+        <div class="scro__head scro__head--start">
+          {%- if s.eyebrow != blank -%}<p class="scro__eyebrow">{{ s.eyebrow | escape }}</p>{%- endif -%}
+          {%- if s.heading != blank -%}<h2 class="scro__heading">{{ s.heading | escape }}</h2><span class="scro__rule" aria-hidden="true"></span>{%- endif -%}
+          {%- if s.text != blank -%}<div class="scro__sub">{{ s.text }}</div>{%- endif -%}
+        </div>
+        <div class="scro-faq__cta-desktop">
+          {% render 'seora-cta', label: s.cta_label, action: s.cta_action, link: s.cta_link, sub: s.cta_sub, align: 'start', product: product %}
+        </div>
+      </div>
+
+      <div class="scro-faq__list"{% if s.single_open %} data-scro-single{% endif %}>
+        {%- for block in section.blocks -%}
+          <details class="scro-faq__item" {{ block.shopify_attributes }}{% if forloop.first and s.open_first %} open{% endif %}>
+            <summary><span>{{ block.settings.question | escape }}</span><span class="scro-faq__icon" aria-hidden="true"></span></summary>
+            <div class="scro-faq__answer rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+
+      <div class="scro-faq__cta-mobile">
+        {% render 'seora-cta', label: s.cta_label, action: s.cta_action, link: s.cta_link, sub: s.cta_sub, product: product %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if s.schema_markup and section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          { "@type": "Question", "name": {{ block.settings.question | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} } }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "שאלות נפוצות + כפתור",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "כותרת עליונה קטנה", "default": "יש לך שאלה?" },
+    { "type": "text", "id": "heading", "label": "כותרת", "default": "שאלות נפוצות" },
+    { "type": "richtext", "id": "text", "label": "טקסט מתחת לכותרת", "default": "<p>לא מצאת תשובה? כתבו לנו ונחזור אליכם בהקדם.</p>" },
+    { "type": "checkbox", "id": "open_first", "label": "שאלה ראשונה פתוחה", "default": true },
+    { "type": "checkbox", "id": "single_open", "label": "רק שאלה אחת פתוחה בכל פעם", "default": true },
+    { "type": "checkbox", "id": "schema_markup", "label": "סימון FAQ לגוגל (SEO)", "default": true },
+    { "type": "header", "content": "כפתור" },
+    { "type": "text", "id": "cta_label", "label": "טקסט כפתור (ריק = בלי כפתור)", "default": "להזמנה עכשיו" },
+    { "type": "select", "id": "cta_action", "label": "פעולת הכפתור", "options": [ { "value": "auto", "label": "חכם: מוסיף לסל, או גולל לבחירת מידה אם יש אפשרויות" }, { "value": "add", "label": "הוספה לסל של הבחירה הנוכחית" }, { "value": "scroll", "label": "גלילה לאזור הקנייה" }, { "value": "link", "label": "קישור" } ], "default": "auto" },
+    { "type": "url", "id": "cta_link", "label": "קישור (אם נבחר 'קישור')" },
+    { "type": "text", "id": "cta_sub", "label": "טקסט קטן מתחת לכפתור" },
+    { "type": "header", "content": "עיצוב" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "ערכת צבעים", "default": "background-1" },
+    { "type": "color", "id": "accent_color", "label": "צבע הדגשה", "default": "#a8894f" },
+    { "type": "color", "id": "button_bg", "label": "כפתור - רקע", "default": "#111111" },
+    { "type": "color", "id": "button_color", "label": "כפתור - טקסט", "default": "#ffffff" },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "שאלה",
+      "settings": [
+        { "type": "text", "id": "question", "label": "שאלה", "default": "שאלה נפוצה?" },
+        { "type": "richtext", "id": "answer", "label": "תשובה", "default": "<p>תשובה קצרה וברורה.</p>" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "שאלות נפוצות + כפתור", "blocks": [ { "type": "question" }, { "type": "question" }, { "type": "question" } ] } ]
+}
+{% endschema %}

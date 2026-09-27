@@ -100,7 +100,8 @@
   /* pills */
   #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-pill {
     flex: 1 1 0; min-width: 0; max-width: {{ s.pill_min_width }}px; min-height: {{ s.pill_height }}px; padding: 1.2rem 1.6rem;
-    border: 1px solid var(--spi-border); border-radius: 1rem; background: #fff; color: var(--spi-text); white-space: nowrap;
+    border: 1px solid var(--spi-border); border-radius: 1rem; background: #fff; color: var(--spi-text);
+    white-space: normal; text-align: center; line-height: 1.25; overflow-wrap: anywhere;
   }
   #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-pill:hover { border-color: var(--spi-dark); }
   #spi-{{ sid }} .spi-picker .product-form__input input[type='radio']:checked + label.spi-pill {
@@ -182,6 +183,16 @@
   #spi-{{ sid }} .product-form__submit { margin-bottom: 1rem; }
 
   /* ---- text / accordion ---- */
+  #spi-{{ sid }} .spi-trust { margin: 1.6rem 0 0.8rem; }
+  #spi-{{ sid }} .spi-trust__pay { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.8rem 1.4rem; margin-bottom: 1.2rem; }
+  #spi-{{ sid }} .spi-trust__secure { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1.35rem; font-weight: 700; color: var(--spi-muted); }
+  #spi-{{ sid }} .spi-trust__secure svg { width: 1.6rem; height: 1.6rem; }
+  #spi-{{ sid }} .spi-trust__cards { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+  #spi-{{ sid }} .spi-trust__cards .icon { width: 3.6rem; height: 2.4rem; display: block; }
+  #spi-{{ sid }} .spi-trust__box { display: grid; gap: 1rem; margin: 0; padding: 1.6rem 1.8rem; list-style: none; border-radius: var(--spi-radius); }
+  #spi-{{ sid }} .spi-trust__row { display: flex; align-items: center; gap: 1rem; font-size: 1.45rem; line-height: 1.4; }
+  #spi-{{ sid }} .spi-trust__icon { flex: 0 0 auto; width: 2.2rem; height: 2.2rem; }
+  #spi-{{ sid }} .spi-trust__icon svg { width: 100%; height: 100%; }
   #spi-{{ sid }} .spi-text { font-size: 1.6rem; line-height: 1.6; }
   #spi-{{ sid }} .spi-accordion summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.4rem 0; cursor: pointer; font-size: 1.7rem; font-weight: 700; border-top: 1px solid var(--spi-border); list-style: none; }
   #spi-{{ sid }} .spi-accordion summary::-webkit-details-marker { display: none; }

@@ -1,0 +1,120 @@
+{%- comment -%} ŚEORA - customer reviews cards (social proof #3) {%- endcomment -%}
+{{ 'seora-cro.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'seora-cro.js' | asset_url }}" defer="defer"></script>
+{%- liquid
+  assign s = section.settings
+  assign rating = s.summary_rating
+  assign count = s.summary_count
+  assign mf_rating = product.metafields.reviews.rating.value.rating | default: 0
+  if s.summary_source == 'metafield' and mf_rating > 0
+    assign rating = mf_rating | round: 1
+    assign count = product.metafields.reviews.rating_count
+  endif
+  assign pct = rating | times: 20.0 | at_most: 100
+-%}
+{%- capture star -%}<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.95 6.2 6.8.85-5 4.75 1.3 6.75L12 17.7l-6.05 3.35 1.3-6.75-5-4.75 6.8-.85z"/></svg>{%- endcapture -%}
+{% render 'seora-section-vars', section: section %}
+{%- style -%}
+  #scro-{{ section.id }} { --scro-cols: {{ s.columns }}; --scro-star: {{ s.star_color }}; --scro-card-bg: {{ s.card_bg }}; }
+{%- endstyle -%}
+<div id="scro-{{ section.id }}" class="scro scro-reviews gradient color-{{ s.color_scheme }}">
+  <div class="page-width">
+    <div class="scro__head">
+      {%- if s.eyebrow != blank -%}<p class="scro__eyebrow">{{ s.eyebrow | escape }}</p>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="scro__heading">{{ s.heading | escape }}</h2><span class="scro__rule" aria-hidden="true"></span>{%- endif -%}
+      {%- if s.show_summary -%}
+        <div class="scro-reviews__summary">
+          <span class="scro-stars" role="img" aria-label="{{ rating }} / 5"><span>{{ star }}{{ star }}{{ star }}{{ star }}{{ star }}</span><span class="scro-stars__fg" style="width: {{ pct }}%;">{{ star }}{{ star }}{{ star }}{{ star }}{{ star }}</span></span>
+          <span><strong>{{ rating }}/5</strong>{% if count != blank %} · {{ count }} {{ s.count_label | escape }}{% endif %}</span>
+        </div>
+      {%- endif -%}
+      {%- if s.subheading != blank -%}<div class="scro__sub">{{ s.subheading }}</div>{%- endif -%}
+    </div>
+
+    <ul class="scro-reviews__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          <li style="grid-column: 1 / -1;" {{ block.shopify_attributes }}>{% render block %}</li>
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign b = block.settings -%}
+        {%- assign rpct = b.rating | times: 20 -%}
+        <li {{ block.shopify_attributes }}>
+          <article class="scro-review">
+            {%- if b.photo != blank -%}
+              <div class="scro-review__photo">{{ b.photo | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800', sizes: '(min-width: 750px) 33vw, 85vw' }}</div>
+            {%- elsif s.show_avatar -%}
+              <div class="scro-review__avatar">
+                {%- if b.avatar != blank -%}{{ b.avatar | image_url: width: 160 | image_tag: loading: 'lazy', alt: b.name }}{%- else -%}{{ b.name | strip | slice: 0 }}{%- endif -%}
+              </div>
+            {%- endif -%}
+            <span class="scro-stars" role="img" aria-label="{{ b.rating }} / 5"><span>{{ star }}{{ star }}{{ star }}{{ star }}{{ star }}</span><span class="scro-stars__fg" style="width: {{ rpct }}%;">{{ star }}{{ star }}{{ star }}{{ star }}{{ star }}</span></span>
+            {%- if b.text != blank -%}<p class="scro-review__text">{{ b.text | escape | newline_to_br }}</p>{%- endif -%}
+            {%- if b.name != blank -%}<p class="scro-review__name">{{ b.name | escape }}</p>{%- endif -%}
+            {%- if b.detail != blank -%}<p class="scro-review__meta">{{ b.detail | escape }}</p>{%- endif -%}
+            {%- if b.verified -%}
+              <span class="scro-review__verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.3l2.5 2.5 5-5.3"/></svg>{{ s.verified_text | escape }}</span>
+            {%- endif -%}
+          </article>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {% render 'seora-cta', label: s.cta_label, action: s.cta_action, link: s.cta_link, sub: s.cta_sub, product: product %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "ביקורות לקוחות",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "paragraph", "content": "הדביקו כאן רק ביקורות אמיתיות של לקוחות. אפשר גם להוסיף בלוק אפליקציה (Judge.me וכו')." },
+    { "type": "text", "id": "eyebrow", "label": "כותרת עליונה קטנה", "default": "לקוחות מספרות" },
+    { "type": "text", "id": "heading", "label": "כותרת", "default": "מה אומרות מי שכבר עונדות" },
+    { "type": "richtext", "id": "subheading", "label": "טקסט מתחת לכותרת" },
+    { "type": "header", "content": "דירוג כולל" },
+    { "type": "checkbox", "id": "show_summary", "label": "הצג דירוג כולל", "default": true },
+    { "type": "select", "id": "summary_source", "label": "מקור הדירוג", "options": [ { "value": "manual", "label": "ידני" }, { "value": "metafield", "label": "אפליקציית ביקורות (reviews.rating), עם נפילה לידני" } ], "default": "manual" },
+    { "type": "range", "id": "summary_rating", "label": "דירוג", "min": 1, "max": 5, "step": 0.1, "default": 4.9 },
+    { "type": "text", "id": "summary_count", "label": "מספר ביקורות (ריק = לא מוצג)" },
+    { "type": "text", "id": "count_label", "label": "מילה אחרי המספר", "default": "ביקורות" },
+    { "type": "header", "content": "כרטיסים" },
+    { "type": "range", "id": "columns", "label": "כרטיסים בשורה (דסקטופ)", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "show_avatar", "label": "הצג עיגול תמונה/אות ראשונה", "default": true },
+    { "type": "text", "id": "verified_text", "label": "טקסט רכישה מאומתת", "default": "רכישה מאומתת" },
+    { "type": "color", "id": "star_color", "label": "צבע כוכבים", "default": "#f5a623" },
+    { "type": "color", "id": "card_bg", "label": "רקע כרטיס", "default": "#faf8f4" },
+    { "type": "header", "content": "כפתור" },
+    { "type": "text", "id": "cta_label", "label": "טקסט כפתור (ריק = בלי כפתור)", "default": "גם אני רוצה" },
+    { "type": "select", "id": "cta_action", "label": "פעולת הכפתור", "options": [ { "value": "auto", "label": "חכם: מוסיף לסל, או גולל לבחירת מידה אם יש אפשרויות" }, { "value": "add", "label": "הוספה לסל של הבחירה הנוכחית" }, { "value": "scroll", "label": "גלילה לאזור הקנייה" }, { "value": "link", "label": "קישור" } ], "default": "auto" },
+    { "type": "url", "id": "cta_link", "label": "קישור (אם נבחר 'קישור')" },
+    { "type": "text", "id": "cta_sub", "label": "טקסט קטן מתחת לכפתור" },
+    { "type": "header", "content": "עיצוב" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "ערכת צבעים", "default": "background-1" },
+    { "type": "color", "id": "accent_color", "label": "צבע הדגשה", "default": "#a8894f" },
+    { "type": "color", "id": "button_bg", "label": "כפתור - רקע", "default": "#111111" },
+    { "type": "color", "id": "button_color", "label": "כפתור - טקסט", "default": "#ffffff" },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    {
+      "type": "review",
+      "name": "ביקורת",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "כוכבים", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "text", "label": "טקסט הביקורת", "default": "כאן מדביקים ביקורת אמיתית של לקוחה, משפט או שניים על הברק, האיכות או השירות." },
+        { "type": "text", "id": "name", "label": "שם", "default": "שם הלקוחה" },
+        { "type": "text", "id": "detail", "label": "פרט נוסף (מוצר שנקנה / עיר)" },
+        { "type": "checkbox", "id": "verified", "label": "רכישה מאומתת", "default": true },
+        { "type": "image_picker", "id": "avatar", "label": "תמונת פרופיל (לא חובה)" },
+        { "type": "image_picker", "id": "photo", "label": "תמונה של הלקוחה עם התכשיט / לפני-אחרי (לא חובה)" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "ביקורות לקוחות", "blocks": [ { "type": "review" }, { "type": "review" }, { "type": "review" } ] } ]
+}
+{% endschema %}

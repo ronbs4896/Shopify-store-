@@ -1,0 +1,24 @@
+{%- comment -%}
+  ŚEORA CTA button for product-page sections.
+  Params: label, action ('auto' | 'add' | 'scroll' | 'link'), link, sub, align ('center' | 'start'), product
+  auto = add to cart when the product has one variant, otherwise scroll to the option picker.
+{%- endcomment -%}
+{%- if label != blank -%}
+  {%- liquid
+    assign mode = action | default: 'auto'
+    if mode == 'auto'
+      assign mode = 'scroll'
+      if product and product.has_only_default_variant
+        assign mode = 'add'
+      endif
+    endif
+  -%}
+  <div class="scro-cta{% if align == 'start' %} scro-cta--start{% endif %}">
+    {%- if mode == 'link' and link != blank -%}
+      <a class="scro-btn" href="{{ link }}">{{ label | escape }}</a>
+    {%- else -%}
+      <button type="button" class="scro-btn" data-scro-cta="{{ mode }}">{{ label | escape }}</button>
+    {%- endif -%}
+    {%- if sub != blank -%}<p class="scro-cta__sub">{{ sub | escape }}</p>{%- endif -%}
+  </div>
+{%- endif -%}

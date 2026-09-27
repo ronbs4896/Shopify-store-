@@ -1,0 +1,109 @@
+{%- comment -%} ŚEORA - image + list section. Used for "Benefits" and "Materials" {%- endcomment -%}
+{{ 'seora-cro.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'seora-cro.js' | asset_url }}" defer="defer"></script>
+{%- liquid
+  assign s = section.settings
+  assign img = s.image
+  if img == blank and product and s.product_image > 0
+    assign idx = s.product_image | minus: 1
+    assign m = product.media[idx]
+    if m == blank
+      assign m = product.featured_media
+    endif
+    assign img = m.preview_image
+  endif
+  assign img_alt = img.alt | default: s.heading | escape
+-%}
+{% render 'seora-section-vars', section: section %}
+<div id="scro-{{ section.id }}" class="scro scro-split scro-split--media-{{ s.media_position }} gradient color-{{ s.color_scheme }}">
+  <div class="page-width">
+    <div class="scro-split__grid">
+      <div class="scro-split__media scro-split__media--{{ s.image_ratio }}">
+        {%- if img != blank -%}
+          {{ img | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '375, 550, 750, 1000, 1400', sizes: '(min-width: 750px) 50vw, 100vw', alt: img_alt }}
+        {%- else -%}
+          <div class="scro-ph">{{ 'image' | placeholder_svg_tag }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="scro-split__content">
+        <div class="scro__head scro__head--start">
+          {%- if s.eyebrow != blank -%}<p class="scro__eyebrow">{{ s.eyebrow | escape }}</p>{%- endif -%}
+          {%- if s.heading != blank -%}<h2 class="scro__heading">{{ s.heading | escape }}</h2><span class="scro__rule" aria-hidden="true"></span>{%- endif -%}
+          {%- if s.text != blank -%}<div class="scro__sub">{{ s.text }}</div>{%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="scro-items" role="list">
+            {%- for block in section.blocks -%}
+              <li class="scro-item" {{ block.shopify_attributes }}>
+                <span class="scro-item__icon" aria-hidden="true">
+                  {%- if s.item_style == 'number' -%}{{ forloop.index | prepend: '0' | slice: -2, 2 }}
+                  {%- elsif s.item_style == 'check' -%}{% render 'seora-icon', icon: 'check' %}
+                  {%- else -%}{% render 'seora-icon', icon: block.settings.icon %}{%- endif -%}
+                </span>
+                <div>
+                  {%- if block.settings.title != blank -%}<h3 class="scro-item__title">{{ block.settings.title | escape }}</h3>{%- endif -%}
+                  {%- if block.settings.text != blank -%}<p class="scro-item__text">{{ block.settings.text | escape }}</p>{%- endif -%}
+                </div>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {% render 'seora-cta', label: s.cta_label, action: s.cta_action, link: s.cta_link, sub: s.cta_sub, align: 'start', product: product %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "תמונה + רשימה",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "כותרת עליונה קטנה", "default": "למה ŚEORA" },
+    { "type": "text", "id": "heading", "label": "כותרת", "default": "היתרונות שלנו" },
+    { "type": "richtext", "id": "text", "label": "טקסט פתיחה (לא חובה)" },
+    { "type": "header", "content": "תמונה" },
+    { "type": "image_picker", "id": "image", "label": "תמונה" },
+    { "type": "range", "id": "product_image", "label": "אם לא נבחרה תמונה: תמונת מוצר מס'", "min": 0, "max": 10, "step": 1, "default": 2, "info": "0 = בלי תמונת מוצר. מאפשר לאותה תבנית להציג תמונה נכונה לכל מוצר." },
+    { "type": "select", "id": "image_ratio", "label": "יחס תמונה", "options": [ { "value": "square", "label": "ריבוע" }, { "value": "portrait", "label": "לאורך" }, { "value": "landscape", "label": "לרוחב" }, { "value": "adapt", "label": "מקורי" } ], "default": "square" },
+    { "type": "select", "id": "media_position", "label": "מיקום התמונה בדסקטופ", "options": [ { "value": "first", "label": "ימין" }, { "value": "second", "label": "שמאל" } ], "default": "first" },
+    { "type": "header", "content": "רשימה" },
+    { "type": "select", "id": "item_style", "label": "סימון פריטים", "options": [ { "value": "icon", "label": "אייקון לכל פריט" }, { "value": "number", "label": "מספור 01, 02, 03" }, { "value": "check", "label": "וי" } ], "default": "icon" },
+    { "type": "header", "content": "כפתור" },
+    { "type": "text", "id": "cta_label", "label": "טקסט כפתור (ריק = בלי כפתור)", "default": "להזמנה עכשיו" },
+    { "type": "select", "id": "cta_action", "label": "פעולת הכפתור", "options": [ { "value": "auto", "label": "חכם: מוסיף לסל, או גולל לבחירת מידה אם יש אפשרויות" }, { "value": "add", "label": "הוספה לסל של הבחירה הנוכחית" }, { "value": "scroll", "label": "גלילה לאזור הקנייה" }, { "value": "link", "label": "קישור" } ], "default": "auto" },
+    { "type": "url", "id": "cta_link", "label": "קישור (אם נבחר 'קישור')" },
+    { "type": "text", "id": "cta_sub", "label": "טקסט קטן מתחת לכפתור" },
+    { "type": "header", "content": "עיצוב" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "ערכת צבעים", "default": "background-1" },
+    { "type": "color", "id": "accent_color", "label": "צבע הדגשה", "default": "#a8894f" },
+    { "type": "color", "id": "button_bg", "label": "כפתור - רקע", "default": "#111111" },
+    { "type": "color", "id": "button_color", "label": "כפתור - טקסט", "default": "#ffffff" },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "פריט",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "אייקון", "options": [
+          { "value": "diamond", "label": "יהלום" }, { "value": "certificate", "label": "תעודה" }, { "value": "shield", "label": "מגן עם וי" }, { "value": "check", "label": "וי בעיגול" },
+          { "value": "truck", "label": "משלוח" }, { "value": "gift", "label": "מתנה" }, { "value": "sparkles", "label": "נצנוץ" }, { "value": "ring", "label": "טבעת" },
+          { "value": "heart", "label": "לב" }, { "value": "star", "label": "כוכב" }, { "value": "lock", "label": "מנעול" }, { "value": "refresh", "label": "החזרה/החלפה" },
+          { "value": "clock", "label": "שעון" }, { "value": "water", "label": "עמיד במים" } ], "default": "sparkles" },
+        { "type": "text", "id": "title", "label": "כותרת", "default": "כותרת היתרון" },
+        { "type": "textarea", "id": "text", "label": "טקסט", "default": "משפט או שניים שמתארים מה הלקוחה מרוויחה מזה." }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "יתרונות + תמונה", "blocks": [ { "type": "item" }, { "type": "item" }, { "type": "item" } ] },
+    { "name": "חומרים ומפרט + תמונה", "settings": { "eyebrow": "חומרים ומפרט", "heading": "ממה עשוי התכשיט", "media_position": "second", "item_style": "number" }, "blocks": [ { "type": "item" }, { "type": "item" }, { "type": "item" } ] }
+  ]
+}
+{% endschema %}

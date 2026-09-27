@@ -6,7 +6,7 @@
         "badges": {
           "type": "badges",
           "settings": {
-            "badge_text": "הצמיד הכי נמכר בישראל",
+            "badge_text": "יבואן רשמי ובלעדי",
             "badge_bg": "#a8894f",
             "badge_color": "#ffffff",
             "badge2_text": "",
@@ -18,10 +18,6 @@
             "dot_color": "#2ecc5b"
           }
         },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
         "rating": {
           "type": "rating",
           "settings": {
@@ -32,11 +28,24 @@
             "star_color": "#f5a623"
           }
         },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "save_text": "חסכת",
+            "show_installments": true,
+            "installments": 5,
+            "installments_text": "או ב{count} תשלומים של {amount} ללא ריבית"
+          }
+        },
         "feature_1": {
           "type": "feature",
           "settings": {
             "icon": "diamond",
-            "text": "מואסנייט 5.5 קראט — ברק פי 2.4 מיהלום",
+            "text": "מוסאנייט בצבע D וניקיון VVS1, חיתוך Excellent",
             "icon_color": "#a8894f"
           }
         },
@@ -44,7 +53,7 @@
           "type": "feature",
           "settings": {
             "icon": "certificate",
-            "text": "תעודת IGI בינלאומית לכל צמיד",
+            "text": "תעודה גמולוגית וכרטיס מקוריות GRA",
             "icon_color": "#a8894f"
           }
         },
@@ -52,15 +61,7 @@
           "type": "feature",
           "settings": {
             "icon": "shield",
-            "text": "כסף 925 עם ציפוי זהב 14K בעובי 5 מיקרון",
-            "icon_color": "#a8894f"
-          }
-        },
-        "feature_4": {
-          "type": "feature",
-          "settings": {
-            "icon": "check",
-            "text": "סוגר כספת ייחודי — יציב בענידה יומיומית",
+            "text": "כסף סטרלינג S925 בציפוי רודיום, עמיד במים",
             "icon_color": "#a8894f"
           }
         },
@@ -83,15 +84,6 @@
             "link_text": "למידע נוסף"
           }
         },
-        "price": {
-          "type": "price",
-          "settings": {
-            "save_text": "חסכת",
-            "show_installments": true,
-            "installments": 5,
-            "installments_text": "או ב{count} תשלומים של {amount} ללא ריבית"
-          }
-        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -102,20 +94,68 @@
             "skip_cart": false,
             "show_pickup": false
           }
+        },
+        "trust": {
+          "type": "trust",
+          "settings": {
+            "show_payment": true,
+            "secure_text": "תשלום מאובטח",
+            "box_bg": "#f6f4ef",
+            "icon_color": "#a8894f",
+            "line1_icon": "truck",
+            "line1_text": "<strong>משלוח מהיר</strong> עד 5 ימי עסקים",
+            "line2_icon": "refresh",
+            "line2_text": "<strong>14 יום</strong> לביטול עסקה והחזרה",
+            "line3_icon": "shield",
+            "line3_text": "<strong>אחריות יבואן רשמי</strong> לשנה"
+          }
+        },
+        "tab_details": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "פרטי המוצר",
+            "show_description": true,
+            "content": "",
+            "page": "",
+            "open": false
+          }
+        },
+        "tab_shipping": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "משלוחים והחזרות",
+            "show_description": false,
+            "content": "<p>המשלוח מגיע עד 5 ימי עסקים (א'-ה', לא כולל חגים). ניתן לבטל עסקה בתוך 14 יום מקבלת המוצר, בהתאם לחוק הגנת הצרכן ולמדיניות ההחזרות. הפרטים המלאים בתקנון האתר.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "tab_warranty": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "אחריות ותעודות",
+            "show_description": false,
+            "content": "<p>כל תכשיט מגיע עם תעודה גמולוגית וכרטיס מקוריות של GRA, ועם אחריות יבואן רשמי ובלעדי לשנה. האחריות אינה כוללת נזק שנגרם משימוש לא תקין, מכה, שבר או אובדן.</p>",
+            "page": "",
+            "open": false
+          }
         }
       },
       "block_order": [
         "badges",
-        "title",
         "rating",
+        "title",
+        "price",
         "feature_1",
         "feature_2",
         "feature_3",
-        "feature_4",
         "variant_picker",
         "bundle",
-        "price",
-        "buy_buttons"
+        "buy_buttons",
+        "trust",
+        "tab_details",
+        "tab_shipping",
+        "tab_warranty"
       ],
       "settings": {
         "stock_in_text": "במלאי - משלוח מיידי",
@@ -150,75 +190,69 @@
         "padding_bottom": 60
       }
     },
-    "moissanite_compare_Xk3Q7p": {
-      "type": "moissanite-compare",
+    "seora_logos": {
+      "type": "seora-logo-bar",
       "blocks": {
-        "row_1": {
-          "type": "row",
+        "logo_1": {
+          "type": "logo",
           "settings": {
-            "featured_text": "החזר אור פי 2.4",
-            "other_text": "ברק בסיסי ותלוי אבן"
+            "text": "",
+            "link": ""
           }
         },
-        "row_2": {
-          "type": "row",
+        "logo_2": {
+          "type": "logo",
           "settings": {
-            "featured_text": "צבע D ניקיון VVS1",
-            "other_text": "צבע וניקיון משתנים"
+            "text": "",
+            "link": ""
           }
         },
-        "row_3": {
-          "type": "row",
+        "logo_3": {
+          "type": "logo",
           "settings": {
-            "featured_text": "קושי 9.5 בסולם מוס",
-            "other_text": "קושי 10 בסולם מוס"
+            "text": "",
+            "link": ""
           }
         },
-        "row_4": {
-          "type": "row",
+        "logo_4": {
+          "type": "logo",
           "settings": {
-            "featured_text": "תעודה GRA בינלאומית",
-            "other_text": "תעודות משתנות ומבלבלות"
+            "text": "",
+            "link": ""
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "text": "",
+            "link": ""
+          }
+        },
+        "logo_6": {
+          "type": "logo",
+          "settings": {
+            "text": "",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "row_1",
-        "row_2",
-        "row_3",
-        "row_4"
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5",
+        "logo_6"
       ],
       "settings": {
-        "subtitle": "מה זה בכלל מואסנייט מעבדה?",
-        "heading": "אותה נוכחות",
-        "heading_highlight": "בעשירית מחיר!",
-        "highlight_underline": true,
-        "description": "<p>אבן חן אמיתית תוצרת ארה\"ב, שמפזרת יותר אור מיהלום. הנה הנתונים האמיתיים, בלי מסיכות.</p>",
-        "featured_title": "מוסאנייט IF1",
-        "featured_price": "₪1,499",
-        "other_title": "יהלום טבעי בסיסי",
-        "other_price": "+₪15,000",
-        "cta_text": "מכשיר Diamond Tester לא רואה בהבדלים!",
-        "hand_width": 520,
-        "hand_opacity": 100,
-        "hide_hand_mobile": true,
-        "bg_color": "#f7f6f3",
-        "text_color": "#111111",
-        "gold_start": "#c9a24f",
-        "gold_end": "#8a6a2e",
-        "card_bg": "#ffffff",
-        "featured_bg": "#f5ead6",
-        "featured_badge_bg": "#111111",
-        "featured_badge_text": "#ffffff",
-        "other_badge_bg": "#f5ead6",
-        "other_badge_text": "#111111",
-        "cta_bg": "#0f0f0f",
-        "cta_text_color": "#ffffff",
-        "card_radius": 24,
-        "padding_top": 64,
-        "padding_bottom": 64,
-        "featured_image": "shopify://shop_images/seora-compare-moissanite.png",
-        "other_image": "shopify://shop_images/seora-compare-diamond.png"
+        "label": "ממליצים עלינו:",
+        "bar_bg": "#f5f5f5",
+        "logo_height": 28,
+        "grayscale": true,
+        "marquee": false,
+        "speed": 30,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "shoppable_video_new_yQVWcy": {
@@ -398,184 +432,380 @@
         "padding_bottom": 64
       }
     },
-    "featured_collection_tP9GP7": {
-      "type": "featured-collection",
-      "name": "t:sections.featured-collection.presets.name",
-      "settings": {
-        "title": "Featured collection",
-        "description": "",
-        "collection_text_alignment": "left",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "הנמכרים-ביותר",
-        "show_collection_image": false,
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "navigation_on_desk": true,
-        "color_scheme": "",
-        "image_ratio": "adapt",
-        "image_no_crop": true,
-        "show_secondary_image": false,
-        "show_vendor": false,
-        "show_rating": false,
-        "show_scroll_tags": false,
-        "enable_quick_desc": false,
-        "quick_desc_legth": 90,
-        "quick_desc_size": 14,
-        "enable_quick_add": false,
-        "show_secondary_add": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "navigation_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "image_banner_xBTq9P": {
-      "type": "image-banner",
-      "custom_css": [
-        "@media screen and (max-width: 750px) {.banner, slideshow-component {display: none; }}"
-      ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image": "shopify://shop_images/e96f9382-86f5-4e20-8f82-57255a62a5a9.png",
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "desktop_content_position": "middle-center",
-        "show_text_box": true,
-        "desktop_content_alignment": "center",
-        "color_scheme": "",
-        "image_behavior": "none",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
-      }
-    },
-    "image_banner_gAjwMV": {
-      "type": "image-banner",
-      "custom_css": [
-        "@media screen and (min-width: 750px) {.banner, slideshow-component {display: none; }}"
-      ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image_2": "shopify://shop_images/5381de88-5264-448c-b231-5613f148e1d7.png",
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "desktop_content_position": "middle-center",
-        "show_text_box": true,
-        "desktop_content_alignment": "center",
-        "color_scheme": "",
-        "image_behavior": "none",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
-      }
-    },
-    "e80cb7bb-7295-4d49-bbf9-cb8f0fdd2f92": {
-      "type": "collapsible-content",
+    "seora_benefits": {
+      "type": "seora-split",
       "blocks": {
-        "template--20428573212984__e80cb7bb-7295-4d49-bbf9-cb8f0fdd2f92-collapsible_row-2": {
-          "type": "collapsible_row",
+        "benefit_1": {
+          "type": "item",
           "settings": {
-            "heading": "מהם זמני המשלוח?",
-            "icon": "none",
-            "row_content": "<p>זמן הכנת ההזמנה משתנה בהתאם לסוג התכשיט ולזמינותו במלאי. לאחר השלמת ההכנה, ההזמנה תישלח לכתובת שהוזנה בעת הרכישה. זמני המשלוח המדויקים מופיעים בעמוד המוצר ובשלב התשלום.</p><h3></h3>",
-            "page": ""
+            "icon": "sparkles",
+            "title": "ברק שכולם שמים לב אליו",
+            "text": "אבן מוסאנייט בחיתוך Excellent שוברת את האור לניצוצות צבעוניים, באור יום ובערב."
           }
         },
-        "template--20428573212984__e80cb7bb-7295-4d49-bbf9-cb8f0fdd2f92-collapsible_row-3": {
-          "type": "collapsible_row",
+        "benefit_2": {
+          "type": "item",
           "settings": {
-            "heading": "אילו אפשרויות תשלום קיימות באתר?",
-            "icon": "none",
-            "row_content": "<p>ניתן לשלם באמצעות כרטיסי אשראי בצורה מאובטחת. בהתאם לסכום ההזמנה, ניתן לבחור גם באפשרות של תשלום בתשלומים, בכפוף לתנאי חברת האשראי.</p>",
-            "page": ""
+            "icon": "heart",
+            "title": "יוקרה שאפשר לענוד כל יום",
+            "text": "כסף סטרלינג S925 בציפוי רודיום, עמיד במים. לא צריך לשמור את התכשיט רק לאירועים."
           }
         },
-        "4f82fe7e-cbd8-48ee-8eac-c4c0d675189e": {
-          "type": "collapsible_row",
+        "benefit_3": {
+          "type": "item",
           "settings": {
-            "heading": "האם קיימת אחריות על התכשיטים?",
-            "icon": "none",
-            "row_content": "<p>כן. התכשיטים שלנו מגיעים עם אחריות בהתאם לסוג התכשיט ולתנאים המפורטים בתעודת האחריות. האחריות אינה כוללת נזק שנגרם כתוצאה משימוש לא תקין, מכה, שבר, שריטה או אובדן.</p><h3></h3>",
-            "page": ""
-          }
-        },
-        "83ca6b89-d3b8-4d97-9e69-effe4cf282f5": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "האם ניתן להחליף או להחזיר תכשיט?",
-            "icon": "none",
-            "row_content": "<p>ניתן להגיש בקשה להחלפה או להחזרה בהתאם למדיניות ההחזרות וההחלפות של החנות. התכשיט חייב להיות חדש, ללא שימוש, באריזתו המקורית ובצירוף הוכחת רכישה. לא ניתן להחזיר תכשיטים שיוצרו או הותאמו אישית.</p>",
-            "page": ""
-          }
-        },
-        "b063c876-e8c2-4de3-aff7-6afa1ce75e44": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "האם ניתן לשנות את מידת הטבעת לאחר ההזמנה?",
-            "icon": "none",
-            "row_content": "<p>בחלק מהדגמים ניתן לבצע שינוי מידה. מומלץ לבדוק היטב את המידה לפני ביצוע ההזמנה באמצעות מדריך המידות באתר. במקרה של טעות במידה, ניתן לפנות לשירות הלקוחות לבדיקת אפשרויות ההתאמה.</p>",
-            "page": ""
-          }
-        },
-        "collapsible_row_b4p7hR": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "כיצד ניתן לעקוב אחר ההזמנה?",
-            "icon": "none",
-            "row_content": "<p>לאחר שההזמנה תצא למשלוח, יישלח אליכם עדכון עם פרטי המשלוח וקישור למעקב. ניתן גם לפנות לשירות הלקוחות עם מספר ההזמנה ולקבל עדכון על סטטוס ההזמנה.</p>",
-            "page": ""
+            "icon": "gift",
+            "title": "מתנה שמגיעה מוכנה",
+            "text": "קופסת תכשיט מהודרת ושקית יוקרתית, יחד עם תעודה וכרטיס מקוריות."
           }
         }
       },
       "block_order": [
-        "template--20428573212984__e80cb7bb-7295-4d49-bbf9-cb8f0fdd2f92-collapsible_row-2",
-        "template--20428573212984__e80cb7bb-7295-4d49-bbf9-cb8f0fdd2f92-collapsible_row-3",
-        "4f82fe7e-cbd8-48ee-8eac-c4c0d675189e",
-        "83ca6b89-d3b8-4d97-9e69-effe4cf282f5",
-        "b063c876-e8c2-4de3-aff7-6afa1ce75e44",
-        "collapsible_row_b4p7hR"
+        "benefit_1",
+        "benefit_2",
+        "benefit_3"
       ],
       "settings": {
-        "caption": "",
-        "heading": "שאלות תשובות",
-        "heading_size": "h1",
-        "heading_alignment": "center",
-        "layout": "section",
         "color_scheme": "background-1",
-        "container_color_scheme": "accent-2",
-        "open_first_collapsible_row": false,
-        "image_ratio": "small",
-        "desktop_layout": "image_second",
-        "padding_top": 0,
-        "padding_bottom": 36
+        "accent_color": "#a8894f",
+        "button_bg": "#111111",
+        "button_color": "#ffffff",
+        "eyebrow": "למה ŚEORA",
+        "heading": "נראה כמו יהלום. מרגיש כמו יהלום. במחיר אחר לגמרי.",
+        "text": "",
+        "image": "",
+        "product_image": 2,
+        "image_ratio": "square",
+        "media_position": "first",
+        "item_style": "icon",
+        "cta_label": "להזמנה עכשיו",
+        "cta_action": "auto",
+        "cta_link": "",
+        "cta_sub": "משלוח מהיר עד 5 ימי עסקים",
+        "padding_top": 72,
+        "padding_bottom": 48
       }
     },
-    "related-products": {
-      "type": "related-products",
+    "seora_materials": {
+      "type": "seora-split",
+      "blocks": {
+        "material_1": {
+          "type": "item",
+          "settings": {
+            "icon": "diamond",
+            "title": "אבן מוסאנייט D / VVS1",
+            "text": "הדרגה הגבוהה ביותר בצבע (D, שקופה לחלוטין) וניקיון VVS1, בחיתוך Excellent. זו האבן שאחראית לברק."
+          }
+        },
+        "material_2": {
+          "type": "item",
+          "settings": {
+            "icon": "ring",
+            "title": "כסף סטרלינג S925 בציפוי רודיום",
+            "text": "92.5% כסף טהור. ציפוי הרודיום נותן גוון לבן בוהק ועוזר לשמור על התכשיט מהשחרה."
+          }
+        },
+        "material_3": {
+          "type": "item",
+          "settings": {
+            "icon": "certificate",
+            "title": "תעודת GRA וכרטיס מקוריות",
+            "text": "כל תכשיט מגיע עם תעודה גמולוגית שמפרטת את נתוני האבן, ועם אחריות יבואן רשמי לשנה."
+          }
+        }
+      },
+      "block_order": [
+        "material_1",
+        "material_2",
+        "material_3"
+      ],
       "settings": {
-        "heading": "<strong>תכשיטים משלימים להזמנה שלך</strong>",
-        "heading_size": "h1",
-        "collection_text_alignment": "center",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "color_scheme": "inverse",
-        "image_ratio": "adapt",
-        "image_no_crop": true,
-        "show_secondary_image": true,
-        "show_vendor": false,
+        "color_scheme": "background-1",
+        "accent_color": "#a8894f",
+        "button_bg": "#111111",
+        "button_color": "#ffffff",
+        "eyebrow": "חומרים ומפרט",
+        "heading": "ממה עשוי התכשיט",
+        "text": "",
+        "image": "",
+        "product_image": 3,
+        "image_ratio": "square",
+        "media_position": "second",
+        "item_style": "number",
+        "cta_label": "לבחירת התכשיט שלי",
+        "cta_action": "auto",
+        "cta_link": "",
+        "cta_sub": "",
+        "padding_top": 48,
+        "padding_bottom": 72
+      }
+    },
+    "seora_reviews": {
+      "type": "seora-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "כאן מדביקים ביקורת אמיתית של לקוחה, משפט או שניים על הברק, האיכות או השירות.",
+            "name": "שם הלקוחה",
+            "detail": "",
+            "verified": true,
+            "avatar": "",
+            "photo": ""
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "כאן מדביקים ביקורת אמיתית של לקוחה, משפט או שניים על הברק, האיכות או השירות.",
+            "name": "שם הלקוחה",
+            "detail": "",
+            "verified": true,
+            "avatar": "",
+            "photo": ""
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "כאן מדביקים ביקורת אמיתית של לקוחה, משפט או שניים על הברק, האיכות או השירות.",
+            "name": "שם הלקוחה",
+            "detail": "",
+            "verified": true,
+            "avatar": "",
+            "photo": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "accent_color": "#a8894f",
+        "button_bg": "#111111",
+        "button_color": "#ffffff",
+        "eyebrow": "לקוחות מספרות",
+        "heading": "מה אומרות מי שכבר עונדות",
+        "subheading": "",
+        "show_summary": true,
+        "summary_source": "metafield",
+        "summary_rating": 4.9,
+        "summary_count": "",
+        "count_label": "ביקורות",
+        "columns": 3,
+        "show_avatar": true,
+        "verified_text": "רכישה מאומתת",
+        "star_color": "#f5a623",
+        "card_bg": "#faf8f4",
+        "cta_label": "גם אני רוצה",
+        "cta_action": "auto",
+        "cta_link": "",
+        "cta_sub": "",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "moissanite_compare_Xk3Q7p": {
+      "type": "moissanite-compare",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "featured_text": "החזר אור פי 2.4",
+            "other_text": "ברק בסיסי ותלוי אבן"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "featured_text": "צבע D ניקיון VVS1",
+            "other_text": "צבע וניקיון משתנים"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "featured_text": "קושי 9.5 בסולם מוס",
+            "other_text": "קושי 10 בסולם מוס"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "featured_text": "תעודה GRA בינלאומית",
+            "other_text": "תעודות משתנות ומבלבלות"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4"
+      ],
+      "settings": {
+        "subtitle": "מה זה בכלל מואסנייט מעבדה?",
+        "heading": "אותה נוכחות",
+        "heading_highlight": "בעשירית מחיר!",
+        "highlight_underline": true,
+        "description": "<p>אבן חן אמיתית תוצרת ארה\"ב, שמפזרת יותר אור מיהלום. הנה הנתונים האמיתיים, בלי מסיכות.</p>",
+        "featured_title": "מוסאנייט IF1",
+        "featured_price": "₪1,499",
+        "other_title": "יהלום טבעי בסיסי",
+        "other_price": "+₪15,000",
+        "cta_text": "מכשיר Diamond Tester לא רואה בהבדלים!",
+        "hand_width": 520,
+        "hand_opacity": 100,
+        "hide_hand_mobile": true,
+        "bg_color": "#f7f6f3",
+        "text_color": "#111111",
+        "gold_start": "#c9a24f",
+        "gold_end": "#8a6a2e",
+        "card_bg": "#ffffff",
+        "featured_bg": "#f5ead6",
+        "featured_badge_bg": "#111111",
+        "featured_badge_text": "#ffffff",
+        "other_badge_bg": "#f5ead6",
+        "other_badge_text": "#111111",
+        "cta_bg": "#0f0f0f",
+        "cta_text_color": "#ffffff",
+        "card_radius": 24,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "featured_image": "shopify://shop_images/seora-compare-moissanite.png",
+        "other_image": "shopify://shop_images/seora-compare-diamond.png"
+      }
+    },
+    "seora_faq": {
+      "type": "seora-faq",
+      "blocks": {
+        "faq_x1": {
+          "type": "question",
+          "settings": {
+            "question": "מה זה מוסאנייט ובמה הוא שונה מיהלום?",
+            "answer": "<p>מוסאנייט היא אבן חן מעבדתית, השנייה בקשיותה אחרי היהלום, עם ברק ואש צבעונית גבוהים משל יהלום. ההבדל העיקרי הוא המחיר: מוסאנייט בדרגת D / VVS1 עולה חלק קטן ממחיר יהלום טבעי במראה דומה.</p>"
+          }
+        },
+        "faq_x2": {
+          "type": "question",
+          "settings": {
+            "question": "האם התכשיט עמיד במים?",
+            "answer": "<p>כן. התכשיטים עשויים כסף סטרלינג S925 בציפוי רודיום ועמידים במים. כדי לשמור על הברק לאורך זמן מומלץ להסיר אותם לפני מגע עם כלור, כימיקלים וקרמים.</p>"
+          }
+        },
+        "faq_x3": {
+          "type": "question",
+          "settings": {
+            "question": "מה מגיע באריזה?",
+            "answer": "<p>התכשיט מגיע בקופסת תכשיט מהודרת ובשקית יוקרתית, יחד עם תעודה גמולוגית וכרטיס מקוריות של GRA. מוכן להענקה כמתנה.</p>"
+          }
+        },
+        "faq_1": {
+          "type": "question",
+          "settings": {
+            "question": "מהם זמני המשלוח?",
+            "answer": "<p>זמן הכנת ההזמנה משתנה בהתאם לסוג התכשיט ולזמינותו במלאי. לאחר השלמת ההכנה, ההזמנה תישלח לכתובת שהוזנה בעת הרכישה. זמני המשלוח המדויקים מופיעים בעמוד המוצר ובשלב התשלום.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "question",
+          "settings": {
+            "question": "אילו אפשרויות תשלום קיימות באתר?",
+            "answer": "<p>ניתן לשלם באמצעות כרטיסי אשראי בצורה מאובטחת. בהתאם לסכום ההזמנה, ניתן לבחור גם באפשרות של תשלום בתשלומים, בכפוף לתנאי חברת האשראי.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "question",
+          "settings": {
+            "question": "האם קיימת אחריות על התכשיטים?",
+            "answer": "<p>כן. התכשיטים שלנו מגיעים עם אחריות בהתאם לסוג התכשיט ולתנאים המפורטים בתעודת האחריות. האחריות אינה כוללת נזק שנגרם כתוצאה משימוש לא תקין, מכה, שבר, שריטה או אובדן.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "question",
+          "settings": {
+            "question": "האם ניתן להחליף או להחזיר תכשיט?",
+            "answer": "<p>ניתן להגיש בקשה להחלפה או להחזרה בהתאם למדיניות ההחזרות וההחלפות של החנות. התכשיט חייב להיות חדש, ללא שימוש, באריזתו המקורית ובצירוף הוכחת רכישה. לא ניתן להחזיר תכשיטים שיוצרו או הותאמו אישית.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "question",
+          "settings": {
+            "question": "האם ניתן לשנות את מידת הטבעת לאחר ההזמנה?",
+            "answer": "<p>בחלק מהדגמים ניתן לבצע שינוי מידה. מומלץ לבדוק היטב את המידה לפני ביצוע ההזמנה באמצעות מדריך המידות באתר. במקרה של טעות במידה, ניתן לפנות לשירות הלקוחות לבדיקת אפשרויות ההתאמה.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "question",
+          "settings": {
+            "question": "כיצד ניתן לעקוב אחר ההזמנה?",
+            "answer": "<p>לאחר שההזמנה תצא למשלוח, יישלח אליכם עדכון עם פרטי המשלוח וקישור למעקב. ניתן גם לפנות לשירות הלקוחות עם מספר ההזמנה ולקבל עדכון על סטטוס ההזמנה.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_x1",
+        "faq_x2",
+        "faq_x3",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "accent_color": "#a8894f",
+        "button_bg": "#111111",
+        "button_color": "#ffffff",
+        "eyebrow": "יש לך שאלה?",
+        "heading": "שאלות נפוצות",
+        "text": "<p>לא מצאת תשובה? כתבו לנו ב-hello@seora.co.il או בוואטסאפ 052-319-9277.</p>",
+        "open_first": true,
+        "single_open": true,
+        "schema_markup": true,
+        "cta_label": "להזמנה עכשיו",
+        "cta_action": "auto",
+        "cta_link": "",
+        "cta_sub": "",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "seora_final_cta": {
+      "type": "seora-final-cta",
+      "settings": {
+        "show_image": true,
         "show_rating": true,
-        "enable_quick_desc": false,
-        "quick_desc_legth": 90,
-        "quick_desc_size": 14,
-        "columns_mobile": "2",
-        "padding_top": 36,
-        "padding_bottom": 28
+        "rating": 5,
+        "rating_text": "הבחירה של לקוחות ŚEORA",
+        "heading": "הברק של יהלום. בעשירית מהמחיר.",
+        "text": "<p>כל תכשיט מגיע עם תעודה גמולוגית של GRA, אחריות יבואן רשמי לשנה ואריזת מתנה מהודרת.</p>",
+        "show_price": true,
+        "cta_label": "אני רוצה את שלי",
+        "cta_action": "auto",
+        "cta_link": "",
+        "cta_sub": "",
+        "trust_1": "תעודת GRA",
+        "trust_2": "אחריות יבואן לשנה",
+        "trust_3": "אריזת מתנה",
+        "style": "box",
+        "box_bg": "#111111",
+        "box_color": "#ffffff",
+        "star_color": "#e3c47b",
+        "color_scheme": "background-1",
+        "accent_color": "#c9a86a",
+        "button_bg": "#c9a86a",
+        "button_color": "#111111",
+        "padding_top": 48,
+        "padding_bottom": 72
       }
     },
     "41eff030-bfe6-4439-9af3-bc24e7cb0559": {
@@ -611,13 +841,14 @@
   },
   "order": [
     "main",
-    "moissanite_compare_Xk3Q7p",
+    "seora_logos",
     "shoppable_video_new_yQVWcy",
-    "featured_collection_tP9GP7",
-    "image_banner_xBTq9P",
-    "image_banner_gAjwMV",
-    "e80cb7bb-7295-4d49-bbf9-cb8f0fdd2f92",
-    "related-products",
+    "seora_benefits",
+    "seora_materials",
+    "seora_reviews",
+    "moissanite_compare_Xk3Q7p",
+    "seora_faq",
+    "seora_final_cta",
     "41eff030-bfe6-4439-9af3-bc24e7cb0559"
   ]
 }

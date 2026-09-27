@@ -1,0 +1,18 @@
+{%- comment -%} Per-section CSS variables + padding for scro-* sections. Param: section {%- endcomment -%}
+{%- liquid
+  assign ss = section.settings
+  assign pt = ss.padding_top | default: 0
+  assign pb = ss.padding_bottom | default: 0
+-%}
+{%- style -%}
+  #scro-{{ section.id }} {
+    {%- if ss.accent_color != blank %} --scro-accent: {{ ss.accent_color }};{% endif %}
+    {%- if ss.button_bg != blank %} --scro-btn-bg: {{ ss.button_bg }};{% endif %}
+    {%- if ss.button_color != blank %} --scro-btn-fg: {{ ss.button_color }};{% endif %}
+    padding-top: {{ pt | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ pb | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #scro-{{ section.id }} { padding-top: {{ pt }}px; padding-bottom: {{ pb }}px; }
+  }
+{%- endstyle -%}

@@ -1,7 +1,7 @@
 {%- comment -%}
   ŚEORA product information section.
   Reuses the theme's media gallery, product form (cart drawer) and variant-radios logic.
-  Blocks: badges, title, rating, feature, variant_picker, bundle, price, buy_buttons, text, collapsible_tab, custom_liquid, @app
+  Blocks: badges, title, rating, feature, variant_picker, bundle, price, buy_buttons, trust, text, collapsible_tab, custom_liquid, @app
 {%- endcomment -%}
 
 {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
@@ -219,12 +219,39 @@
         { "type": "checkbox", "id": "show_pickup", "label": "הצג זמינות איסוף עצמי", "default": false }
       ]
     },
+    {
+      "type": "trust",
+      "name": "אמון מתחת לכפתור",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_payment", "label": "הצג אייקוני אמצעי תשלום", "default": true },
+        { "type": "text", "id": "secure_text", "label": "טקסט תשלום מאובטח", "default": "תשלום מאובטח" },
+        { "type": "color", "id": "box_bg", "label": "רקע התיבה", "default": "#f6f4ef" },
+        { "type": "color", "id": "icon_color", "label": "צבע אייקונים", "default": "#a8894f" },
+        { "type": "select", "id": "line1_icon", "label": "שורה 1 - אייקון", "options": [
+          { "value": "truck", "label": "משלוח" }, { "value": "refresh", "label": "החזרה/החלפה" }, { "value": "shield", "label": "מגן עם וי" }, { "value": "certificate", "label": "תעודה" },
+          { "value": "gift", "label": "מתנה" }, { "value": "lock", "label": "מנעול" }, { "value": "check", "label": "וי בעיגול" }, { "value": "clock", "label": "שעון" },
+          { "value": "diamond", "label": "יהלום" }, { "value": "heart", "label": "לב" }, { "value": "star", "label": "כוכב" }, { "value": "water", "label": "עמיד במים" } ], "default": "truck" },
+        { "type": "inline_richtext", "id": "line1_text", "label": "שורה 1 - טקסט", "default": "<strong>משלוח מהיר</strong> עד 5 ימי עסקים" },
+        { "type": "select", "id": "line2_icon", "label": "שורה 2 - אייקון", "options": [
+          { "value": "truck", "label": "משלוח" }, { "value": "refresh", "label": "החזרה/החלפה" }, { "value": "shield", "label": "מגן עם וי" }, { "value": "certificate", "label": "תעודה" },
+          { "value": "gift", "label": "מתנה" }, { "value": "lock", "label": "מנעול" }, { "value": "check", "label": "וי בעיגול" }, { "value": "clock", "label": "שעון" },
+          { "value": "diamond", "label": "יהלום" }, { "value": "heart", "label": "לב" }, { "value": "star", "label": "כוכב" }, { "value": "water", "label": "עמיד במים" } ], "default": "refresh" },
+        { "type": "inline_richtext", "id": "line2_text", "label": "שורה 2 - טקסט", "default": "<strong>14 יום</strong> לביטול עסקה והחזרה" },
+        { "type": "select", "id": "line3_icon", "label": "שורה 3 - אייקון", "options": [
+          { "value": "truck", "label": "משלוח" }, { "value": "refresh", "label": "החזרה/החלפה" }, { "value": "shield", "label": "מגן עם וי" }, { "value": "certificate", "label": "תעודה" },
+          { "value": "gift", "label": "מתנה" }, { "value": "lock", "label": "מנעול" }, { "value": "check", "label": "וי בעיגול" }, { "value": "clock", "label": "שעון" },
+          { "value": "diamond", "label": "יהלום" }, { "value": "heart", "label": "לב" }, { "value": "star", "label": "כוכב" }, { "value": "water", "label": "עמיד במים" } ], "default": "shield" },
+        { "type": "inline_richtext", "id": "line3_text", "label": "שורה 3 - טקסט", "default": "<strong>אחריות יבואן רשמי</strong> לשנה" }
+      ]
+    },
     { "type": "text", "name": "טקסט", "settings": [ { "type": "richtext", "id": "text", "label": "טקסט", "default": "<p>טקסט חופשי</p>" } ] },
     {
       "type": "collapsible_tab",
       "name": "אקורדיון",
       "settings": [
         { "type": "text", "id": "heading", "label": "כותרת", "default": "מדיניות משלוחים" },
+        { "type": "checkbox", "id": "show_description", "label": "הצג את תיאור המוצר", "default": false },
         { "type": "richtext", "id": "content", "label": "תוכן" },
         { "type": "page", "id": "page", "label": "או תוכן מעמוד" },
         { "type": "checkbox", "id": "open", "label": "פתוח כברירת מחדל", "default": false }
@@ -236,17 +263,19 @@
     {
       "name": "מידע מוצר - ŚEORA",
       "blocks": [
-        { "type": "badges" },
-        { "type": "title" },
+        { "type": "badges", "settings": { "badge_text": "יבואן רשמי ובלעדי" } },
         { "type": "rating" },
-        { "type": "feature", "settings": { "icon": "diamond", "text": "מואסנייט 5.5 קראט — ברק פי 2.4 מיהלום" } },
-        { "type": "feature", "settings": { "icon": "certificate", "text": "תעודת IGI בינלאומית לכל צמיד" } },
-        { "type": "feature", "settings": { "icon": "shield", "text": "כסף 925 עם ציפוי זהב 14K בעובי 5 מיקרון" } },
-        { "type": "feature", "settings": { "icon": "check", "text": "סוגר כספת ייחודי — יציב בענידה יומיומית" } },
-        { "type": "variant_picker" },
-        { "type": "bundle" },
+        { "type": "title" },
         { "type": "price" },
-        { "type": "buy_buttons" }
+        { "type": "feature", "settings": { "icon": "diamond", "text": "מוסאנייט בצבע D וניקיון VVS1, חיתוך Excellent" } },
+        { "type": "feature", "settings": { "icon": "certificate", "text": "תעודה גמולוגית וכרטיס מקוריות GRA" } },
+        { "type": "feature", "settings": { "icon": "shield", "text": "כסף סטרלינג S925 בציפוי רודיום, עמיד במים" } },
+        { "type": "variant_picker" },
+        { "type": "buy_buttons" },
+        { "type": "trust" },
+        { "type": "collapsible_tab", "settings": { "heading": "פרטי המוצר", "show_description": true } },
+        { "type": "collapsible_tab", "settings": { "heading": "משלוחים והחזרות" } },
+        { "type": "collapsible_tab", "settings": { "heading": "אחריות ותעודות" } }
       ]
     }
   ]

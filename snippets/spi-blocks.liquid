@@ -291,6 +291,40 @@
         show_pickup_availability: block.settings.show_pickup
       -%}
 
+    {%- when 'trust' -%}
+      <div class="spi-trust" {{ block.shopify_attributes }}>
+        {%- if block.settings.show_payment or block.settings.secure_text != blank -%}
+          <div class="spi-trust__pay">
+            {%- if block.settings.secure_text != blank -%}
+              <span class="spi-trust__secure">{% render 'seora-icon', icon: 'lock' %}{{ block.settings.secure_text | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.show_payment -%}
+              <ul class="spi-trust__cards" role="list">
+                {%- for type in shop.enabled_payment_types -%}
+                  <li>{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- capture trust_rows -%}
+          {%- for i in (1..3) -%}
+            {%- liquid
+              assign tk = 'line' | append: i | append: '_text'
+              assign ik = 'line' | append: i | append: '_icon'
+              assign t_text = block.settings[tk]
+              assign t_icon = block.settings[ik]
+            -%}
+            {%- if t_text != blank -%}
+              <li class="spi-trust__row"><span class="spi-trust__icon" style="color: {{ block.settings.icon_color }};">{% render 'seora-icon', icon: t_icon %}</span><span>{{ t_text }}</span></li>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- if trust_rows != blank -%}
+          <ul class="spi-trust__box" role="list" style="background: {{ block.settings.box_bg }};">{{ trust_rows }}</ul>
+        {%- endif -%}
+      </div>
+
     {%- when 'text' -%}
       <div class="spi-text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
 
@@ -301,6 +335,7 @@
           <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
         </summary>
         <div class="spi-accordion__content rte">
+          {%- if block.settings.show_description %}{{ product.description }}{% endif -%}
           {{ block.settings.content }}
           {{ block.settings.page.content }}
         </div>
