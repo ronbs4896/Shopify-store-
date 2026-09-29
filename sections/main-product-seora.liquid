@@ -220,15 +220,24 @@
     },
     {
       "type": "bundle",
-      "name": "שדרוג לסט",
+      "name": "מוצר נוסף / מתנה",
       "limit": 1,
       "settings": [
-        { "type": "product", "id": "product", "label": "מוצר משלים" },
-        { "type": "range", "id": "discount_pct", "label": "אחוז הנחה על הסט", "min": 0, "max": 60, "step": 1, "unit": "%", "default": 15, "info": "ההנחה בפועל בעגלה דורשת הנחה אוטומטית תואמת ב-Shopify." },
-        { "type": "text", "id": "heading", "label": "כותרת", "default": "שדרגו לסט המלא" },
-        { "type": "text", "id": "label", "label": "שם הסט (ריק = שם המוצר המשלים)", "default": "צמיד + טבעת קשת" },
-        { "type": "text", "id": "badge_text", "label": "תגית ({pct} = אחוז)", "default": "-{pct}% הנחה נוספת" },
-        { "type": "text", "id": "link_text", "label": "טקסט קישור", "default": "למידע נוסף" }
+        { "type": "product", "id": "product", "label": "המוצר שמוצע (אפשר להחליף בכל רגע)" },
+        { "type": "image_picker", "id": "image", "label": "תמונה (ריק = התמונה של המוצר)" },
+        { "type": "text", "id": "label", "label": "שם שיוצג (ריק = שם המוצר)", "default": "צמיד + טבעת קשת" },
+        { "type": "select", "id": "offer_type", "label": "סוג ההצעה", "options": [
+          { "value": "set", "label": "הנחה באחוזים על הסט (מוצר + נוסף)" },
+          { "value": "addon_pct", "label": "הנחה באחוזים על המוצר הנוסף בלבד" },
+          { "value": "addon_price", "label": "מחיר מבצע קבוע למוצר הנוסף" },
+          { "value": "gift", "label": "מתנה (חינם)" } ], "default": "set" },
+        { "type": "range", "id": "discount_pct", "label": "אחוז הנחה", "min": 0, "max": 60, "step": 1, "unit": "%", "default": 15 },
+        { "type": "number", "id": "offer_price", "label": "מחיר מבצע קבוע (₪)", "info": "רק לסוג 'מחיר מבצע קבוע'." },
+        { "type": "text", "id": "free_text", "label": "טקסט במקום מחיר במתנה", "default": "חינם" },
+        { "type": "text", "id": "badge_text", "label": "תגית ({pct} = אחוז, {value} = שווי)", "default": "-{pct}% הנחה נוספת", "info": "למשל: מתנה בשווי {value}" },
+        { "type": "text", "id": "heading", "label": "כותרת מעל הכרטיס (לא חובה)", "default": "שדרגו לסט המלא" },
+        { "type": "text", "id": "link_text", "label": "טקסט קישור למוצר (לא חובה)", "default": "למידע נוסף" },
+        { "type": "paragraph", "content": "המחיר בעגלה נקבע ע\"י Shopify: כדי שהלקוח יקבל בפועל את ההנחה/המתנה צריך ליצור הנחה אוטומטית תואמת (הנחות ← הנחה אוטומטית)." }
       ]
     },
     {

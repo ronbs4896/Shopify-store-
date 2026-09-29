@@ -241,9 +241,30 @@
           assign bundle_price = sum_price | times: factor | divided_by: 100.0 | round
           assign bundle_label = block.settings.label | default: addon.title
           assign pct_bdi = '<bdi dir="ltr">-' | append: pct | append: '%</bdi>'
-          assign badge_text = block.settings.badge_text | replace: '-{pct}%', pct_bdi | replace: '{pct}', pct
+          assign mode = block.settings.offer_type | default: 'set'
+          assign offer_cents = block.settings.offer_price | default: 0 | times: 100 | round
+          case mode
+            when 'addon_pct'
+              assign deal_price = av.price | times: factor | divided_by: 100.0 | round
+              assign deal_compare = addon_compare
+            when 'addon_price'
+              assign deal_price = offer_cents
+              assign deal_compare = addon_compare
+            when 'gift'
+              assign deal_price = 0
+              assign deal_compare = addon_compare
+            else
+              assign deal_price = bundle_price
+              assign deal_compare = sum_compare
+          endcase
+          assign free_text = block.settings.free_text | default: 'חינם'
+          assign bundle_img = block.settings.image | default: addon.featured_image
         -%}
-        <div class="spi-bundle" data-pct="{{ pct }}" {{ block.shopify_attributes }}>
+        {%- capture value_money -%}{% render 'seora-money', amount: addon_compare, symbol: sym %}{%- endcapture -%}
+        {%- liquid
+          assign badge_text = block.settings.badge_text | escape | replace: '-{pct}%', pct_bdi | replace: '{pct}', pct | replace: '{value}', value_money
+        -%}
+        <div class="spi-bundle spi-bundle--{{ mode }}" data-pct="{{ pct }}" data-mode="{{ mode }}" data-offer="{{ offer_cents }}" data-free-text="{{ free_text | escape }}" {{ block.shopify_attributes }}>
           {%- if block.settings.heading != blank -%}
             <p class="spi-bundle__heading">{{ block.settings.heading | escape }}</p>
           {%- endif -%}
@@ -266,16 +287,16 @@
             <div class="spi-bundle__deal">
               {%- if badge_text != blank -%}<span class="spi-bundle__badge">{{ badge_text }}</span>{%- endif -%}
               <div class="spi-bundle__prices">
-                <span class="spi-bundle__sale">{% render 'seora-money', amount: bundle_price, symbol: sym %}</span>
-                <s class="spi-bundle__compare">{% render 'seora-money', amount: sum_compare, symbol: sym %}</s>
+                <span class="spi-bundle__sale">{%- if mode == 'gift' -%}{{ free_text | escape }}{%- else -%}{% render 'seora-money', amount: deal_price, symbol: sym %}{%- endif -%}</span>
+                <s class="spi-bundle__compare"{% if deal_compare <= deal_price %} hidden{% endif %}>{% render 'seora-money', amount: deal_compare, symbol: sym %}</s>
               </div>
               {%- if block.settings.link_text != blank -%}
                 <a class="spi-bundle__link" href="{{ addon.url }}" target="_blank" rel="noopener">{{ block.settings.link_text | escape }}</a>
               {%- endif -%}
             </div>
             <label class="spi-bundle__img" for="spi-bundle-{{ block.id }}">
-              {%- if addon.featured_image -%}
-                {{ addon.featured_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: addon.title }}
+              {%- if bundle_img -%}
+                {{ bundle_img | image_url: width: 240 | image_tag: loading: 'lazy', alt: addon.title }}
               {%- endif -%}
             </label>
           </div>

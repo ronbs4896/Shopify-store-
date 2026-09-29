@@ -346,4 +346,40 @@
     #spi-{{ sid }} .spi-media-badge { top: 1.2rem; left: auto; right: 1.2rem; font-size: 1.2rem; }
     #spi-{{ sid }} .product__media-icon--lightbox { width: 3.8rem; height: 3.8rem; bottom: 1.2rem; left: 1.2rem; }
   }
+
+  /* ================= premium v2: cleaner hierarchy ================= */
+  #spi-{{ sid }} .spi > * + * { margin-top: 2.2rem; }
+  #spi-{{ sid }} .spi > .spi-rating + .spi-badges { margin-top: 1.2rem; }
+  #spi-{{ sid }} .spi > .spi-badges + .spi-title { margin-top: 1.6rem; }
+  #spi-{{ sid }} .spi > .spi-title + .spi-text { margin-top: 1.2rem; }
+
+  /* benefits as a clean vertical list */
+  #spi-{{ sid }} .spi-features--list { gap: 1.3rem; padding: 0; border: 0; }
+  #spi-{{ sid }} .spi-features--list .spi-feature { align-items: flex-start; gap: 1.2rem; font-size: 1.5rem; line-height: 1.45; }
+  #spi-{{ sid }} .spi-features--list .spi-feature__icon { width: 2.2rem; height: 2.2rem; padding: 0; background: none; border-radius: 0; margin-top: .05rem; }
+
+  /* price: clear but not dominant, right aligned */
+  #spi-{{ sid }} .spi-price { padding-bottom: 0; border-bottom: 0; }
+  #spi-{{ sid }} .spi-price__row { justify-content: flex-start; align-items: baseline; gap: .6rem 1.2rem; }
+  #spi-{{ sid }} .spi-price__sale { font-size: clamp({{ s.price_size | times: 0.85 | round }}px, 1.8rem + .6vw, {{ s.price_size }}px); font-weight: 700; }
+  #spi-{{ sid }} .spi-price__compare { font-size: 1.5rem; color: {{ s.text_color | color_mix: '#ffffff', 45 }}; }
+  #spi-{{ sid }} .spi-price__save { align-self: center; padding: .4rem .8rem; border: 0; border-radius: .5rem; background: #eef6f0; color: #2a7a45; font-size: 1.2rem; font-weight: 600; }
+  #spi-{{ sid }} .spi-installments { margin-top: .8rem; font-size: 1.35rem; }
+
+  /* upsell card: lighter */
+  #spi-{{ sid }} .spi-bundle__card { box-shadow: none; }
+  #spi-{{ sid }} .spi-bundle--gift .spi-bundle__sale { color: var(--spi-green); }
+
+  /* nothing wider than its container */
+  #spi-{{ sid }} .spi-bundle, #spi-{{ sid }} .spi-bundle__card, #spi-{{ sid }} .product-form, #spi-{{ sid }} .product-form__submit, #spi-{{ sid }} .spi-picker { width: 100%; max-width: 100%; box-sizing: border-box; }
+
+  @media screen and (max-width: 749px) {
+    #spi-{{ sid }} .spi > * + * { margin-top: 1.8rem; }
+    #spi-{{ sid }} .spi > .spi-rating + .spi-badges { margin-top: 1rem; }
+    #spi-{{ sid }} .spi > .spi-badges + .spi-title { margin-top: 1.2rem; }
+    #spi-{{ sid }} .spi-features--list { gap: 1.1rem; }
+    #spi-{{ sid }} .spi-features--list .spi-feature { font-size: 1.4rem; }
+    #spi-{{ sid }} .spi-features--list .spi-feature__icon { width: 2rem; height: 2rem; }
+    #spi-{{ sid }} .spi-price__compare { font-size: 1.4rem; }
+  }
 {%- endstyle -%}

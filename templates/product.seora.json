@@ -46,24 +46,24 @@
         "feature_1": {
           "type": "feature",
           "settings": {
-            "icon": "heart",
-            "text": "עיצוב קלאסי ונצחי",
+            "icon": "diamond",
+            "text": "מוסאנייט D VVS1 בחיתוך Excellent",
             "icon_color": "#a8894f"
           }
         },
         "feature_2": {
           "type": "feature",
           "settings": {
-            "icon": "diamond",
-            "text": "מוסאנייט באיכות D VVS1",
+            "icon": "certificate",
+            "text": "תעודה גמולוגית וכרטיס מקוריות GRA",
             "icon_color": "#a8894f"
           }
         },
         "feature_3": {
           "type": "feature",
           "settings": {
-            "icon": "certificate",
-            "text": "תעודה גמולוגית GRA",
+            "icon": "shield",
+            "text": "כסף סטרלינג S925 בציפוי רודיום, עמיד במים",
             "icon_color": "#a8894f"
           }
         },
@@ -86,7 +86,8 @@
             "heading": "",
             "label": "צמיד + טבעת קשת",
             "badge_text": "-{pct}% הנחה נוספת",
-            "link_text": ""
+            "link_text": "",
+            "offer_type": "set"
           }
         },
         "buy_buttons": {
@@ -110,8 +111,8 @@
         "feature_4": {
           "type": "feature",
           "settings": {
-            "icon": "shield",
-            "text": "כסף 925 עמיד במים",
+            "icon": "heart",
+            "text": "עיצוב קלאסי ויוקרתי",
             "icon_color": "#a8894f"
           }
         },
@@ -136,16 +137,16 @@
         }
       },
       "block_order": [
-        "badges",
         "rating",
+        "badges",
         "title",
-        "price",
         "text",
         "feature_1",
         "feature_2",
         "feature_3",
         "feature_4",
         "variant_picker",
+        "price",
         "bundle",
         "buy_buttons",
         "trust_bar"
@@ -163,7 +164,7 @@
         "button_text_color": "#ffffff",
         "button_radius": 10,
         "title_size": 32,
-        "price_size": 36,
+        "price_size": 28,
         "swatch_size": 56,
         "pill_height": 64,
         "pill_min_width": 160,
@@ -182,7 +183,7 @@
         "padding_top": 28,
         "padding_bottom": 60,
         "bg_color": "#faf8f5",
-        "features_style": "tiles",
+        "features_style": "list",
         "media_badge_text": "נמכר ביותר",
         "media_badge_icon": "fire",
         "show_media_arrows": true

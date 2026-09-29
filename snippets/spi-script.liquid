@@ -139,15 +139,29 @@
         const addonPrice = parseInt(opt.dataset.price, 10) || 0;
         const addonCompare = parseInt(opt.dataset.compare, 10) || addonPrice;
         const pct = parseFloat(wrap.dataset.pct) || 0;
-        const mainCompare = v.compare_at_price || v.price;
-        const bundlePrice = Math.round((v.price + addonPrice) * (100 - pct) / 100);
-        const bundleCompare = mainCompare + addonCompare;
+        const mode = wrap.dataset.mode || 'set';
+        let price;
+        let cmp;
+        if (mode === 'addon_pct') {
+          price = Math.round(addonPrice * (100 - pct) / 100);
+          cmp = addonCompare;
+        } else if (mode === 'addon_price') {
+          price = parseInt(wrap.dataset.offer, 10) || 0;
+          cmp = addonCompare;
+        } else if (mode === 'gift') {
+          price = 0;
+          cmp = addonCompare;
+        } else {
+          const mainCompare = v.compare_at_price || v.price;
+          price = Math.round((v.price + addonPrice) * (100 - pct) / 100);
+          cmp = mainCompare + addonCompare;
+        }
         const sale = wrap.querySelector('.spi-bundle__sale');
         const compare = wrap.querySelector('.spi-bundle__compare');
-        if (sale) sale.textContent = this.money(bundlePrice);
+        if (sale) sale.textContent = mode === 'gift' ? (wrap.dataset.freeText || this.money(0)) : this.money(price);
         if (compare) {
-          compare.textContent = this.money(bundleCompare);
-          compare.hidden = bundleCompare <= bundlePrice;
+          compare.textContent = this.money(cmp);
+          compare.hidden = cmp <= price;
         }
       }
 
