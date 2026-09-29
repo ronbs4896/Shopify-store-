@@ -1,0 +1,162 @@
+{%- comment -%}
+  ŚEORA - אישור תקנון לפני מעבר לתשלום
+  ---------------------------------------------------------------
+  שימוש:  {% render 'seora-terms-consent', form_id: 'CartDrawer-Form', uid: 'drawer' %}
+          {% render 'seora-terms-consent', form_id: 'cart',            uid: 'page'   %}
+
+  form_id - ה-id של טופס העגלה שכפתור "לתשלום" שולח (CartDrawer-Form / cart)
+  uid     - מזהה ייחודי לכל מופע (drawer / page)
+
+  הטקסטים ניתנים לעריכה כאן למטה. הקישורים נלקחים אוטומטית
+  מהמדיניות שמוגדרת ב-Settings -> Policies (תקנון + מדיניות פרטיות).
+  האישור נשמר גם על ההזמנה עצמה כ-cart attribute בשם "אישור תקנון".
+{%- endcomment -%}
+{%- liquid
+  assign t_prefix  = 'קראתי ואני מאשר/ת את'
+  assign t_terms   = 'תקנון האתר'
+  assign t_and     = 'ואת'
+  assign t_privacy = 'מדיניות הפרטיות'
+  assign t_error   = 'כדי להמשיך לתשלום יש לאשר את תקנון האתר'
+  assign show_privacy = true
+
+  assign terms_url = shop.terms_of_service.url
+  assign privacy_url = shop.privacy_policy.url
+  if terms_url == blank
+    assign terms_url = '/policies/terms-of-service'
+  endif
+  if privacy_url == blank
+    assign privacy_url = '/policies/privacy-policy'
+  endif
+
+  assign accepted = false
+  if cart.attributes['אישור תקנון'] == 'כן'
+    assign accepted = true
+  endif
+-%}
+{%- if cart != empty -%}
+<style>
+  .seora-terms { direction: rtl; text-align: right; margin: 1.4rem 0 0.2rem; }
+  .seora-terms__label { display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; font-size: 1.4rem; line-height: 1.5; color: rgba(var(--color-foreground), 0.85); }
+  .seora-terms__input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+  .seora-terms__box { flex: 0 0 auto; width: 1.9rem; height: 1.9rem; margin-top: 0.15rem; border: 1.5px solid rgba(var(--color-foreground), 0.45); border-radius: 0.4rem; display: inline-flex; align-items: center; justify-content: center; background: rgb(var(--color-background)); transition: background 0.15s, border-color 0.15s, box-shadow 0.15s; }
+  .seora-terms__box svg { width: 1.1rem; height: 1.1rem; opacity: 0; transform: scale(0.6); transition: opacity 0.15s, transform 0.15s; }
+  .seora-terms__input:checked + .seora-terms__box { background: rgb(var(--color-foreground)); border-color: rgb(var(--color-foreground)); }
+  .seora-terms__input:checked + .seora-terms__box svg { opacity: 1; transform: scale(1); }
+  .seora-terms__input:focus-visible + .seora-terms__box { box-shadow: 0 0 0 0.3rem rgba(var(--color-foreground), 0.2); }
+  .seora-terms__text a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; font-weight: 600; }
+  .seora-terms__error { display: flex; align-items: center; gap: 0.5rem; margin: 0.6rem 0 0; padding: 0.7rem 1rem; border-radius: 0.6rem; font-size: 1.3rem; line-height: 1.4; color: #b3261e; background: rgba(179, 38, 30, 0.08); }
+  .seora-terms__error[hidden] { display: none; }
+  .seora-terms__error svg { flex: 0 0 auto; width: 1.5rem; height: 1.5rem; }
+  .seora-terms.is-invalid .seora-terms__box { border-color: #b3261e; box-shadow: 0 0 0 0.3rem rgba(179, 38, 30, 0.15); }
+  .seora-terms-shield { position: absolute; inset: 0; z-index: 5; cursor: not-allowed; }
+  .seora-terms-locked { position: relative; }
+  .seora-terms-locked > :not(.seora-terms-shield) { opacity: 0.45; filter: grayscale(0.4); }
+</style>
+<div class="seora-terms" data-seora-terms data-form="{{ form_id }}">
+  <label class="seora-terms__label" for="SeoraTerms-{{ uid }}">
+    <input
+      type="checkbox"
+      class="seora-terms__input"
+      id="SeoraTerms-{{ uid }}"
+      name="attributes[אישור תקנון]"
+      value="כן"
+      form="{{ form_id }}"
+      aria-describedby="SeoraTermsError-{{ uid }}"
+      {% if accepted %}checked{% endif %}
+    >
+    <span class="seora-terms__box" aria-hidden="true">
+      <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.2 4.6 8.8 10 3.4" stroke="rgb(var(--color-background))" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <span class="seora-terms__text">
+      {{ t_prefix }}
+      <a href="{{ terms_url }}" target="_blank" rel="noopener">{{ t_terms }}</a>
+      {%- if show_privacy %} {{ t_and }} <a href="{{ privacy_url }}" target="_blank" rel="noopener">{{ t_privacy }}</a>{% endif %}
+    </span>
+  </label>
+  <p class="seora-terms__error" id="SeoraTermsError-{{ uid }}" role="alert" hidden>
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5v4.2M8 11.2v.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>{{ t_error }}</span>
+  </p>
+</div>
+<script>
+  (function () {
+    if (window.__seoraTermsInit) return;
+    window.__seoraTermsInit = true;
+
+    var FORM_IDS = { cart: true, 'CartDrawer-Form': true };
+
+    function boxFor(formId) {
+      return document.querySelector('[data-seora-terms][data-form="' + formId + '"]');
+    }
+    function setInvalid(box, invalid) {
+      if (!box) return;
+      box.classList.toggle('is-invalid', invalid);
+      var err = box.querySelector('.seora-terms__error');
+      if (err) err.hidden = !invalid;
+    }
+    function reject(box) {
+      setInvalid(box, true);
+      var input = box.querySelector('input[type="checkbox"]');
+      if (box.scrollIntoView) box.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      if (input) input.focus({ preventScroll: true });
+    }
+
+    // חוסם את כפתורי התשלום המהיר (Shop Pay / PayPal וכו') עד לאישור
+    function syncShields() {
+      document.querySelectorAll('[data-seora-terms]').forEach(function (box) {
+        var input = box.querySelector('input[type="checkbox"]');
+        var scope = box.closest('.drawer__footer, .cart__footer, .cart__blocks, form, body') || document;
+        scope.querySelectorAll('.cart__dynamic-checkout-buttons, .additional-checkout-buttons').forEach(function (wrap) {
+          var shield = wrap.querySelector(':scope > .seora-terms-shield');
+          if (input && input.checked) {
+            wrap.classList.remove('seora-terms-locked');
+            if (shield) shield.remove();
+          } else {
+            wrap.classList.add('seora-terms-locked');
+            if (!shield) {
+              shield = document.createElement('div');
+              shield.className = 'seora-terms-shield';
+              shield.setAttribute('aria-hidden', 'true');
+              shield.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); reject(box); });
+              wrap.appendChild(shield);
+            }
+          }
+        });
+      });
+    }
+
+    document.addEventListener('submit', function (e) {
+      var form = e.target;
+      if (!form || !FORM_IDS[form.id]) return;
+      var sub = e.submitter;
+      if (sub && sub.name && sub.name !== 'checkout') return; // כפתור "עדכון" וכד'
+      var box = boxFor(form.id);
+      if (!box) return;
+      var input = box.querySelector('input[type="checkbox"]');
+      if (input && input.checked) { setInvalid(box, false); return; }
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      reject(box);
+    }, true);
+
+    document.addEventListener('change', function (e) {
+      var input = e.target;
+      if (!input || !input.matches || !input.matches('[data-seora-terms] input[type="checkbox"]')) return;
+      var box = input.closest('[data-seora-terms]');
+      if (input.checked) setInvalid(box, false);
+      // מסנכרן את שני המופעים (מגירה + דף עגלה) אם שניהם על המסך
+      document.querySelectorAll('[data-seora-terms] input[type="checkbox"]').forEach(function (other) {
+        if (other !== input) { other.checked = input.checked; if (input.checked) setInvalid(other.closest('[data-seora-terms]'), false); }
+      });
+      syncShields();
+    });
+
+    var mo = new MutationObserver(function () { syncShields(); });
+    function start() {
+      syncShields();
+      mo.observe(document.body, { childList: true, subtree: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+  })();
+</script>
+{%- endif -%}

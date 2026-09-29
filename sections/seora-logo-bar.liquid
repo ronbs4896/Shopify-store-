@@ -1,0 +1,68 @@
+{%- comment -%} ŚEORA - "As seen in" logo bar (social proof #1) {%- endcomment -%}
+{{ 'seora-cro.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign s = section.settings
+  assign copies = 1
+  if s.marquee
+    assign copies = 2
+  endif
+-%}
+{% render 'seora-section-vars', section: section %}
+{%- style -%}
+  #scro-{{ section.id }} { --scro-bar-bg: {{ s.bar_bg }}; --scro-logo-h: {{ s.logo_height }}px; --scro-speed: {{ s.speed }}s; }
+{%- endstyle -%}
+<div id="scro-{{ section.id }}" class="scro scro-logos{% if s.grayscale %} scro-logos--gray{% endif %}{% if s.marquee %} scro-logos--marquee{% endif %}">
+  <div class="page-width scro-logos__inner">
+    {%- if s.label != blank -%}<p class="scro-logos__label">{{ s.label | escape }}</p>{%- endif -%}
+    <div class="scro-logos__track">
+      <ul class="scro-logos__list" role="list">
+        {%- for i in (1..copies) -%}
+          {%- for block in section.blocks -%}
+            <li class="scro-logos__item" {% if i == 1 %}{{ block.shopify_attributes }}{% else %}aria-hidden="true"{% endif %}>
+              {%- if block.settings.link != blank %}<a href="{{ block.settings.link }}" target="_blank" rel="noopener"{% if i > 1 %} tabindex="-1"{% endif %}>{% endif -%}
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: height: 120 | image_tag: loading: 'lazy', alt: block.settings.text }}
+              {%- else -%}
+                <span class="scro-logos__text">{{ block.settings.text | default: 'LOGO' | escape }}</span>
+              {%- endif -%}
+              {%- if block.settings.link != blank %}</a>{% endif -%}
+            </li>
+          {%- endfor -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "פס לוגואים - ממליצים",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "paragraph", "content": "הוסיפו רק לוגואים של גופים שבאמת כתבו או המליצו עליכם. לוגו בלי תמונה יוצג כטקסט." },
+    { "type": "text", "id": "label", "label": "כותרת קטנה", "default": "ממליצים עלינו:" },
+    { "type": "color", "id": "bar_bg", "label": "צבע רקע הפס", "default": "#f5f5f5" },
+    { "type": "range", "id": "logo_height", "label": "גובה לוגו", "min": 16, "max": 60, "step": 2, "unit": "px", "default": 28 },
+    { "type": "checkbox", "id": "grayscale", "label": "לוגואים באפור (צבע במעבר עכבר)", "default": true },
+    { "type": "checkbox", "id": "marquee", "label": "תנועה אינסופית (מרקי)", "default": false },
+    { "type": "range", "id": "speed", "label": "מהירות תנועה (שניות לסיבוב)", "min": 10, "max": 80, "step": 5, "unit": "s", "default": 30 },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "לוגו",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "תמונת לוגו (PNG שקוף מומלץ)" },
+        { "type": "text", "id": "text", "label": "שם (טקסט חלופי / מוצג אם אין תמונה)" },
+        { "type": "url", "id": "link", "label": "קישור לכתבה (לא חובה)" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "פס לוגואים - ממליצים", "blocks": [ { "type": "logo" }, { "type": "logo" }, { "type": "logo" }, { "type": "logo" }, { "type": "logo" }, { "type": "logo" } ] }
+  ]
+}
+{% endschema %}

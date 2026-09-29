@@ -1,0 +1,51 @@
+api_version = "2025-07"
+
+[[extensions]]
+type = "ui_extension"
+name = "ŚEORA – אישור תקנון"
+handle = "seora-terms-consent"
+description = "תיבת אישור תקנון חובה בדף התשלום. חוסמת מעבר לתשלום עד לאישור ושומרת את האישור על ההזמנה."
+
+[[extensions.targeting]]
+module = "./src/Checkout.jsx"
+target = "purchase.checkout.block.render"
+
+[extensions.capabilities]
+api_access = true
+network_access = false
+block_progress = true
+
+[extensions.settings]
+  [[extensions.settings.fields]]
+  key = "label_prefix"
+  type = "single_line_text_field"
+  name = "טקסט לפני הקישור"
+  description = "ברירת מחדל: קראתי ואני מאשר/ת את"
+
+  [[extensions.settings.fields]]
+  key = "terms_link_text"
+  type = "single_line_text_field"
+  name = "טקסט קישור התקנון"
+  description = "ברירת מחדל: תקנון האתר"
+
+  [[extensions.settings.fields]]
+  key = "terms_url"
+  type = "single_line_text_field"
+  name = "קישור לתקנון"
+  description = "ברירת מחדל: https://www.seora.co.il/policies/terms-of-service"
+
+  [[extensions.settings.fields]]
+  key = "privacy_link_text"
+  type = "single_line_text_field"
+  name = "טקסט קישור מדיניות פרטיות (ריק = בלי קישור)"
+
+  [[extensions.settings.fields]]
+  key = "privacy_url"
+  type = "single_line_text_field"
+  name = "קישור למדיניות פרטיות"
+
+  [[extensions.settings.fields]]
+  key = "error_text"
+  type = "single_line_text_field"
+  name = "הודעת שגיאה"
+  description = "ברירת מחדל: כדי להמשיך לתשלום יש לאשר את תקנון האתר"
