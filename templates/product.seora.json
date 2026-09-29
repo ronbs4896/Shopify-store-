@@ -15,7 +15,9 @@
             "show_stock": true,
             "stock_bg": "#111111",
             "stock_color": "#ffffff",
-            "dot_color": "#2ecc5b"
+            "dot_color": "#2ecc5b",
+            "badge_icon": "diamond",
+            "stock_icon": "truck"
           }
         },
         "rating": {
@@ -44,24 +46,24 @@
         "feature_1": {
           "type": "feature",
           "settings": {
-            "icon": "diamond",
-            "text": "מוסאנייט בצבע D וניקיון VVS1, חיתוך Excellent",
+            "icon": "heart",
+            "text": "עיצוב קלאסי ונצחי",
             "icon_color": "#a8894f"
           }
         },
         "feature_2": {
           "type": "feature",
           "settings": {
-            "icon": "certificate",
-            "text": "תעודה גמולוגית וכרטיס מקוריות GRA",
+            "icon": "diamond",
+            "text": "מוסאנייט באיכות D VVS1",
             "icon_color": "#a8894f"
           }
         },
         "feature_3": {
           "type": "feature",
           "settings": {
-            "icon": "shield",
-            "text": "כסף סטרלינג S925 בציפוי רודיום, עמיד במים",
+            "icon": "certificate",
+            "text": "תעודה גמולוגית GRA",
             "icon_color": "#a8894f"
           }
         },
@@ -70,7 +72,10 @@
           "settings": {
             "swatch_options": "צבע, צבע הצמיד, צבע הטבעת, Color, Colour",
             "bestseller_value": "16.5 ס״מ",
-            "bestseller_text": "הנמכר ביותר"
+            "bestseller_text": "הנמכר ביותר",
+            "label_prefix": "בחרו את",
+            "size_guide_text": "מדריך מידות",
+            "size_guide_url": ""
           }
         },
         "bundle": {
@@ -78,10 +83,10 @@
           "settings": {
             "product": "טבעת-טניס-בשיבוץ-יהלומי-מוסאנייט",
             "discount_pct": 15,
-            "heading": "שדרגו לסט המלא",
+            "heading": "",
             "label": "צמיד + טבעת קשת",
             "badge_text": "-{pct}% הנחה נוספת",
-            "link_text": "למידע נוסף"
+            "link_text": ""
           }
         },
         "buy_buttons": {
@@ -95,49 +100,38 @@
             "show_pickup": false
           }
         },
-        "trust": {
-          "type": "trust",
+        "text": {
+          "type": "text",
           "settings": {
-            "show_payment": true,
-            "secure_text": "תשלום מאובטח",
-            "box_bg": "#f6f4ef",
+            "source": "metafield",
+            "text": "<p>כסף סטרלינג 925 בציפוי רודיום, משובץ באבני מוסאנייט בצבע D וניקיון VVS1 בחיתוך Excellent – הברק של יהלום, בעמידות לשימוש יומיומי. מגיע באריזת מתנה יוקרתית עם תעודת GRA.</p>"
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "text": "כסף 925 עמיד במים",
+            "icon_color": "#a8894f"
+          }
+        },
+        "trust_bar": {
+          "type": "trust_bar",
+          "settings": {
+            "bg_color": "#f6f2ea",
             "icon_color": "#a8894f",
-            "line1_icon": "truck",
-            "line1_text": "<strong>משלוח מהיר</strong> עד 5 ימי עסקים",
-            "line2_icon": "refresh",
-            "line2_text": "<strong>14 יום</strong> לביטול עסקה והחזרה",
-            "line3_icon": "shield",
-            "line3_text": "<strong>אחריות יבואן רשמי</strong> לשנה"
-          }
-        },
-        "tab_details": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "פרטי המוצר",
-            "show_description": true,
-            "content": "",
-            "page": "",
-            "open": false
-          }
-        },
-        "tab_shipping": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "משלוחים והחזרות",
-            "show_description": false,
-            "content": "<p>המשלוח מגיע עד 5 ימי עסקים (א'-ה', לא כולל חגים). ניתן לבטל עסקה בתוך 14 יום מקבלת המוצר, בהתאם לחוק הגנת הצרכן ולמדיניות ההחזרות. הפרטים המלאים בתקנון האתר.</p>",
-            "page": "",
-            "open": false
-          }
-        },
-        "tab_warranty": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "אחריות ותעודות",
-            "show_description": false,
-            "content": "<p>כל תכשיט מגיע עם תעודה גמולוגית וכרטיס מקוריות של GRA, ועם אחריות יבואן רשמי ובלעדי לשנה. האחריות אינה כוללת נזק שנגרם משימוש לא תקין, מכה, שבר או אובדן.</p>",
-            "page": "",
-            "open": false
+            "item1_icon": "truck",
+            "item1_title": "משלוח מהיר",
+            "item1_text": "עד 5 ימי עסקים",
+            "item2_icon": "refresh",
+            "item2_title": "החזרה וביטול",
+            "item2_text": "14 ימים בקלות",
+            "item3_icon": "shield",
+            "item3_title": "תשלום מאובטח",
+            "item3_text": "באישור תקן PCI",
+            "item4_icon": "headset",
+            "item4_title": "שירות לקוחות אישי",
+            "item4_text": "לכל שאלה"
           }
         }
       },
@@ -146,16 +140,15 @@
         "rating",
         "title",
         "price",
+        "text",
         "feature_1",
         "feature_2",
         "feature_3",
+        "feature_4",
         "variant_picker",
         "bundle",
         "buy_buttons",
-        "trust",
-        "tab_details",
-        "tab_shipping",
-        "tab_warranty"
+        "trust_bar"
       ],
       "settings": {
         "stock_in_text": "במלאי - משלוח מיידי",
@@ -169,17 +162,17 @@
         "button_bg": "#111111",
         "button_text_color": "#ffffff",
         "button_radius": 10,
-        "title_size": 30,
-        "price_size": 34,
+        "title_size": 32,
+        "price_size": 36,
         "swatch_size": 56,
-        "pill_height": 58,
+        "pill_height": 64,
         "pill_min_width": 160,
         "media_size": "medium",
         "media_position": "left",
         "gallery_layout": "thumbnail",
         "mobile_thumbnails": "show",
         "media_fit": "contain",
-        "image_zoom": "none",
+        "image_zoom": "lightbox",
         "constrain_to_viewport": false,
         "hide_variants": true,
         "display_variant_image_first": false,
@@ -187,7 +180,12 @@
         "enable_sticky_info": true,
         "color_scheme": "background-1",
         "padding_top": 28,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "bg_color": "#faf8f5",
+        "features_style": "tiles",
+        "media_badge_text": "נמכר ביותר",
+        "media_badge_icon": "fire",
+        "show_media_arrows": true
       }
     },
     "seora_logos": {

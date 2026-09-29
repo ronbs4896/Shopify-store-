@@ -90,7 +90,7 @@
           const span = save.querySelector('span');
           if (span && onSale) span.textContent = this.money(v.compare_at_price - v.price);
         }
-        const inst = box.querySelector('.spi-installments');
+        const inst = box.querySelector('.spi-installments__text') || box.querySelector('.spi-installments');
         const count = parseInt(box.dataset.installments || '0', 10);
         if (inst && count > 1) {
           const tpl = box.dataset.installmentsText || '';

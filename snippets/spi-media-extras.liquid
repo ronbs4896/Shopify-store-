@@ -1,0 +1,55 @@
+{%- comment -%}
+  Overlay for the main product image: badge + desktop arrows. Moved into the gallery viewer by JS.
+  Params: section, product
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign has_badge = false
+  if s.media_badge_text != blank
+    assign has_badge = true
+  endif
+  assign has_arrows = false
+  if s.show_media_arrows and product.media.size > 1
+    assign has_arrows = true
+  endif
+-%}
+{%- if has_badge or has_arrows -%}
+  <div class="spi-media-extras" data-spi-media-extras="{{ section.id }}" hidden>
+    {%- if has_badge -%}
+      <span class="spi-media-badge">{%- if s.media_badge_icon != 'none' -%}{% render 'seora-icon', icon: s.media_badge_icon %}{%- endif -%}{{ s.media_badge_text | escape }}</span>
+    {%- endif -%}
+    {%- if has_arrows -%}
+      <button type="button" class="spi-media-arrow spi-media-arrow--prev" data-dir="-1" aria-label="{{ 'general.slider.previous_slide' | t }}">{% render 'seora-icon', icon: 'chevron-right' %}</button>
+      <button type="button" class="spi-media-arrow spi-media-arrow--next" data-dir="1" aria-label="{{ 'general.slider.next_slide' | t }}">{% render 'seora-icon', icon: 'chevron-left' %}</button>
+    {%- endif -%}
+  </div>
+  <script>
+    (function () {
+      var sid = {{ section.id | json }};
+      function init() {
+        var extras = document.querySelector('[data-spi-media-extras="' + sid + '"]');
+        var viewer = document.getElementById('GalleryViewer-' + sid);
+        if (!extras || !viewer || extras.dataset.ready) return;
+        extras.dataset.ready = '1';
+        viewer.classList.add('spi-viewer');
+        viewer.appendChild(extras);
+        extras.hidden = false;
+        extras.addEventListener('click', function (e) {
+          var b = e.target.closest('.spi-media-arrow');
+          if (!b) return;
+          var dir = parseInt(b.dataset.dir, 10);
+          var thumbs = Array.prototype.slice.call(document.querySelectorAll('#GalleryThumbnails-' + sid + ' .thumbnail'))
+            .filter(function (t) { return t.offsetParent !== null; });
+          if (thumbs.length) {
+            var i = thumbs.findIndex(function (t) { return t.getAttribute('aria-current') === 'true'; });
+            thumbs[(i + dir + thumbs.length) % thumbs.length].click();
+            return;
+          }
+          var btn = viewer.querySelector(dir > 0 ? '.slider-button--next' : '.slider-button--prev');
+          if (btn) btn.click();
+        });
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+    })();
+  </script>
+{%- endif -%}

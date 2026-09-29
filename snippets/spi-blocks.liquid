@@ -12,9 +12,17 @@
       {% render block %}
 
     {%- when 'badges' -%}
+      {%- liquid
+        assign next_block = section.blocks[forloop.index]
+        assign toprow_open = false
+        if next_block.type == 'rating'
+          assign toprow_open = true
+        endif
+      -%}
+      {%- if toprow_open -%}<div class="spi-toprow">{%- endif -%}
       <div class="spi-badges" {{ block.shopify_attributes }}>
         {%- if block.settings.badge_text != blank -%}
-          <span class="spi-badge" style="background: {{ block.settings.badge_bg }}; color: {{ block.settings.badge_color }};">{{ block.settings.badge_text | escape }}</span>
+          <span class="spi-badge" style="background: {{ block.settings.badge_bg }}; color: {{ block.settings.badge_color }};">{%- if block.settings.badge_icon != 'none' -%}<i class="spi-badge__icon">{% render 'seora-icon', icon: block.settings.badge_icon %}</i>{%- endif -%}{{ block.settings.badge_text | escape }}</span>
         {%- endif -%}
         {%- if block.settings.badge2_text != blank -%}
           <span class="spi-badge" style="background: {{ block.settings.badge2_bg }}; color: {{ block.settings.badge2_color }};">{{ block.settings.badge2_text | escape }}</span>
@@ -22,7 +30,7 @@
         {%- if block.settings.show_stock -%}
           <div id="Inventory-{{ sid }}" class="spi-stock" role="status" data-bg="{{ block.settings.stock_bg }}" data-color="{{ block.settings.stock_color }}">
             {%- if cv.available -%}
-              <span class="spi-badge spi-badge--in" style="background: {{ block.settings.stock_bg }}; color: {{ block.settings.stock_color }};"><i class="spi-badge__dot" style="background: {{ block.settings.dot_color }}; box-shadow: 0 0 0 0.3rem {{ block.settings.dot_color | color_modify: 'alpha', 0.25 }};"></i>{{ s.stock_in_text | escape }}</span>
+              <span class="spi-badge spi-badge--in" style="background: {{ block.settings.stock_bg }}; color: {{ block.settings.stock_color }};">{%- if block.settings.stock_icon != 'none' -%}<i class="spi-badge__icon">{% render 'seora-icon', icon: block.settings.stock_icon %}</i>{%- else -%}<i class="spi-badge__dot" style="background: {{ block.settings.dot_color }}; box-shadow: 0 0 0 0.3rem {{ block.settings.dot_color | color_modify: 'alpha', 0.25 }};"></i>{%- endif -%}{{ s.stock_in_text | escape }}</span>
             {%- else -%}
               <span class="spi-badge spi-badge--out" style="background: {{ block.settings.stock_bg }}; color: {{ block.settings.stock_color }};">{{ s.stock_out_text | escape }}</span>
             {%- endif -%}
@@ -43,6 +51,14 @@
         endif
         assign pct = rating | times: 20.0 | at_most: 100 | at_least: 0
       -%}
+      {%- liquid
+        assign prev_index = forloop.index0 | minus: 1
+        assign prev_block = section.blocks[prev_index]
+        assign toprow_close = false
+        if forloop.index0 > 0 and prev_block.type == 'badges'
+          assign toprow_close = true
+        endif
+      -%}
       <div class="spi-rating" style="--spi-star: {{ block.settings.star_color }};" {{ block.shopify_attributes }}>
         {%- capture star -%}<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.95 6.2 6.8.85-5 4.75 1.3 6.75L12 17.7l-6.05 3.35 1.3-6.75-5-4.75 6.8-.85z"/></svg>{%- endcapture -%}
         <span class="spi-stars" role="img" aria-label="{{ rating }} / 5">
@@ -54,6 +70,7 @@
           <span class="spi-rating__count">({{ count }} {{ block.settings.count_label | escape }})</span>
         {%- endif -%}
       </div>
+      {%- if toprow_close -%}</div>{%- endif -%}
 
     {%- when 'feature' -%}
       {%- liquid
@@ -69,7 +86,7 @@
           assign close_list = false
         endif
       -%}
-      {%- if open_list -%}<ul class="spi-features">{%- endif -%}
+      {%- if open_list -%}<ul class="spi-features spi-features--{{ s.features_style | default: 'list' }}" role="list">{%- endif -%}
         <li class="spi-feature" {{ block.shopify_attributes }}>
           <span class="spi-feature__icon" style="color: {{ block.settings.icon_color }};">
             {%- case block.settings.icon -%}
@@ -120,7 +137,17 @@
               endfor
             -%}
             <fieldset class="js product-form__input spi-opt {% if is_swatch %}spi-opt--swatch{% else %}spi-opt--buttons{% endif %}">
-              <legend class="form__label spi-opt__label">{{ option.name | escape }}: <span class="spi-opt__value">{{ option.selected_value | escape }}</span></legend>
+              {%- if block.settings.label_prefix != blank -%}
+                <legend class="form__label spi-opt__label spi-opt__label--prompt">
+                  <span class="spi-opt__name">{{ block.settings.label_prefix | escape }} {{ option.name | escape }}:</span>
+                  {%- if forloop.first and block.settings.size_guide_url != blank and block.settings.size_guide_text != blank -%}
+                    <a class="spi-sizeguide" href="{{ block.settings.size_guide_url }}" target="_blank" rel="noopener">{% render 'seora-icon', icon: 'ruler' %}<span>{{ block.settings.size_guide_text | escape }}</span></a>
+                  {%- endif -%}
+                  <span class="spi-opt__value" hidden>{{ option.selected_value | escape }}</span>
+                </legend>
+              {%- else -%}
+                <legend class="form__label spi-opt__label">{{ option.name | escape }}: <span class="spi-opt__value">{{ option.selected_value | escape }}</span></legend>
+              {%- endif -%}
               <div class="spi-opt__values">
                 {%- for value in option.values -%}
                   {%- liquid
@@ -213,26 +240,18 @@
           assign factor = 100 | minus: pct
           assign bundle_price = sum_price | times: factor | divided_by: 100.0 | round
           assign bundle_label = block.settings.label | default: addon.title
-          assign badge_text = block.settings.badge_text | replace: '{pct}', pct
+          assign pct_bdi = '<bdi dir="ltr">-' | append: pct | append: '%</bdi>'
+          assign badge_text = block.settings.badge_text | replace: '-{pct}%', pct_bdi | replace: '{pct}', pct
         -%}
         <div class="spi-bundle" data-pct="{{ pct }}" {{ block.shopify_attributes }}>
           {%- if block.settings.heading != blank -%}
             <p class="spi-bundle__heading">{{ block.settings.heading | escape }}</p>
           {%- endif -%}
           <div class="spi-bundle__card">
-            {%- if badge_text != blank -%}<span class="spi-bundle__badge">{{ badge_text }}</span>{%- endif -%}
-            {%- if block.settings.link_text != blank -%}
-              <a class="spi-bundle__link" href="{{ addon.url }}" target="_blank" rel="noopener">{{ block.settings.link_text | escape }}</a>
-            {%- endif -%}
-            <input type="checkbox" class="spi-bundle__check" id="spi-bundle-{{ block.id }}" aria-label="{{ bundle_label | escape }}">
-            <div class="spi-bundle__body">
-              <label class="spi-bundle__img" for="spi-bundle-{{ block.id }}">
-                {%- if addon.featured_image -%}
-                  {{ addon.featured_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: addon.title }}
-                {%- endif -%}
-              </label>
-              <div class="spi-bundle__info">
-                <label class="spi-bundle__name" for="spi-bundle-{{ block.id }}">{{ bundle_label | escape }}</label>
+            <div class="spi-bundle__main">
+              <label class="spi-bundle__name" for="spi-bundle-{{ block.id }}">{{ bundle_label | escape }}</label>
+              <div class="spi-bundle__controls">
+                <input type="checkbox" class="spi-bundle__check" id="spi-bundle-{{ block.id }}" aria-label="{{ bundle_label | escape }}">
                 {%- if addon.variants.size > 1 -%}
                   <select class="spi-bundle__variant" aria-label="{{ addon.options.first | escape }}">
                     {%- for v in addon.variants -%}
@@ -244,10 +263,21 @@
                 {%- endif -%}
               </div>
             </div>
-            <div class="spi-bundle__prices">
-              <span class="spi-bundle__sale">{% render 'seora-money', amount: bundle_price, symbol: sym %}</span>
-              <s class="spi-bundle__compare">{% render 'seora-money', amount: sum_compare, symbol: sym %}</s>
+            <div class="spi-bundle__deal">
+              {%- if badge_text != blank -%}<span class="spi-bundle__badge">{{ badge_text }}</span>{%- endif -%}
+              <div class="spi-bundle__prices">
+                <span class="spi-bundle__sale">{% render 'seora-money', amount: bundle_price, symbol: sym %}</span>
+                <s class="spi-bundle__compare">{% render 'seora-money', amount: sum_compare, symbol: sym %}</s>
+              </div>
+              {%- if block.settings.link_text != blank -%}
+                <a class="spi-bundle__link" href="{{ addon.url }}" target="_blank" rel="noopener">{{ block.settings.link_text | escape }}</a>
+              {%- endif -%}
             </div>
+            <label class="spi-bundle__img" for="spi-bundle-{{ block.id }}">
+              {%- if addon.featured_image -%}
+                {{ addon.featured_image | image_url: width: 240 | image_tag: loading: 'lazy', alt: addon.title }}
+              {%- endif -%}
+            </label>
           </div>
         </div>
       {%- endif -%}
@@ -278,7 +308,7 @@
             assign inst_text = inst_text | replace: '{count}', inst_count
             assign inst_text = inst_text | replace: '{amount}', inst_money
           -%}
-          <p class="spi-installments">{{ inst_text }}</p>
+          <p class="spi-installments"><i class="spi-installments__icon">{% render 'seora-icon', icon: 'card' %}</i><span class="spi-installments__text">{{ inst_text }}</span></p>
         {%- endif -%}
       </div>
 
@@ -326,7 +356,16 @@
       </div>
 
     {%- when 'text' -%}
-      <div class="spi-text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+      {%- liquid
+        assign t_out = block.settings.text
+        if block.settings.source == 'metafield' and product.metafields.custom.short_description != blank
+          assign t_out = product.metafields.custom.short_description | metafield_tag
+        endif
+      -%}
+      {%- if t_out != blank -%}<div class="spi-text rte" {{ block.shopify_attributes }}>{{ t_out }}</div>{%- endif -%}
+
+    {%- when 'trust_bar' -%}
+      {%- comment -%} rendered full-width under the product grid by main-product-seora {%- endcomment -%}
 
     {%- when 'collapsible_tab' -%}
       <details class="spi-accordion" {{ block.shopify_attributes }} {% if block.settings.open %}open{% endif %}>

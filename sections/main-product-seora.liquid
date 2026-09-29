@@ -40,6 +40,7 @@
     <div class="product product--{{ s.media_size }} product--{{ s.media_position }} product--{{ s.gallery_layout }} product--mobile-{{ s.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper{% if s.media_position == 'right' %} medium-hide large-up-hide{% endif %}">
         {% render 'product-media-gallery', variant_images: variant_images %}
+        {% render 'spi-media-extras', section: section, product: product %}
       </div>
 
       <div class="product__info-wrapper grid__item">
@@ -68,6 +69,31 @@
         </div>
       {%- endif -%}
     </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'trust_bar' -%}
+        <ul class="spi-trustbar" role="list" style="--spi-trustbar-bg: {{ block.settings.bg_color }}; --spi-trustbar-icon: {{ block.settings.icon_color }};" {{ block.shopify_attributes }}>
+          {%- for i in (1..4) -%}
+            {%- liquid
+              assign k_icon = 'item' | append: i | append: '_icon'
+              assign k_title = 'item' | append: i | append: '_title'
+              assign k_text = 'item' | append: i | append: '_text'
+              assign tb_title = block.settings[k_title]
+              assign tb_text = block.settings[k_text]
+            -%}
+            {%- if tb_title != blank or tb_text != blank -%}
+              <li class="spi-trustbar__item">
+                <span class="spi-trustbar__icon">{% render 'seora-icon', icon: block.settings[k_icon] %}</span>
+                <span class="spi-trustbar__txt">
+                  {%- if tb_title != blank -%}<strong>{{ tb_title | escape }}</strong>{%- endif -%}
+                  {%- if tb_text != blank -%}<span>{{ tb_text | escape }}</span>{%- endif -%}
+                </span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    {%- endfor -%}
 
     {% render 'product-media-modal', variant_images: variant_images %}
 
@@ -120,9 +146,14 @@
     { "type": "checkbox", "id": "display_variant_image_first", "label": "הצג תמונת וריאנט ראשונה", "default": false },
     { "type": "checkbox", "id": "enable_video_looping", "label": "וידאו בלופ", "default": true },
     { "type": "checkbox", "id": "enable_sticky_info", "label": "מידע מוצר דביק בדסקטופ", "default": true },
+    { "type": "text", "id": "media_badge_text", "label": "תגית על התמונה הראשית (ריק = בלי)", "default": "נמכר ביותר" },
+    { "type": "select", "id": "media_badge_icon", "label": "אייקון התגית", "options": [ { "value": "none", "label": "ללא" }, { "value": "diamond", "label": "יהלום" }, { "value": "truck", "label": "משלוח" }, { "value": "certificate", "label": "תעודה" }, { "value": "shield", "label": "מגן" }, { "value": "star", "label": "כוכב" }, { "value": "sparkles", "label": "נצנוץ" }, { "value": "fire", "label": "אש" }, { "value": "gift", "label": "מתנה" } ], "default": "fire" },
+    { "type": "checkbox", "id": "show_media_arrows", "label": "חיצים על התמונה הראשית (דסקטופ)", "default": true },
 
     { "type": "header", "content": "כללי" },
     { "type": "color_scheme", "id": "color_scheme", "label": "ערכת צבעים", "default": "background-1" },
+    { "type": "color", "id": "bg_color", "label": "צבע רקע לסקשן (ריק = לפי ערכת הצבעים)" },
+    { "type": "select", "id": "features_style", "label": "תצוגת שורות היתרון", "options": [ { "value": "tiles", "label": "אייקונים בשורה (כרטיסים)" }, { "value": "list", "label": "רשימה" } ], "default": "tiles" },
     { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 },
     { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 60 }
   ],
@@ -136,12 +167,14 @@
         { "type": "text", "id": "badge_text", "label": "תגית 1 - טקסט", "default": "הצמיד הכי נמכר בישראל" },
         { "type": "color", "id": "badge_bg", "label": "תגית 1 - רקע", "default": "#a8894f" },
         { "type": "color", "id": "badge_color", "label": "תגית 1 - טקסט", "default": "#ffffff" },
+        { "type": "select", "id": "badge_icon", "label": "תגית 1 - אייקון", "options": [ { "value": "none", "label": "ללא" }, { "value": "diamond", "label": "יהלום" }, { "value": "truck", "label": "משלוח" }, { "value": "certificate", "label": "תעודה" }, { "value": "shield", "label": "מגן" }, { "value": "star", "label": "כוכב" }, { "value": "sparkles", "label": "נצנוץ" }, { "value": "fire", "label": "אש" }, { "value": "gift", "label": "מתנה" } ], "default": "diamond" },
         { "type": "text", "id": "badge2_text", "label": "תגית 2 - טקסט (לא חובה)" },
         { "type": "color", "id": "badge2_bg", "label": "תגית 2 - רקע", "default": "#f5ead6" },
         { "type": "color", "id": "badge2_color", "label": "תגית 2 - טקסט", "default": "#111111" },
         { "type": "checkbox", "id": "show_stock", "label": "הצג תגית מלאי (הטקסטים בהגדרות הסקשן)", "default": true },
         { "type": "color", "id": "stock_bg", "label": "תגית מלאי - רקע", "default": "#111111" },
         { "type": "color", "id": "stock_color", "label": "תגית מלאי - טקסט", "default": "#ffffff" },
+        { "type": "select", "id": "stock_icon", "label": "תגית מלאי - אייקון (ללא = נקודה ירוקה)", "options": [ { "value": "none", "label": "ללא" }, { "value": "diamond", "label": "יהלום" }, { "value": "truck", "label": "משלוח" }, { "value": "certificate", "label": "תעודה" }, { "value": "shield", "label": "מגן" }, { "value": "star", "label": "כוכב" }, { "value": "sparkles", "label": "נצנוץ" }, { "value": "fire", "label": "אש" }, { "value": "gift", "label": "מתנה" } ], "default": "truck" },
         { "type": "color", "id": "dot_color", "label": "תגית מלאי - נקודה", "default": "#2ecc5b" }
       ]
     },
@@ -179,7 +212,10 @@
         { "type": "text", "id": "swatch_options", "label": "אופציות שיוצגו כעיגולי צבע (מופרד בפסיק)", "default": "צבע, צבע הצמיד, צבע הטבעת, Color, Colour" },
         { "type": "textarea", "id": "swatch_map", "label": "מיפוי צבעים (שורה לכל ערך: שם:CSS)", "info": "אפשר צבע או גרדיאנט. ערך שלא במיפוי יקבל את השם שלו כצבע CSS.", "default": "כסף:linear-gradient(135deg,#f6f6f6 0%,#cfcfcf 30%,#8e8e8e 60%,#e9e9e9 100%)\nצהוב:linear-gradient(135deg,#fbecb2 0%,#eacc6e 35%,#c9a24f 65%,#f5df95 100%)\nרוז:linear-gradient(135deg,#f8dcd2 0%,#ebb9a8 40%,#d99b88 70%,#f4cfc4 100%)\nזהב:linear-gradient(135deg,#fbecb2 0%,#eacc6e 35%,#c9a24f 65%,#f5df95 100%)\nרוז גולד:linear-gradient(135deg,#f8dcd2 0%,#ebb9a8 40%,#d99b88 70%,#f4cfc4 100%)\nSilver:linear-gradient(135deg,#f6f6f6 0%,#cfcfcf 30%,#8e8e8e 60%,#e9e9e9 100%)\nGold:linear-gradient(135deg,#fbecb2 0%,#eacc6e 35%,#c9a24f 65%,#f5df95 100%)\nRose Gold:linear-gradient(135deg,#f8dcd2 0%,#ebb9a8 40%,#d99b88 70%,#f4cfc4 100%)" },
         { "type": "text", "id": "bestseller_value", "label": "ערכים שיקבלו תגית (מופרד בפסיק)", "default": "16.5 ס״מ" },
-        { "type": "text", "id": "bestseller_text", "label": "טקסט התגית", "default": "הנמכר ביותר" }
+        { "type": "text", "id": "bestseller_text", "label": "טקסט התגית", "default": "הנמכר ביותר" },
+        { "type": "text", "id": "label_prefix", "label": "טקסט לפני שם האפשרות (למשל: בחרו את). ריק = שם + הערך הנבחר", "default": "בחרו את" },
+        { "type": "text", "id": "size_guide_text", "label": "טקסט מדריך מידות", "default": "מדריך מידות" },
+        { "type": "url", "id": "size_guide_url", "label": "קישור למדריך מידות (ריק = לא מוצג)" }
       ]
     },
     {
@@ -245,7 +281,35 @@
         { "type": "inline_richtext", "id": "line3_text", "label": "שורה 3 - טקסט", "default": "<strong>אחריות יבואן רשמי</strong> לשנה" }
       ]
     },
-    { "type": "text", "name": "טקסט", "settings": [ { "type": "richtext", "id": "text", "label": "טקסט", "default": "<p>טקסט חופשי</p>" } ] },
+    {
+      "type": "text",
+      "name": "טקסט / תיאור קצר",
+      "settings": [
+        { "type": "select", "id": "source", "label": "מקור הטקסט", "options": [ { "value": "custom", "label": "הטקסט כאן" }, { "value": "metafield", "label": "שדה מוצר custom.short_description (אם ריק: הטקסט כאן)" } ], "default": "custom" },
+        { "type": "richtext", "id": "text", "label": "טקסט", "default": "<p>טקסט חופשי</p>" }
+      ]
+    },
+    {
+      "type": "trust_bar",
+      "name": "פס אמון מתחת לתמונות",
+      "limit": 1,
+      "settings": [
+        { "type": "color", "id": "bg_color", "label": "רקע", "default": "#f6f2ea" },
+        { "type": "color", "id": "icon_color", "label": "צבע אייקונים", "default": "#a8894f" },
+        { "type": "select", "id": "item1_icon", "label": "פריט 1 - אייקון", "options": [ { "value": "truck", "label": "משלוח" }, { "value": "refresh", "label": "החזרה" }, { "value": "shield", "label": "מגן" }, { "value": "lock", "label": "מנעול" }, { "value": "headset", "label": "שירות לקוחות" }, { "value": "certificate", "label": "תעודה" }, { "value": "gift", "label": "מתנה" }, { "value": "card", "label": "כרטיס אשראי" }, { "value": "clock", "label": "שעון" }, { "value": "diamond", "label": "יהלום" }, { "value": "heart", "label": "לב" }, { "value": "star", "label": "כוכב" } ], "default": "truck" },
+        { "type": "text", "id": "item1_title", "label": "פריט 1 - כותרת", "default": "משלוח מהיר" },
+        { "type": "text", "id": "item1_text", "label": "פריט 1 - טקסט", "default": "עד 5 ימי עסקים" },
+        { "type": "select", "id": "item2_icon", "label": "פריט 2 - אייקון", "options": [ { "value": "truck", "label": "משלוח" }, { "value": "refresh", "label": "החזרה" }, { "value": "shield", "label": "מגן" }, { "value": "lock", "label": "מנעול" }, { "value": "headset", "label": "שירות לקוחות" }, { "value": "certificate", "label": "תעודה" }, { "value": "gift", "label": "מתנה" }, { "value": "card", "label": "כרטיס אשראי" }, { "value": "clock", "label": "שעון" }, { "value": "diamond", "label": "יהלום" }, { "value": "heart", "label": "לב" }, { "value": "star", "label": "כוכב" } ], "default": "refresh" },
+        { "type": "text", "id": "item2_title", "label": "פריט 2 - כותרת", "default": "החזרה וביטול" },
+        { "type": "text", "id": "item2_text", "label": "פריט 2 - טקסט", "default": "14 ימים בקלות" },
+        { "type": "select", "id": "item3_icon", "label": "פריט 3 - אייקון", "options": [ { "value": "truck", "label": "משלוח" }, { "value": "refresh", "label": "החזרה" }, { "value": "shield", "label": "מגן" }, { "value": "lock", "label": "מנעול" }, { "value": "headset", "label": "שירות לקוחות" }, { "value": "certificate", "label": "תעודה" }, { "value": "gift", "label": "מתנה" }, { "value": "card", "label": "כרטיס אשראי" }, { "value": "clock", "label": "שעון" }, { "value": "diamond", "label": "יהלום" }, { "value": "heart", "label": "לב" }, { "value": "star", "label": "כוכב" } ], "default": "shield" },
+        { "type": "text", "id": "item3_title", "label": "פריט 3 - כותרת", "default": "תשלום מאובטח" },
+        { "type": "text", "id": "item3_text", "label": "פריט 3 - טקסט", "default": "באישור תקן PCI" },
+        { "type": "select", "id": "item4_icon", "label": "פריט 4 - אייקון", "options": [ { "value": "truck", "label": "משלוח" }, { "value": "refresh", "label": "החזרה" }, { "value": "shield", "label": "מגן" }, { "value": "lock", "label": "מנעול" }, { "value": "headset", "label": "שירות לקוחות" }, { "value": "certificate", "label": "תעודה" }, { "value": "gift", "label": "מתנה" }, { "value": "card", "label": "כרטיס אשראי" }, { "value": "clock", "label": "שעון" }, { "value": "diamond", "label": "יהלום" }, { "value": "heart", "label": "לב" }, { "value": "star", "label": "כוכב" } ], "default": "headset" },
+        { "type": "text", "id": "item4_title", "label": "פריט 4 - כותרת", "default": "שירות לקוחות אישי" },
+        { "type": "text", "id": "item4_text", "label": "פריט 4 - טקסט", "default": "לכל שאלה" }
+      ]
+    },
     {
       "type": "collapsible_tab",
       "name": "אקורדיון",
