@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -311,77 +320,6 @@
         "padding_bottom": 76,
         "padding_top_mb": 0,
         "padding_bottom_mb": 36
-      }
-    },
-    "moissanite_compare_Xk3Q7p": {
-      "type": "moissanite-compare",
-      "blocks": {
-        "row_1": {
-          "type": "row",
-          "settings": {
-            "featured_text": "החזר אור פי 2.4",
-            "other_text": "ברק בסיסי ותלוי אבן"
-          }
-        },
-        "row_2": {
-          "type": "row",
-          "settings": {
-            "featured_text": "צבע D ניקיון VVS1",
-            "other_text": "צבע וניקיון משתנים"
-          }
-        },
-        "row_3": {
-          "type": "row",
-          "settings": {
-            "featured_text": "קושי 9.5 בסולם מוס",
-            "other_text": "קושי 10 בסולם מוס"
-          }
-        },
-        "row_4": {
-          "type": "row",
-          "settings": {
-            "featured_text": "תעודה GRA בינלאומית",
-            "other_text": "תעודות משתנות ומבלבלות"
-          }
-        }
-      },
-      "block_order": [
-        "row_1",
-        "row_2",
-        "row_3",
-        "row_4"
-      ],
-      "settings": {
-        "subtitle": "מה זה בכלל מואסנייט מעבדה?",
-        "heading": "אותה נוכחות",
-        "heading_highlight": "בעשירית מחיר!",
-        "highlight_underline": true,
-        "description": "<p>אבן חן אמיתית תוצרת ארה\"ב, שמפזרת יותר אור מיהלום. הנה הנתונים האמיתיים, בלי מסיכות.</p>",
-        "featured_title": "מוסאנייט IF1",
-        "featured_price": "₪1,499",
-        "other_title": "יהלום טבעי בסיסי",
-        "other_price": "+₪15,000",
-        "cta_text": "מכשיר Diamond Tester לא רואה בהבדלים!",
-        "hand_width": 520,
-        "hand_opacity": 100,
-        "hide_hand_mobile": true,
-        "bg_color": "#f7f6f3",
-        "text_color": "#111111",
-        "gold_start": "#c9a24f",
-        "gold_end": "#8a6a2e",
-        "card_bg": "#ffffff",
-        "featured_bg": "#f5ead6",
-        "featured_badge_bg": "#111111",
-        "featured_badge_text": "#ffffff",
-        "other_badge_bg": "#f5ead6",
-        "other_badge_text": "#111111",
-        "cta_bg": "#0f0f0f",
-        "cta_text_color": "#ffffff",
-        "card_radius": 24,
-        "padding_top": 64,
-        "padding_bottom": 64,
-        "featured_image": "shopify://shop_images/seora-compare-moissanite.png",
-        "other_image": "shopify://shop_images/seora-compare-diamond.png"
       }
     },
     "shoppable_video_new_yQVWcy": {
@@ -774,7 +712,6 @@
   },
   "order": [
     "main",
-    "moissanite_compare_Xk3Q7p",
     "shoppable_video_new_yQVWcy",
     "featured_collection_tP9GP7",
     "image_banner_xBTq9P",
