@@ -226,11 +226,59 @@
       {%- endunless -%}
 
     {%- when 'bundle' -%}
+      {%- comment -%} Per-product override from the product admin (metafields custom.upsell_*), falling back to the block settings. {%- endcomment -%}
       {%- liquid
+        assign mf = product.metafields.custom
         assign addon = block.settings.product
         assign pct = block.settings.discount_pct
+        assign mode = block.settings.offer_type | default: 'set'
+        assign offer_price = block.settings.offer_price
+        assign up_label = block.settings.label
+        assign up_badge = block.settings.badge_text
+        assign up_image = block.settings.image
+        assign up_hide = false
+        if mf.upsell_product.value != blank
+          assign addon = mf.upsell_product.value
+          assign up_label = ''
+          assign up_image = nil
+        endif
+        case mf.upsell_offer.value
+          when 'הנחה על הסט'
+            assign mode = 'set'
+          when 'הנחה על המוצר הנוסף'
+            assign mode = 'addon_pct'
+          when 'מחיר מבצע קבוע'
+            assign mode = 'addon_price'
+          when 'מתנה'
+            assign mode = 'gift'
+          when 'בלי אפסייל'
+            assign up_hide = true
+        endcase
+        if mf.upsell_offer.value != blank or mf.upsell_product.value != blank
+          case mode
+            when 'gift'
+              assign up_badge = 'מתנה בשווי {value}'
+            when 'addon_price'
+              assign up_badge = 'מחיר מיוחד בהזמנה משותפת'
+          endcase
+        endif
+        if mf.upsell_discount.value != blank
+          assign pct = mf.upsell_discount.value
+        endif
+        if mf.upsell_price.value != blank
+          assign offer_price = mf.upsell_price.value
+        endif
+        if mf.upsell_title.value != blank
+          assign up_label = mf.upsell_title.value
+        endif
+        if mf.upsell_badge.value != blank
+          assign up_badge = mf.upsell_badge.value
+        endif
+        if addon.id == product.id
+          assign up_hide = true
+        endif
       -%}
-      {%- if addon != blank and addon.available -%}
+      {%- if up_hide == false and addon != blank and addon.available -%}
         {%- liquid
           assign av = addon.selected_or_first_available_variant
           assign main_compare = cv.compare_at_price | default: cv.price
@@ -239,10 +287,9 @@
           assign sum_compare = main_compare | plus: addon_compare
           assign factor = 100 | minus: pct
           assign bundle_price = sum_price | times: factor | divided_by: 100.0 | round
-          assign bundle_label = block.settings.label | default: addon.title
+          assign bundle_label = up_label | default: addon.title
           assign pct_bdi = '<bdi dir="ltr">-' | append: pct | append: '%</bdi>'
-          assign mode = block.settings.offer_type | default: 'set'
-          assign offer_cents = block.settings.offer_price | default: 0 | times: 100 | round
+          assign offer_cents = offer_price | default: 0 | times: 100 | round
           case mode
             when 'addon_pct'
               assign deal_price = av.price | times: factor | divided_by: 100.0 | round
@@ -258,11 +305,11 @@
               assign deal_compare = sum_compare
           endcase
           assign free_text = block.settings.free_text | default: 'חינם'
-          assign bundle_img = block.settings.image | default: addon.featured_image
+          assign bundle_img = up_image | default: addon.featured_image
         -%}
         {%- capture value_money -%}{% render 'seora-money', amount: addon_compare, symbol: sym %}{%- endcapture -%}
         {%- liquid
-          assign badge_text = block.settings.badge_text | escape | replace: '-{pct}%', pct_bdi | replace: '{pct}', pct | replace: '{value}', value_money
+          assign badge_text = up_badge | escape | replace: '-{pct}%', pct_bdi | replace: '{pct}', pct | replace: '{value}', value_money
         -%}
         <div class="spi-bundle spi-bundle--{{ mode }}" data-pct="{{ pct }}" data-mode="{{ mode }}" data-offer="{{ offer_cents }}" data-free-text="{{ free_text | escape }}" {{ block.shopify_attributes }}>
           {%- if block.settings.heading != blank -%}
