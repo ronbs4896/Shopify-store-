@@ -148,6 +148,9 @@
         } else if (mode === 'addon_price') {
           price = parseInt(wrap.dataset.offer, 10) || 0;
           cmp = addonCompare;
+        } else if (mode === 'regular') {
+          price = addonPrice;
+          cmp = addonCompare;
         } else if (mode === 'gift') {
           price = 0;
           cmp = addonCompare;

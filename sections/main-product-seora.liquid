@@ -234,8 +234,10 @@
         { "type": "range", "id": "discount_pct", "label": "אחוז הנחה", "min": 0, "max": 60, "step": 1, "unit": "%", "default": 15 },
         { "type": "number", "id": "offer_price", "label": "מחיר מבצע קבוע (₪)", "info": "רק לסוג 'מחיר מבצע קבוע'." },
         { "type": "text", "id": "free_text", "label": "טקסט במקום מחיר במתנה", "default": "חינם" },
+        { "type": "checkbox", "id": "sale_override", "label": "מבצע באתר: מוצר נוסף במחיר רגיל", "default": false, "info": "כשיש הנחה אוטומטית על כל האתר שלא מצטרפת להנחות אחרות. מבטל את הנחות האפסייל בתצוגה (חוץ ממתנה). ההגדרות בכל מוצר נשמרות." },
+        { "type": "text", "id": "sale_badge", "label": "תגית בזמן מבצע באתר", "default": "גם עליו 40% הנחה בקופה" },
         { "type": "text", "id": "badge_text", "label": "תגית ({pct} = אחוז, {value} = שווי)", "default": "-{pct}% הנחה נוספת", "info": "למשל: מתנה בשווי {value}" },
-        { "type": "text", "id": "heading", "label": "כותרת מעל הכרטיס (לא חובה)", "default": "שדרגו לסט המלא" },
+        { "type": "text", "id": "heading", "label": "כותרת מעל הכרטיס (לא חובה)", "default": "משלימים את הלוק" },
         { "type": "text", "id": "link_text", "label": "טקסט קישור למוצר (לא חובה)", "default": "למידע נוסף" },
         { "type": "paragraph", "content": "המחיר בעגלה נקבע ע\"י Shopify: כדי שהלקוח יקבל בפועל את ההנחה/המתנה צריך ליצור הנחה אוטומטית תואמת (הנחות ← הנחה אוטומטית)." }
       ]

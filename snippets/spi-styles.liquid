@@ -133,7 +133,8 @@
   #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'].disabled:checked + label.spi-pill { color: rgba(255,255,255,.7); }
 
   /* ---- bundle ---- */
-  #spi-{{ sid }} .spi-bundle__heading { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.2rem; }
+  #spi-{{ sid }} .spi-bundle__heading { display: flex; align-items: center; gap: .7rem; font-size: 1.6rem; font-weight: 700; letter-spacing: .01em; margin: 0 0 1.2rem; }
+  #spi-{{ sid }} .spi-bundle__heading::before { content: '\2726'; color: var(--spi-gold); font-size: 1.3rem; line-height: 1; }
   #spi-{{ sid }} .spi-bundle__card {
     position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: 'main deal img';
     align-items: center; gap: 1.6rem; padding: 1.4rem 1.6rem; border: 1px solid var(--spi-border); border-radius: var(--spi-radius); background: #fff;
