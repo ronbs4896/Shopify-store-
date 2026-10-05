@@ -251,7 +251,8 @@
         "marquee": false,
         "speed": 30,
         "padding_top": 0,
-        "padding_bottom": 0
+        "padding_bottom": 0,
+        "full_width": true
       }
     },
     "shoppable_video_new_yQVWcy": {
@@ -481,8 +482,9 @@
         "cta_action": "auto",
         "cta_link": "",
         "cta_sub": "משלוח מהיר עד 5 ימי עסקים",
-        "padding_top": 72,
-        "padding_bottom": 72
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "full_width": true
       }
     },
     "seora_materials": {
@@ -535,9 +537,10 @@
         "cta_action": "auto",
         "cta_link": "",
         "cta_sub": "",
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "bg_color": "#faf8f4"
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "bg_color": "#faf8f4",
+        "full_width": true
       }
     },
     "seora_reviews": {

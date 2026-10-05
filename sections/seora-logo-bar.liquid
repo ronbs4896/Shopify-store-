@@ -12,7 +12,7 @@
   #scro-{{ section.id }} { --scro-bar-bg: {{ s.bar_bg }}; --scro-logo-h: {{ s.logo_height }}px; --scro-speed: {{ s.speed }}s; }
 {%- endstyle -%}
 <div id="scro-{{ section.id }}" class="scro scro-logos{% if s.grayscale %} scro-logos--gray{% endif %}{% if s.marquee %} scro-logos--marquee{% endif %}">
-  <div class="page-width scro-logos__inner">
+  <div class="{% if s.full_width %}scro-logos__inner--full{% else %}page-width{% endif %} scro-logos__inner">
     {%- if s.label != blank -%}<p class="scro-logos__label">{{ s.label | escape }}</p>{%- endif -%}
     <div class="scro-logos__track">
       <ul class="scro-logos__list" role="list">
@@ -43,6 +43,7 @@
     { "type": "paragraph", "content": "הוסיפו רק לוגואים של גופים שבאמת כתבו או המליצו עליכם. לוגו בלי תמונה יוצג כטקסט." },
     { "type": "text", "id": "label", "label": "כותרת קטנה", "default": "ממליצים עלינו:" },
     { "type": "color", "id": "bar_bg", "label": "צבע רקע הפס", "default": "#f5f5f5" },
+    { "type": "checkbox", "id": "full_width", "label": "רוחב מלא (100%)", "default": true },
     { "type": "range", "id": "logo_height", "label": "גובה לוגו", "min": 16, "max": 60, "step": 2, "unit": "px", "default": 28 },
     { "type": "checkbox", "id": "grayscale", "label": "לוגואים באפור (צבע במעבר עכבר)", "default": true },
     { "type": "checkbox", "id": "marquee", "label": "תנועה אינסופית (מרקי)", "default": false },
