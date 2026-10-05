@@ -15,8 +15,8 @@
   assign img_alt = img.alt | default: s.heading | escape
 -%}
 {% render 'seora-section-vars', section: section %}
-<div id="scro-{{ section.id }}" class="scro scro-split scro-split--media-{{ s.media_position }} gradient color-{{ s.color_scheme }}">
-  <div class="page-width">
+<div id="scro-{{ section.id }}" class="scro scro-split scro-split--media-{{ s.media_position }}{% if s.full_width %} scro-split--full{% endif %} gradient color-{{ s.color_scheme }}">
+  <div class="{% if s.full_width %}scro-split__wrap{% else %}page-width{% endif %}">
     <div class="scro-split__grid">
       <div class="scro-split__media scro-split__media--{{ s.image_ratio }}">
         {%- if img != blank -%}
@@ -71,6 +71,7 @@
     { "type": "range", "id": "product_image", "label": "אם לא נבחרה תמונה: תמונת מוצר מס'", "min": 0, "max": 10, "step": 1, "default": 2, "info": "0 = בלי תמונת מוצר. מאפשר לאותה תבנית להציג תמונה נכונה לכל מוצר." },
     { "type": "select", "id": "image_ratio", "label": "יחס תמונה", "options": [ { "value": "square", "label": "ריבוע" }, { "value": "portrait", "label": "לאורך" }, { "value": "landscape", "label": "לרוחב" }, { "value": "adapt", "label": "מקורי" } ], "default": "square" },
     { "type": "select", "id": "media_position", "label": "מיקום התמונה בדסקטופ", "options": [ { "value": "first", "label": "ימין" }, { "value": "second", "label": "שמאל" } ], "default": "first" },
+    { "type": "checkbox", "id": "full_width", "label": "רוחב מלא (100%) – התמונה עד קצה המסך", "default": true, "info": "מומלץ עם ריווח עליון/תחתון 0." },
     { "type": "header", "content": "רשימה" },
     { "type": "select", "id": "item_style", "label": "סימון פריטים", "options": [ { "value": "icon", "label": "אייקון לכל פריט" }, { "value": "number", "label": "מספור 01, 02, 03" }, { "value": "check", "label": "וי" } ], "default": "icon" },
     { "type": "header", "content": "כפתור" },

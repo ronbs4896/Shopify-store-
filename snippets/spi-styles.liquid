@@ -102,9 +102,9 @@
 
   /* pills */
   #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-pill {
-    flex: 1 1 0; min-width: 0; max-width: {{ s.pill_min_width }}px; min-height: {{ s.pill_height }}px; padding: 0.8rem 1.2rem;
+    flex: 1 1 0; min-width: min-content; max-width: {{ s.pill_min_width }}px; min-height: {{ s.pill_height }}px; padding: 0.8rem 1.2rem;
     border: 1px solid var(--spi-border); border-radius: 1rem; background: #fff; color: var(--spi-text);
-    white-space: normal; text-align: center; line-height: 1.25; overflow-wrap: anywhere;
+    white-space: normal; text-align: center; line-height: 1.25; overflow-wrap: normal;
   }
   #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-pill:hover { border-color: var(--spi-dark); }
   #spi-{{ sid }} .spi-picker .product-form__input input[type='radio']:checked + label.spi-pill {
@@ -381,5 +381,15 @@
     #spi-{{ sid }} .spi-features--list .spi-feature { font-size: 1.4rem; }
     #spi-{{ sid }} .spi-features--list .spi-feature__icon { width: 2rem; height: 2rem; }
     #spi-{{ sid }} .spi-price__compare { font-size: 1.4rem; }
+  }
+
+  /* RTL desktop layout: the theme's grid CSS is LTR (gap + padding on the left of the info column).
+     Reverse the row so the gallery sits on the left and that spacing lands between gallery and info. */
+  @media screen and (min-width: 750px) {
+    #spi-{{ sid }} .product.grid { flex-direction: row-reverse; }
+  }
+  @media screen and (max-width: 749px) {
+    #spi-{{ sid }} .spi-opt--buttons .spi-opt__values { display: grid; grid-template-columns: repeat(auto-fit, minmax(7.4rem, 1fr)); gap: .8rem; }
+    #spi-{{ sid }} .spi-picker .product-form__input input[type='radio'] + label.spi-pill { width: auto; max-width: none; min-width: 0; }
   }
 {%- endstyle -%}
