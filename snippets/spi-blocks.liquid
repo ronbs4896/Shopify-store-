@@ -277,6 +277,10 @@
         if addon.id == product.id
           assign up_hide = true
         endif
+        if block.settings.sale_override and mode != 'gift'
+          assign mode = 'regular'
+          assign up_badge = block.settings.sale_badge
+        endif
       -%}
       {%- if up_hide == false and addon != blank and addon.available -%}
         {%- liquid
@@ -299,6 +303,9 @@
               assign deal_compare = addon_compare
             when 'gift'
               assign deal_price = 0
+              assign deal_compare = addon_compare
+            when 'regular'
+              assign deal_price = av.price
               assign deal_compare = addon_compare
             else
               assign deal_price = bundle_price
