@@ -5,6 +5,7 @@
 
 /* ---------- listing ---------- */
 .seora-mag__wrap { max-width: 114rem; }
+.seora-mag__wrap--full { max-width: none; margin: 0; padding-inline: clamp(1.6rem, 4vw, 6.4rem); }
 .seora-mag__head { max-width: 68rem; margin: 0 auto clamp(2.4rem, 4vw, 4rem); text-align: center; }
 .seora-mag__eyebrow { margin: 0 0 1rem; font-size: 1.25rem; font-weight: 700; letter-spacing: 0.14em; color: var(--sm-accent); }
 .seora-mag__title { margin: 0; font-size: clamp(2.6rem, 1.8rem + 2vw, 4rem); line-height: 1.2; }

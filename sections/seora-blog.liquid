@@ -13,7 +13,7 @@
 
 {%- paginate blog.articles by per_page -%}
   <div id="sblog-{{ section.id }}" class="seora-mag">
-    <div class="seora-mag__wrap page-width">
+    <div class="seora-mag__wrap{% if ss.full_width %} seora-mag__wrap--full{% else %} page-width{% endif %}">
       <header class="seora-mag__head">
         {%- if ss.eyebrow != blank -%}<p class="seora-mag__eyebrow">{{ ss.eyebrow | escape }}</p>{%- endif -%}
         <h1 class="seora-mag__title">
@@ -72,6 +72,7 @@
     { "type": "text", "id": "eyebrow", "label": "כותרת קטנה מעל", "default": "המגזין של SEORA" },
     { "type": "text", "id": "heading", "label": "כותרת (ריק = שם הבלוג)", "default": "מדריכים, השראה וכל מה שכדאי לדעת" },
     { "type": "richtext", "id": "subheading", "label": "תת כותרת", "default": "<p>איך בוחרים, איך מודדים ואיך שומרים על התכשיט, בלי שיווק מיותר.</p>" },
+    { "type": "checkbox", "id": "full_width", "label": "רוחב מלא (100%)", "default": true },
     { "type": "checkbox", "id": "show_tags", "label": "הצג סינון לפי נושא", "default": true },
     { "type": "checkbox", "id": "show_excerpt", "label": "הצג תקציר", "default": true },
     { "type": "checkbox", "id": "show_author", "label": "הצג כותב", "default": true },

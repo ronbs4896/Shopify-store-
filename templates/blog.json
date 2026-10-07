@@ -21,7 +21,8 @@
         "show_date": true,
         "per_page": 8,
         "padding_top": 40,
-        "padding_bottom": 56
+        "padding_bottom": 56,
+        "full_width": true
       }
     }
   },
