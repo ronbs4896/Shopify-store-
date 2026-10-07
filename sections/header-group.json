@@ -32,7 +32,7 @@
         "announcement_j8pyT6": {
           "type": "announcement",
           "settings": {
-            "Announcement": "<p>40% הנחה על כל האתר עד חצות</p>",
+            "Announcement": "<p>20% הנחה על כל האתר</p>",
             "announcement_size": 18,
             "announcement_size_m": 16,
             "text_spacing": 0,
