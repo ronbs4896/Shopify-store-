@@ -1,0 +1,18 @@
+# SEORA store: notes for Claude
+
+## Hebrew text (always)
+
+Every piece of Hebrew text, including chat replies to the store owner, follows `.claude/skills/hebrew-punctuation/SKILL.md`. Load the skill before writing Hebrew copy, then run the checker on the draft or on the files you changed:
+
+```
+python3 .claude/skills/hebrew-punctuation/check_he.py --headings --text "כותרת"
+python3 .claude/skills/hebrew-punctuation/check_he.py templates/product.seora.json
+```
+
+The short version: no full stop at the end of headings, buttons or labels; no chains of short fragments separated by full stops; no space before punctuation; a hyphen between a prefix letter and a number or Latin word (ב-5, ה-GRA); ״ in acronyms (ש״ח, ס״מ); no em dashes.
+
+## Store rules
+
+- Theme files are written only to an unpublished theme; the owner publishes.
+- Prices and discounts change only with the owner's explicit approval.
+- No invented reviews or ratings.
