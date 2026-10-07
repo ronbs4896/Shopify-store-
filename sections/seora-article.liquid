@@ -76,24 +76,30 @@
 
   {%- if ss.show_related -%}
     {%- liquid
+      assign related_max = ss.related_max | default: 12
+      assign related_visible = ss.related_visible | default: 4
       assign related_count = 0
       assign first_tag = article.tags.first
     -%}
     {%- capture related_html -%}
       {%- for a in blog.articles -%}
-        {%- if a.id != article.id and related_count < 2 -%}
+        {%- if a.id != article.id and related_count < related_max -%}
           {%- if first_tag == blank or a.tags contains first_tag -%}
-            {%- render 'seora-article-card', article: a, show_excerpt: false, show_author: false, show_date: true, heading_tag: 'h3', lazy: true -%}
             {%- assign related_count = related_count | plus: 1 -%}
+            <div class="seora-art__related-item"{% if related_count > related_visible %} hidden{% endif %}>
+              {%- render 'seora-article-card', article: a, show_excerpt: false, show_author: false, show_date: true, heading_tag: 'h3', lazy: true -%}
+            </div>
           {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
-      {%- if related_count < 2 -%}
+      {%- if first_tag != blank -%}
         {%- for a in blog.articles -%}
-          {%- if a.id != article.id and related_count < 2 -%}
-            {%- unless first_tag != blank and a.tags contains first_tag -%}
-              {%- render 'seora-article-card', article: a, show_excerpt: false, show_author: false, show_date: true, heading_tag: 'h3', lazy: true -%}
+          {%- if a.id != article.id and related_count < related_max -%}
+            {%- unless a.tags contains first_tag -%}
               {%- assign related_count = related_count | plus: 1 -%}
+              <div class="seora-art__related-item"{% if related_count > related_visible %} hidden{% endif %}>
+                {%- render 'seora-article-card', article: a, show_excerpt: false, show_author: false, show_date: true, heading_tag: 'h3', lazy: true -%}
+              </div>
             {%- endunless -%}
           {%- endif -%}
         {%- endfor -%}
@@ -103,10 +109,29 @@
       <aside class="seora-art__related page-width">
         <div class="seora-art__related-head">
           <h2>{{ ss.related_heading | default: 'עוד מהמגזין' | escape }}</h2>
-          <a href="{{ blog.url }}">לכל המאמרים</a>
         </div>
-        <div class="seora-mag__grid">{{ related_html }}</div>
+        <div class="seora-art__related-grid" id="seora-related-{{ section.id }}">{{ related_html }}</div>
+        <div class="seora-art__related-actions">
+          {%- if related_count > related_visible -%}
+            <button type="button" class="seora-art__btn seora-art__btn--outline" data-related-more data-step="{{ related_visible }}" aria-controls="seora-related-{{ section.id }}">
+              {{- ss.more_label | default: 'להציג עוד מאמרים' | escape -}}
+            </button>
+          {%- endif -%}
+          <a class="seora-art__btn" href="{{ blog.url }}">{{ ss.all_label | default: 'לכל המאמרים' | escape }}</a>
+        </div>
       </aside>
+      <script>
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-related-more]');
+          if (!btn) return;
+          var grid = document.getElementById(btn.getAttribute('aria-controls'));
+          if (!grid) return;
+          var step = parseInt(btn.getAttribute('data-step'), 10) || 4;
+          var hidden = grid.querySelectorAll('.seora-art__related-item[hidden]');
+          for (var i = 0; i < hidden.length && i < step; i++) hidden[i].hidden = false;
+          if (!grid.querySelector('.seora-art__related-item[hidden]')) btn.hidden = true;
+        });
+      </script>
     {%- endif -%}
   {%- endif -%}
 </article>
@@ -160,6 +185,10 @@
     { "type": "checkbox", "id": "show_share", "label": "כפתורי שיתוף", "default": true },
     { "type": "checkbox", "id": "show_related", "label": "מאמרים נוספים", "default": true },
     { "type": "text", "id": "related_heading", "label": "כותרת מאמרים נוספים", "default": "עוד מהמגזין" },
+    { "type": "range", "id": "related_visible", "label": "מאמרים שמוצגים מיד", "min": 2, "max": 8, "step": 1, "default": 4, "info": "במחשב מוצגים 4 בשורה. כל לחיצה על כפתור ההצגה פותחת עוד אותה כמות." },
+    { "type": "range", "id": "related_max", "label": "מקסימום מאמרים בסך הכול", "min": 4, "max": 24, "step": 4, "default": 12 },
+    { "type": "text", "id": "more_label", "label": "כפתור להציג עוד", "default": "להציג עוד מאמרים" },
+    { "type": "text", "id": "all_label", "label": "כפתור לכל המאמרים", "default": "לכל המאמרים" },
     { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 24 },
     { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 56 }
   ]

@@ -98,3 +98,18 @@ h3.seora-card__title { font-size: clamp(1.6rem, 1.45rem + 0.4vw, 1.9rem); }
 .seora-art__related-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1.6rem; margin-bottom: 2.4rem; }
 .seora-art__related-head h2 { margin: 0; font-size: clamp(2rem, 1.7rem + 0.7vw, 2.6rem); }
 .seora-art__related-head a { font-size: 1.4rem; font-weight: 700; color: rgb(var(--color-foreground)); text-decoration: underline; text-decoration-color: var(--sm-accent); text-underline-offset: 0.3rem; white-space: nowrap; }
+
+/* related articles: 4 per row on desktop, show-more + all-articles buttons */
+.seora-art__related { max-width: 128rem; }
+.seora-art__related-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.4rem 1.6rem; }
+.seora-art__related-item[hidden] { display: none; }
+.seora-art__related-grid .seora-card__title { font-size: clamp(1.5rem, 1.4rem + 0.3vw, 1.8rem); }
+.seora-art__related-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem; margin-top: clamp(2.8rem, 4vw, 4rem); }
+.seora-art__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 4.6rem; padding: 0 2.8rem; border: 1px solid rgb(var(--color-foreground)); border-radius: 99rem; background: rgb(var(--color-foreground)); color: rgb(var(--color-background)); font: inherit; font-size: 1.45rem; font-weight: 700; text-decoration: none; cursor: pointer; transition: opacity 0.15s, background 0.15s, color 0.15s; }
+.seora-art__btn:hover { opacity: 0.85; }
+.seora-art__btn--outline { background: transparent; color: rgb(var(--color-foreground)); }
+.seora-art__btn--outline:hover { background: rgb(var(--color-foreground)); color: rgb(var(--color-background)); opacity: 1; }
+.seora-art__btn[hidden] { display: none; }
+@media screen and (min-width: 990px) {
+  .seora-art__related-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3.2rem 2.4rem; }
+}

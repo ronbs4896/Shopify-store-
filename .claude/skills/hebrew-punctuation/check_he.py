@@ -105,6 +105,11 @@ def walk_json(obj, path, filename):
             check_line(line, where, heading=is_heading)
 
 
+def _schema_text(block):
+    # keep only Hebrew string values from the schema JSON, one per line
+    return '\n'.join(re.findall(r'"default"\s*:\s*"([^"]*[\u0590-\u05FF][^"]*)"', block))
+
+
 def check_file(fn, headings):
     raw = open(fn, encoding='utf-8').read()
     if fn.endswith('.json'):
@@ -112,8 +117,9 @@ def check_file(fn, headings):
         walk_json(json.loads(body), [], fn)
         return
     # html / liquid / md / txt
+    raw = re.sub(r'{%-?\s*schema\s*-?%}.*?{%-?\s*endschema\s*-?%}', lambda m: _schema_text(m.group(0)), raw, flags=re.S)
     for m in re.finditer(r'<h[1-6][^>]*>(.*?)</h[1-6]>', raw, re.S):
-        check_line(strip_tags(m.group(1)), f'{fn}:<h>', heading=True)
+        check_line(strip_tags(re.sub(r'{%.*?%}|{{.*?}}', ' ', m.group(1), flags=re.S)), f'{fn}:<h>', heading=True)
     text = re.sub(r'<h[1-6][^>]*>.*?</h[1-6]>', '\n', raw, flags=re.S)
     text = re.sub(r'{%.*?%}|{{.*?}}', ' ', text, flags=re.S)
     for i, line in enumerate(strip_tags(text).split('\n'), 1):
