@@ -1,0 +1,85 @@
+{%- comment -%} SEORA magazine: blog listing, 2 equal cards per row. {%- endcomment -%}
+{{ 'seora-blog.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign ss = section.settings
+  assign per_page = ss.per_page | default: 8
+-%}
+{%- style -%}
+  #sblog-{{ section.id }} { padding-top: {{ ss.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ ss.padding_bottom | times: 0.75 | round: 0 }}px; }
+  @media screen and (min-width: 750px) {
+    #sblog-{{ section.id }} { padding-top: {{ ss.padding_top }}px; padding-bottom: {{ ss.padding_bottom }}px; }
+  }
+{%- endstyle -%}
+
+{%- paginate blog.articles by per_page -%}
+  <div id="sblog-{{ section.id }}" class="seora-mag">
+    <div class="seora-mag__wrap{% if ss.full_width %} seora-mag__wrap--full{% else %} page-width{% endif %}">
+      <header class="seora-mag__head">
+        {%- if ss.eyebrow != blank -%}<p class="seora-mag__eyebrow">{{ ss.eyebrow | escape }}</p>{%- endif -%}
+        <h1 class="seora-mag__title">
+          {%- if current_tags -%}{{ current_tags.first | escape }}{%- else -%}{{ ss.heading | default: blog.title | escape }}{%- endif -%}
+        </h1>
+        {%- if ss.subheading != blank and current_tags.size == 0 -%}
+          <div class="seora-mag__sub">{{ ss.subheading }}</div>
+        {%- endif -%}
+      </header>
+
+      {%- if ss.show_tags and blog.all_tags.size > 0 -%}
+        <nav class="seora-mag__tags" aria-label="נושאים">
+          <a href="{{ blog.url }}" class="seora-mag__tag{% unless current_tags %} is-active{% endunless %}">הכל</a>
+          {%- for tag in blog.all_tags -%}
+            <a href="{{ blog.url }}/tagged/{{ tag | handleize }}" class="seora-mag__tag{% if current_tags contains tag %} is-active{% endif %}">{{ tag | escape }}</a>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+
+      {%- if blog.articles.size > 0 -%}
+        <div class="seora-mag__grid">
+          {%- for article in blog.articles -%}
+            {%- liquid
+              assign lazy = true
+              if forloop.index <= 2 and paginate.current_page == 1
+                assign lazy = false
+              endif
+            -%}
+            {%- render 'seora-article-card',
+              article: article,
+              show_excerpt: ss.show_excerpt,
+              show_author: ss.show_author,
+              show_date: ss.show_date,
+              heading_tag: 'h2',
+              lazy: lazy
+            -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="seora-mag__empty">עדיין אין כאן מאמרים.</p>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+        {%- render 'pagination', paginate: paginate -%}
+      {%- endif -%}
+    </div>
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "SEORA מגזין: רשימת מאמרים",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "כותרת קטנה מעל", "default": "המגזין של SEORA" },
+    { "type": "text", "id": "heading", "label": "כותרת (ריק = שם הבלוג)", "default": "מדריכים, השראה וכל מה שכדאי לדעת" },
+    { "type": "richtext", "id": "subheading", "label": "תת כותרת", "default": "<p>איך בוחרים, איך מודדים ואיך שומרים על התכשיט, בלי שיווק מיותר.</p>" },
+    { "type": "checkbox", "id": "full_width", "label": "רוחב מלא (100%)", "default": true },
+    { "type": "checkbox", "id": "show_tags", "label": "הצג סינון לפי נושא", "default": true },
+    { "type": "checkbox", "id": "show_excerpt", "label": "הצג תקציר", "default": true },
+    { "type": "checkbox", "id": "show_author", "label": "הצג כותב", "default": true },
+    { "type": "checkbox", "id": "show_date", "label": "הצג תאריך", "default": true },
+    { "type": "range", "id": "per_page", "label": "מאמרים בעמוד", "min": 4, "max": 24, "step": 2, "default": 8 },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 56 }
+  ]
+}
+{% endschema %}

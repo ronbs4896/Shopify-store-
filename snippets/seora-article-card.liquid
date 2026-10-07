@@ -1,0 +1,46 @@
+{%- comment -%}
+  Article card for the SEORA magazine (blog listing + related articles).
+  Params: article, show_excerpt (bool), show_author (bool), show_date (bool), heading_tag ('h2' | 'h3'), lazy (bool)
+{%- endcomment -%}
+{%- liquid
+  assign h_tag = heading_tag | default: 'h2'
+  assign load = 'lazy'
+  if lazy == false
+    assign load = 'eager'
+  endif
+  assign months = 'ינואר,פברואר,מרץ,אפריל,מאי,יוני,יולי,אוגוסט,ספטמבר,אוקטובר,נובמבר,דצמבר' | split: ','
+  assign m_idx = article.published_at | date: '%m' | plus: 0 | minus: 1
+  assign d_day = article.published_at | date: '%-d'
+  assign d_year = article.published_at | date: '%Y'
+  assign date_label = d_day | append: ' ב' | append: months[m_idx] | append: ' ' | append: d_year
+-%}
+<article class="seora-card">
+  <a class="seora-card__media" href="{{ article.url }}" tabindex="-1" aria-hidden="true">
+    {%- if article.image -%}
+      {{ article.image | image_url: width: 1100 | image_tag:
+        widths: '360, 550, 720, 900, 1100',
+        sizes: '(min-width: 990px) 560px, (min-width: 750px) 45vw, 92vw',
+        loading: load,
+        alt: article.image.alt
+      }}
+    {%- else -%}
+      <span class="seora-card__ph"></span>
+    {%- endif -%}
+  </a>
+  <div class="seora-card__body">
+    {%- if article.tags.size > 0 -%}
+      <span class="seora-card__tag">{{ article.tags.first | escape }}</span>
+    {%- endif -%}
+    <{{ h_tag }} class="seora-card__title">
+      <a href="{{ article.url }}">{{ article.title | escape }}</a>
+    </{{ h_tag }}>
+    {%- if show_excerpt -%}
+      {%- assign ex = article.excerpt | default: article.content | strip_html | strip | truncatewords: 32 -%}
+      {%- if ex != blank -%}<p class="seora-card__excerpt">{{ ex }}</p>{%- endif -%}
+    {%- endif -%}
+    <p class="seora-card__meta">
+      {%- if show_author and article.author != blank -%}<span>{{ article.author | escape }}</span>{%- endif -%}
+      {%- if show_date -%}<time datetime="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">{{ date_label }}</time>{%- endif -%}
+    </p>
+  </div>
+</article>

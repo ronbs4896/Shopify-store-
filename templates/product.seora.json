@@ -56,7 +56,7 @@
           "type": "text",
           "settings": {
             "source": "metafield",
-            "text": "<p>כסף סטרלינג 925 בציפוי רודיום, משובץ באבני מוסאנייט בצבע D וניקיון VVS1 בחיתוך Excellent – הברק של יהלום, בעמידות לשימוש יומיומי. מגיע באריזת מתנה יוקרתית עם תעודת GRA.</p>"
+            "text": "<p>כסף סטרלינג 925, משובץ באבני מוסאנייט בצבע D וניקיון VVS1 בחיתוך Excellent. הברק של יהלום, בתכשיט שאפשר לענוד כל יום. מגיע באריזת מתנה עם תעודת GRA.</p>"
           }
         },
         "feature_1": {
@@ -79,15 +79,15 @@
           "type": "feature",
           "settings": {
             "icon": "shield",
-            "text": "כסף סטרלינג S925 בציפוי רודיום, עמיד במים",
+            "text": "כסף סטרלינג S925, עמיד במים",
             "icon_color": "#a8894f"
           }
         },
         "feature_4": {
           "type": "feature",
           "settings": {
-            "icon": "heart",
-            "text": "עיצוב קלאסי ויוקרתי",
+            "icon": "gift",
+            "text": "אריזת מתנה ואחריות יבואן לשנה",
             "icon_color": "#a8894f"
           }
         },
@@ -115,7 +115,7 @@
             "heading": "משלימים את הלוק",
             "link_text": "",
             "sale_override": true,
-            "sale_badge": "גם עליו 40% הנחה בקופה"
+            "sale_badge": "גם עליו 20% הנחה בקופה"
           }
         },
         "buy_buttons": {
@@ -135,17 +135,17 @@
             "bg_color": "#f6f2ea",
             "icon_color": "#a8894f",
             "item1_icon": "truck",
-            "item1_title": "משלוח מהיר",
+            "item1_title": "משלוח חינם מעל 299 ₪",
             "item1_text": "עד 5 ימי עסקים",
             "item2_icon": "refresh",
-            "item2_title": "החזרה וביטול",
-            "item2_text": "14 ימים בקלות",
-            "item3_icon": "shield",
-            "item3_title": "תשלום מאובטח",
-            "item3_text": "באישור תקן PCI",
-            "item4_icon": "headset",
-            "item4_title": "שירות לקוחות אישי",
-            "item4_text": "לכל שאלה"
+            "item2_title": "החלפה תוך 14 ימי עסקים",
+            "item2_text": "כל עוד התכשיט לא נענד",
+            "item3_icon": "certificate",
+            "item3_title": "אחריות יבואן לשנה",
+            "item3_text": "ותעודת GRA",
+            "item4_icon": "lock",
+            "item4_title": "תשלום מאובטח",
+            "item4_text": "באישור תקן PCI"
           }
         }
       },
@@ -453,45 +453,54 @@
           "type": "item",
           "settings": {
             "icon": "sparkles",
-            "title": "ברק שכולם שמים לב אליו",
-            "text": "אבן מוסאנייט בחיתוך Excellent שוברת את האור לניצוצות צבעוניים, באור יום ובערב."
+            "title": "ברק שרואים גם מקרוב",
+            "text": "מוסאנייט בצבע D, ניקיון VVS1 וחיתוך Excellent. האבן מפזרת יותר אור צבעוני מיהלום, ביום ובערב."
           }
         },
         "benefit_2": {
           "type": "item",
           "settings": {
-            "icon": "heart",
-            "title": "יוקרה שאפשר לענוד כל יום",
-            "text": "כסף סטרלינג S925 בציפוי רודיום, עמיד במים. לא צריך לשמור את התכשיט רק לאירועים."
+            "icon": "water",
+            "title": "נבנו כדי שתענדי אותם",
+            "text": "כסף סטרלינג S925 שעמיד במים. לא צריך לשמור את התכשיט לאירועים."
           }
         },
         "benefit_3": {
           "type": "item",
           "settings": {
-            "icon": "gift",
-            "title": "מתנה שמגיעה מוכנה",
-            "text": "קופסת תכשיט מהודרת ושקית יוקרתית, יחד עם תעודה וכרטיס מקוריות."
+            "icon": "diamond",
+            "title": "יותר תכשיט לכל שקל",
+            "text": "המראה של יהלום, במחיר שמשאיר מקום גם לתכשיט הבא."
+          }
+        },
+        "benefit_4": {
+          "type": "item",
+          "settings": {
+            "icon": "refresh",
+            "title": "קנייה בראש שקט",
+            "text": "משלוח חינם מעל 299 ₪, אחריות יבואן לשנה, והחלפה תוך 14 ימי עסקים אם התכשיט לא נענד."
           }
         }
       },
       "block_order": [
         "benefit_1",
         "benefit_2",
-        "benefit_3"
+        "benefit_3",
+        "benefit_4"
       ],
       "settings": {
         "eyebrow": "למה ŚEORA",
-        "heading": "נראה כמו יהלום. מרגיש כמו יהלום. במחיר אחר לגמרי.",
+        "heading": "המחיר נגיש. המראה ממש לא.",
         "text": "",
         "product_image": 2,
         "image_ratio": "square",
         "media_position": "first",
         "full_width": true,
         "item_style": "icon",
-        "cta_label": "להזמנה עכשיו",
+        "cta_label": "בחרי את שלך",
         "cta_action": "auto",
         "cta_link": "",
-        "cta_sub": "משלוח מהיר עד 5 ימי עסקים",
+        "cta_sub": "משלוח חינם מעל 299 ₪ · עד 5 ימי עסקים",
         "color_scheme": "background-1",
         "bg_color": "",
         "accent_color": "#a8894f",
@@ -554,7 +563,8 @@
         "button_color": "#ffffff",
         "padding_top": 0,
         "padding_bottom": 0
-      }
+      },
+      "disabled": true
     },
     "seora_reviews": {
       "type": "seora-reviews",
@@ -643,7 +653,7 @@
         "row_3": {
           "type": "row",
           "settings": {
-            "featured_text": "קושי 9.5 בסולם מוס",
+            "featured_text": "קושי 9.25 בסולם מוס",
             "other_text": "קושי 10 בסולם מוס"
           }
         },
@@ -709,21 +719,21 @@
           "type": "question",
           "settings": {
             "question": "האם התכשיט עמיד במים?",
-            "answer": "<p>כן. התכשיטים עשויים כסף סטרלינג S925 בציפוי רודיום ועמידים במים. כדי לשמור על הברק לאורך זמן מומלץ להסיר אותם לפני מגע עם כלור, כימיקלים וקרמים.</p>"
+            "answer": "<p>כן. התכשיטים עשויים כסף סטרלינג S925 ועמידים במים. כדי שהברק יישאר לאורך זמן, כדאי להוריד אותם לפני בריכה עם כלור, ניקיון עם חומרים כימיים ומריחת קרמים.</p>"
           }
         },
         "faq_x3": {
           "type": "question",
           "settings": {
             "question": "מה מגיע באריזה?",
-            "answer": "<p>התכשיט מגיע בקופסת תכשיט מהודרת ובשקית יוקרתית, יחד עם תעודה גמולוגית וכרטיס מקוריות של GRA. מוכן להענקה כמתנה.</p>"
+            "answer": "<p>קופסת תכשיט ושקית מתנה, תעודה גמולוגית של GRA וכרטיס מקוריות. אפשר לתת כמו שזה, בלי לארוז מחדש.</p>"
           }
         },
         "faq_1": {
           "type": "question",
           "settings": {
-            "question": "מהם זמני המשלוח?",
-            "answer": "<p>זמן הכנת ההזמנה משתנה בהתאם לסוג התכשיט ולזמינותו במלאי. לאחר השלמת ההכנה, ההזמנה תישלח לכתובת שהוזנה בעת הרכישה. זמני המשלוח המדויקים מופיעים בעמוד המוצר ובשלב התשלום.</p>"
+            "question": "תוך כמה זמן ההזמנה מגיעה?",
+            "answer": "<p>עד 5 ימי עסקים (ראשון עד חמישי, לא כולל חגים). המשלוח חינם בהזמנה מעל 299 ₪, ומתחת לסכום הזה הוא עולה 35 ₪. כשההזמנה יוצאת נשלח אליך מספר מעקב.</p>"
           }
         },
         "faq_2": {
@@ -737,14 +747,14 @@
           "type": "question",
           "settings": {
             "question": "האם קיימת אחריות על התכשיטים?",
-            "answer": "<p>כן. התכשיטים שלנו מגיעים עם אחריות בהתאם לסוג התכשיט ולתנאים המפורטים בתעודת האחריות. האחריות אינה כוללת נזק שנגרם כתוצאה משימוש לא תקין, מכה, שבר, שריטה או אובדן.</p>"
+            "answer": "<p>כן. על כל תכשיט יש אחריות יבואן לשנה מיום הקנייה. האחריות לא מכסה נזק משימוש לא נכון, מכה, שבר, שריטה או אובדן.</p>"
           }
         },
         "faq_4": {
           "type": "question",
           "settings": {
             "question": "האם ניתן להחליף או להחזיר תכשיט?",
-            "answer": "<p>ניתן להגיש בקשה להחלפה או להחזרה בהתאם למדיניות ההחזרות וההחלפות של החנות. התכשיט חייב להיות חדש, ללא שימוש, באריזתו המקורית ובצירוף הוכחת רכישה. לא ניתן להחזיר תכשיטים שיוצרו או הותאמו אישית.</p>"
+            "answer": "<p>אפשר להחליף תכשיט תוך 14 ימי עסקים מקבלת המשלוח, כל עוד הוא לא נענד ונמצא באריזה המקורית עם התעודות. ביטול עסקה והחזר כספי מתבצעים לפי <a href=\"/pages/מדיניות-החזרות\">מדיניות ההחזרות</a>, בכפוף לדמי ביטול. עלות המשלוח בהחזרה על הלקוח, אלא אם התכשיט הגיע פגום.</p>"
           }
         },
         "faq_5": {
@@ -800,13 +810,13 @@
         "show_rating": true,
         "rating": 5,
         "rating_text": "הבחירה של לקוחות ŚEORA",
-        "heading": "הברק של היהלום, ב-עשירית מחיר.",
-        "text": "<p>כל תכשיט מגיע עם תעודה גמולוגית של GRA, אחריות יבואן רשמי לשנה ואריזת מתנה מהודרת.</p>",
+        "heading": "נראה כמו החלטה יקרה. מרגיש כמו החלטה חכמה.",
+        "text": "<p>מוסאנייט בצבע D וניקיון VVS1, כסף סטרלינג S925 ותעודת GRA. מגיע באריזת מתנה, עם אחריות יבואן לשנה.</p>",
         "show_price": true,
         "cta_label": "אני רוצה את שלי",
         "cta_action": "auto",
         "cta_link": "",
-        "cta_sub": "",
+        "cta_sub": "משלוח חינם מעל 299 ₪ · החלפה תוך 14 ימי עסקים",
         "trust_1": "תעודת GRA",
         "trust_2": "אחריות יבואן לשנה",
         "trust_3": "אריזת מתנה",
@@ -851,14 +861,266 @@
       "settings": {
         "enable": true
       }
+    },
+    "seora_category_story": {
+      "type": "seora-category-story",
+      "blocks": {
+        "story_bracelet": {
+          "type": "story",
+          "settings": {
+            "category": "bracelet",
+            "eyebrow": "צמידים",
+            "heading": "הצמיד שתמצאי את עצמך עונדת שוב ושוב",
+            "text": "צמיד טוב לא מחכה לאירוע. הוא מצטרף לג׳ינס וחולצה לבנה בבוקר, ונשאר על היד גם בערב.",
+            "cta_label": "בחרי את הצמיד שלך",
+            "link_label": "",
+            "link_url": "",
+            "m1_icon": "sparkles",
+            "m1_title": "ברק שתופס את האור",
+            "m1_text": "כל תנועה של היד מזיזה את האבנים, והמוסאנייט בחיתוך Excellent מחזיר את האור בניצוצות קטנים.",
+            "m2_icon": "heart",
+            "m2_title": "יושב יפה על היד",
+            "m2_text": "עדין מספיק ליום רגיל, נוכח מספיק כדי שישימו לב אליו.",
+            "m3_icon": "water",
+            "m3_title": "לא רק לאירועים",
+            "m3_text": "כסף סטרלינג S925 שעמיד במים, כך שאין סיבה להשאיר אותו בקופסה."
+          }
+        },
+        "story_necklace": {
+          "type": "story",
+          "settings": {
+            "category": "necklace",
+            "eyebrow": "שרשראות ותליונים",
+            "heading": "יש תכשיטים שמוסיפים ללוק, ויש כאלה שסוגרים אותו",
+            "text": "שרשרת יושבת בדיוק במקום שאליו מסתכלים כשמדברים איתך. לכן היא עושה כל כך הרבה עם כל כך מעט.",
+            "cta_label": "מצאי את השרשרת שלך",
+            "link_label": "",
+            "link_url": "",
+            "m1_icon": "sparkles",
+            "m1_title": "ממסגרת את הפנים",
+            "m1_text": "תליון על עצם הבריח מאיר את הפנים ומושך את המבט למעלה.",
+            "m2_icon": "heart",
+            "m2_title": "עובדת עם כמעט כל לוק",
+            "m2_text": "מחולצה עם צווארון פתוח ועד שמלת ערב. שרשרת אחת עושה עבודה של כמה.",
+            "m3_icon": "diamond",
+            "m3_title": "נראית יקרה יותר ממה שציפית",
+            "m3_text": "אבן בצבע D וניקיון VVS1, עם תעודת GRA שמפרטת את נתוני האבן."
+          }
+        },
+        "story_earrings": {
+          "type": "story",
+          "settings": {
+            "category": "earrings",
+            "eyebrow": "עגילים",
+            "heading": "לא צריך הרבה כדי להאיר את כל הפנים",
+            "text": "עגילים הם התכשיט הכי קרוב לפנים. זוג קטן ומבריק עושה עבודה שגם שרשרת גדולה לא תמיד עושה.",
+            "cta_label": "בחרי את הזוג שלך",
+            "link_label": "",
+            "link_url": "",
+            "m1_icon": "sparkles",
+            "m1_title": "גם מקרוב הם מבריקים",
+            "m1_text": "מקרוב רואים הכול, ולכן האבן חשובה. מוסאנייט D VVS1 נשאר שקוף ומבריק גם במבט מקרוב.",
+            "m2_icon": "heart",
+            "m2_title": "משתלבים עם הכול",
+            "m2_text": "עם שיער אסוף או פזור, ליום עבודה ולערב בחוץ.",
+            "m3_icon": "gift",
+            "m3_title": "בלי לנחש מידה",
+            "m3_text": "עגילים לא צריכים מידה, ולכן הם מהמתנות הכי בטוחות שיש."
+          }
+        },
+        "story_ring": {
+          "type": "story",
+          "settings": {
+            "category": "ring",
+            "eyebrow": "טבעות",
+            "heading": "התכשיט שאת רואה יותר מכל השאר",
+            "text": "טבעת נמצאת מול העיניים כל היום: על ההגה, על המקלדת, סביב כוס הקפה. כדאי שזו תהיה טבעת שאת שמחה לראות.",
+            "cta_label": "מצאי את הטבעת שלך",
+            "link_label": "לא בטוחה במידה? ככה מודדים בבית",
+            "link_url": "/blogs/magazine/moissanite-engagement-ring-guide",
+            "m1_icon": "sparkles",
+            "m1_title": "האבן תמיד בתנועה",
+            "m1_text": "הידיים זזות כל הזמן, והאבן תופסת אור מכל זווית.",
+            "m2_icon": "shield",
+            "m2_title": "חזקה מספיק ליום יום",
+            "m2_text": "מוסאנייט נמצא ב-9.25 בסולם מוס, השני בקשיותו אחרי היהלום.",
+            "m3_icon": "heart",
+            "m3_title": "לא צריך לחכות להצעה",
+            "m3_text": "טבעת יכולה להיות מתנה לעצמך, לסיום תואר או סתם כי בא לך."
+          }
+        },
+        "story_set": {
+          "type": "story",
+          "settings": {
+            "category": "set",
+            "eyebrow": "סטים",
+            "heading": "ההתאמה כבר נעשתה בשבילך",
+            "text": "הפריטים בסט נבנו להיענד יחד: אותן אבנים, אותו גוון, אותו סגנון. לא צריך להתלבט מה הולך עם מה.",
+            "cta_label": "בחרי את הסט שלך",
+            "link_label": "",
+            "link_url": "",
+            "m1_icon": "sparkles",
+            "m1_title": "מראה שלם מהרגע הראשון",
+            "m1_text": "עונדים את הפריטים יחד ומקבלים לוק גמור, בלי לחפש התאמות.",
+            "m2_icon": "heart",
+            "m2_title": "מוקפד גם עם לוק פשוט",
+            "m2_text": "חולצה לבנה וסט מבריק, וזה מספיק.",
+            "m3_icon": "certificate",
+            "m3_title": "כמה פריטים, הזמנה אחת",
+            "m3_text": "הכול מגיע יחד באריזת מתנה, עם תעודת GRA ואחריות יבואן לשנה."
+          }
+        },
+        "story_default": {
+          "type": "story",
+          "settings": {
+            "category": "default",
+            "eyebrow": "ŚEORA",
+            "heading": "מהתכשיטים האלה שפשוט עובדים",
+            "text": "תכשיט שאפשר לענוד היום לעבודה ומחר לערב, בלי לחשוב פעמיים.",
+            "cta_label": "בחרי את שלך",
+            "link_label": "",
+            "link_url": "",
+            "m1_icon": "sparkles",
+            "m1_title": "ברק אמיתי",
+            "m1_text": "מוסאנייט בצבע D וניקיון VVS1, בחיתוך Excellent.",
+            "m2_icon": "water",
+            "m2_title": "לכל יום",
+            "m2_text": "כסף סטרלינג S925 שעמיד במים.",
+            "m3_icon": "gift",
+            "m3_title": "מוכן למתנה",
+            "m3_text": "קופסה, שקית, תעודת GRA ואחריות יבואן לשנה."
+          }
+        }
+      },
+      "block_order": [
+        "story_bracelet",
+        "story_necklace",
+        "story_earrings",
+        "story_ring",
+        "story_set",
+        "story_default"
+      ],
+      "settings": {
+        "cta_action": "scroll",
+        "gift_text": "<strong>קונים במתנה?</strong> אפשר להחליף תוך 14 ימי עסקים, כל עוד התכשיט לא נענד ונמצא באריזה המקורית.",
+        "color_scheme": "background-1",
+        "bg_color": "#faf8f4",
+        "accent_color": "#a8894f",
+        "button_bg": "#111111",
+        "button_color": "#ffffff",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "seora_specs": {
+      "type": "seora-specs",
+      "blocks": {
+        "row_material": {
+          "type": "row",
+          "settings": {
+            "label": "חומר",
+            "value": "כסף סטרלינג S925"
+          }
+        },
+        "row_stone": {
+          "type": "row",
+          "settings": {
+            "label": "אבן",
+            "value": "מוסאנייט"
+          }
+        },
+        "row_cut": {
+          "type": "row",
+          "settings": {
+            "label": "חיתוך",
+            "value": "Excellent"
+          }
+        },
+        "row_color": {
+          "type": "row",
+          "settings": {
+            "label": "צבע",
+            "value": "D"
+          }
+        },
+        "row_clarity": {
+          "type": "row",
+          "settings": {
+            "label": "ניקיון",
+            "value": "VVS1"
+          }
+        },
+        "row_plating": {
+          "type": "plating",
+          "settings": {
+            "label": "ציפוי",
+            "value": "רודיום",
+            "value_gold": "זהב 18K",
+            "value_both": "רודיום או זהב 18K, לפי הגוון שבוחרים"
+          }
+        },
+        "row_cert": {
+          "type": "row",
+          "settings": {
+            "label": "תעודה",
+            "value": "תעודת GRA וכרטיס מקוריות"
+          }
+        },
+        "row_warranty": {
+          "type": "row",
+          "settings": {
+            "label": "אחריות",
+            "value": "אחריות יבואן לשנה"
+          }
+        },
+        "row_box": {
+          "type": "row",
+          "settings": {
+            "label": "אריזה",
+            "value": "קופסת תכשיט ושקית מתנה"
+          }
+        }
+      },
+      "block_order": [
+        "row_material",
+        "row_stone",
+        "row_cut",
+        "row_color",
+        "row_clarity",
+        "row_plating",
+        "row_cert",
+        "row_warranty",
+        "row_box"
+      ],
+      "settings": {
+        "eyebrow": "מפרט",
+        "heading": "מה חשוב לדעת",
+        "note": "כל מה שצריך לדעת, בלי אותיות קטנות ובלי הפתעות.",
+        "product_image": 3,
+        "image_ratio": "square",
+        "media_position": "second",
+        "full_width": true,
+        "cta_label": "לבחירת התכשיט שלי",
+        "cta_action": "auto",
+        "cta_sub": "",
+        "color_scheme": "background-1",
+        "bg_color": "#faf8f4",
+        "accent_color": "#a8894f",
+        "button_bg": "#111111",
+        "button_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "main",
+    "seora_category_story",
     "seora_logos",
     "shoppable_video_new_yQVWcy",
     "seora_benefits",
     "seora_materials",
+    "seora_specs",
     "seora_reviews",
     "moissanite_compare_Xk3Q7p",
     "seora_faq",

@@ -39,17 +39,20 @@ STYLES = {
     "sk-toc": "background:#fafaf8;border:1px solid #ece6dc;border-radius:10px;padding:14px 22px;margin:26px 0",
     "sk-quote": "border-right:4px solid #b08d57;margin:28px 0;padding:4px 20px;font-size:1.25em;line-height:1.6;font-weight:700",
     "sk-table-wrap": "overflow-x:auto;margin:22px 0",
-    "sk-table": "width:100%;border-collapse:collapse;font-size:.95em;min-width:520px",
-    "sk-th": "background:#f7f3ec;border:1px solid #e6dfd3;padding:10px 12px;text-align:right",
-    "sk-td": "border:1px solid #e6dfd3;padding:10px 12px;text-align:right;vertical-align:top",
+    "sk-table": "width:100%;border-collapse:collapse;font-size:.95em;min-width:460px",
+    "sk-th": "background:#f7f3ec;border-bottom:1px solid #e6dfd3;padding:10px 12px;text-align:right",
+    "sk-td": "border-bottom:1px solid #eee8de;padding:10px 12px;text-align:right;vertical-align:top",
     "sk-cta": "background:#f7f3ec;border-radius:12px;padding:20px 24px;margin:32px 0;text-align:center",
     "sk-btn": "display:inline-block;background:#111;color:#fff;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:700;margin:6px",
     "sk-related": "border:1px solid #ece6dc;border-radius:10px;padding:14px 22px;margin:30px 0",
     "sk-note": "font-size:.85em;opacity:.7;margin-top:30px",
 }
-CARD_GRID = "display:flex;flex-wrap:wrap;gap:14px;margin:22px 0"
-CARD = ("flex:1 1 180px;max-width:240px;border:1px solid #e6dfd3;border-radius:12px;padding:10px;"
-        "text-decoration:none;color:inherit;display:block;background:#fff")
+# Compact product card: small thumbnail beside the name. Inline styles so it renders the same
+# on any theme; the SEORA magazine theme also styles .seora-product / .seora-products.
+CARD_GRID = "display:flex;flex-wrap:wrap;gap:12px;margin:24px 0"
+CARD = ("flex:1 1 260px;max-width:420px;display:flex;align-items:center;gap:14px;padding:10px 12px;"
+        "border:1px solid #e9e3d8;border-radius:12px;background:#fff;color:inherit;text-decoration:none;line-height:1.45")
+CARD_IMG = "flex:0 0 auto;width:76px;height:76px;object-fit:cover;border-radius:8px;margin:0"
 
 errors, warnings = [], []
 
@@ -102,26 +105,22 @@ def card(handle, note):
     if not p:
         return ""
     img = p["image"] or ""
-    img = img + ("&" if "?" in img else "?") + "width=480"
-    price = money(p["price"])
-    if p["maxPrice"] > p["price"] + 1:
-        price = "החל מ-" + price
+    img = img + ("&" if "?" in img else "?") + "width=200"
     alt = escape(p["title"])
     return (
-        f'<a href="{url}" style="{CARD}">'
-        f'<img src="{img}" alt="{alt}" loading="lazy" width="480" height="480" '
-        f'style="width:100%;height:auto;border-radius:8px;display:block">'
-        f'<span style="display:block;font-weight:700;margin-top:10px;line-height:1.4">{escape(p["title"])}</span>'
-        f'<span style="display:block;font-size:.9em;opacity:.8;margin-top:4px;line-height:1.5">{note.strip()}</span>'
-        f'<span style="display:block;margin-top:8px;font-weight:700">{price}</span>'
-        f'<span style="display:block;margin-top:4px;text-decoration:underline">לפרטים ולמידות</span>'
-        "</a>"
+        f'<a class="seora-product" href="{url}" style="{CARD}">'
+        f'<img src="{img}" alt="{alt}" loading="lazy" width="76" height="76" style="{CARD_IMG}">'
+        f'<span style="min-width:0">'
+        f'<b style="display:block;font-size:.95em">{escape(p["title"])}</b>'
+        f'<small style="display:block;margin-top:2px;font-size:.85em;opacity:.75">{note.strip()}</small>'
+        f'<u style="display:inline-block;margin-top:4px;font-size:.85em;font-weight:700">לצפייה במוצר</u>'
+        "</span></a>"
     )
 
 
 def cards(spec):
     items = [s.split("|", 1) for s in spec.split(";;") if s.strip()]
-    return f'<div style="{CARD_GRID}">' + "".join(card(h, n) for h, n in items) + "</div>"
+    return f'<div class="seora-products" style="{CARD_GRID}">' + "".join(card(h, n) for h, n in items) + "</div>"
 
 
 def build(src):
@@ -132,6 +131,9 @@ def build(src):
                   lambda m: m.group(1).replace('<a href=', f'<a style="{STYLES["sk-btn"]}" href='), html, flags=re.S)
     for cls, style in STYLES.items():
         html = re.sub(rf'class="{cls}"', f'style="{style}"', html)
+    for gone in ("sk-toc", "sk-box", "sk-meta", "sk-quote", "sk-related", "sk-cta", "sk-lead"):
+        if f'class="{gone}"' in src:
+            errors.append(f"{gone} is no longer used in articles")
     if "[[" in html:
         errors.append("unresolved placeholder")
     if re.search(r'class="sk-', html):

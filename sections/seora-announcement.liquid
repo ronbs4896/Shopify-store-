@@ -1,0 +1,50 @@
+{%- comment -%} SEORA announcement bar: one or two centered lines on a solid background. {%- endcomment -%}
+{%- liquid
+  assign ss = section.settings
+-%}
+{%- style -%}
+  #sann-{{ section.id }} {
+    background: {{ ss.bg_color }};
+    color: {{ ss.text_color }};
+    padding: {{ ss.padding_mobile }}px 1.6rem;
+  }
+  #sann-{{ section.id }} .sann__line { font-size: {{ ss.size_mobile }}px; }
+  @media screen and (min-width: 750px) {
+    #sann-{{ section.id }} { padding-block: {{ ss.padding_desktop }}px; }
+    #sann-{{ section.id }} .sann__line { font-size: {{ ss.size_desktop }}px; }
+  }
+{%- endstyle -%}
+<div id="sann-{{ section.id }}" class="sann" dir="rtl" role="region" aria-label="הודעה">
+  {%- if ss.link != blank -%}<a class="sann__link" href="{{ ss.link }}">{%- endif -%}
+  {%- if ss.line_1 != blank -%}<p class="sann__line">{{ ss.line_1 }}</p>{%- endif -%}
+  {%- if ss.line_2 != blank -%}<p class="sann__line">{{ ss.line_2 }}</p>{%- endif -%}
+  {%- if ss.link != blank -%}</a>{%- endif -%}
+</div>
+<style>
+  .sann { text-align: center; }
+  .sann__link { display: block; color: inherit; text-decoration: none; }
+  .sann__line { margin: 0; line-height: 1.55; color: inherit; letter-spacing: 0; text-transform: none; }
+  .sann__line strong, .sann__line b { font-weight: 700; color: inherit; }
+  .sann__line a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
+</style>
+
+{% schema %}
+{
+  "name": "SEORA הודעה עליונה",
+  "tag": "section",
+  "class": "section-seora-announcement",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "inline_richtext", "id": "line_1", "label": "שורה ראשונה", "default": "<strong>20% הנחה על כל האתר</strong>" },
+    { "type": "inline_richtext", "id": "line_2", "label": "שורה שנייה", "default": "<strong>משלוח חינם</strong> בהזמנה מעל 300 ₪" },
+    { "type": "url", "id": "link", "label": "קישור (לא חובה)" },
+    { "type": "color", "id": "bg_color", "label": "צבע רקע", "default": "#1c3027" },
+    { "type": "color", "id": "text_color", "label": "צבע טקסט", "default": "#ffffff" },
+    { "type": "range", "id": "size_desktop", "label": "גודל טקסט במחשב", "min": 12, "max": 22, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "size_mobile", "label": "גודל טקסט במובייל", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "padding_desktop", "label": "ריווח במחשב", "min": 4, "max": 24, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "padding_mobile", "label": "ריווח במובייל", "min": 4, "max": 24, "step": 1, "unit": "px", "default": 8 }
+  ],
+  "presets": [{ "name": "SEORA הודעה עליונה" }]
+}
+{% endschema %}

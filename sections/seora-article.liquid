@@ -1,0 +1,167 @@
+{%- comment -%} SEORA magazine article: title, author + date/time, banner image, body, related. {%- endcomment -%}
+{{ 'seora-blog.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign ss = section.settings
+  assign months = 'ינואר,פברואר,מרץ,אפריל,מאי,יוני,יולי,אוגוסט,ספטמבר,אוקטובר,נובמבר,דצמבר' | split: ','
+  assign m_idx = article.published_at | date: '%m' | plus: 0 | minus: 1
+  assign d_day = article.published_at | date: '%-d'
+  assign d_year = article.published_at | date: '%Y'
+  assign d_time = article.published_at | date: '%H:%M'
+  assign date_label = d_day | append: ' ב' | append: months[m_idx] | append: ' ' | append: d_year
+  assign words = article.content | strip_html | split: ' ' | size
+  assign read_min = words | divided_by: 200.0 | ceil
+  if read_min < 1
+    assign read_min = 1
+  endif
+-%}
+{%- style -%}
+  #sart-{{ section.id }} { padding-top: {{ ss.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ ss.padding_bottom | times: 0.75 | round: 0 }}px; }
+  #sart-{{ section.id }} .seora-art__banner { aspect-ratio: {{ ss.banner_ratio | default: '16 / 9' }}; }
+  @media screen and (max-width: 749px) {
+    #sart-{{ section.id }} .seora-art__banner { aspect-ratio: {{ ss.banner_ratio_mobile | default: '4 / 3' }}; }
+  }
+  @media screen and (min-width: 750px) {
+    #sart-{{ section.id }} { padding-top: {{ ss.padding_top }}px; padding-bottom: {{ ss.padding_bottom }}px; }
+  }
+{%- endstyle -%}
+
+<article id="sart-{{ section.id }}" class="seora-art" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="seora-art__wrap">
+    <header class="seora-art__head">
+      {%- if ss.show_tag and article.tags.size > 0 -%}
+        <a class="seora-art__tag" href="{{ blog.url }}/tagged/{{ article.tags.first | handleize }}">{{ article.tags.first | escape }}</a>
+      {%- endif -%}
+      <h1 class="seora-art__title" itemprop="headline">{{ article.title | escape }}</h1>
+      <p class="seora-art__meta">
+        {%- if article.author != blank -%}
+          <span class="seora-art__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <span class="seora-art__avatar" aria-hidden="true">{{ article.author | slice: 0 }}</span>
+            <span itemprop="name">{{ article.author | escape }}</span>
+          </span>
+        {%- endif -%}
+        <time class="seora-art__date" datetime="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}" itemprop="datePublished">
+          {{- date_label }}, {{ d_time -}}
+        </time>
+        {%- if ss.show_reading_time -%}
+          <span class="seora-art__read">{{ read_min }} דקות קריאה</span>
+        {%- endif -%}
+      </p>
+    </header>
+
+    {%- if article.image -%}
+      <figure class="seora-art__banner seora-art__banner--{{ ss.banner_fit | default: 'cover' }}" itemprop="image">
+        {{ article.image | image_url: width: 2000 | image_tag:
+          widths: '480, 750, 1000, 1300, 1600, 2000',
+          sizes: '(min-width: 1100px) 1040px, 94vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: article.image.alt
+        }}
+      </figure>
+    {%- endif -%}
+
+    <div class="seora-art__body rte" itemprop="articleBody">
+      {{ article.content }}
+    </div>
+
+    {%- if ss.show_share -%}
+      {%- assign share_url = request.origin | append: article.url -%}
+      <div class="seora-art__share">
+        <span>שתפו:</span>
+        <a href="https://wa.me/?text={{ article.title | append: ' ' | append: share_url | url_encode }}" target="_blank" rel="noopener">וואטסאפ</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" target="_blank" rel="noopener">פייסבוק</a>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if ss.show_related -%}
+    {%- liquid
+      assign related_count = 0
+      assign first_tag = article.tags.first
+    -%}
+    {%- capture related_html -%}
+      {%- for a in blog.articles -%}
+        {%- if a.id != article.id and related_count < 2 -%}
+          {%- if first_tag == blank or a.tags contains first_tag -%}
+            {%- render 'seora-article-card', article: a, show_excerpt: false, show_author: false, show_date: true, heading_tag: 'h3', lazy: true -%}
+            {%- assign related_count = related_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if related_count < 2 -%}
+        {%- for a in blog.articles -%}
+          {%- if a.id != article.id and related_count < 2 -%}
+            {%- unless first_tag != blank and a.tags contains first_tag -%}
+              {%- render 'seora-article-card', article: a, show_excerpt: false, show_author: false, show_date: true, heading_tag: 'h3', lazy: true -%}
+              {%- assign related_count = related_count | plus: 1 -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if related_count > 0 -%}
+      <aside class="seora-art__related page-width">
+        <div class="seora-art__related-head">
+          <h2>{{ ss.related_heading | default: 'עוד מהמגזין' | escape }}</h2>
+          <a href="{{ blog.url }}">לכל המאמרים</a>
+        </div>
+        <div class="seora-mag__grid">{{ related_html }}</div>
+      </aside>
+    {%- endif -%}
+  {%- endif -%}
+</article>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": {{ canonical_url | json }} },
+    "headline": {{ article.title | json }},
+    {%- if article.excerpt != blank %}
+    "description": {{ article.excerpt | strip_html | strip | json }},
+    {%- endif %}
+    {%- if article.image %}
+    "image": [{{ article.image | image_url: width: 1920 | prepend: 'https:' | json }}],
+    {%- endif %}
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+    "author": { "@type": "Person", "name": {{ article.author | json }} },
+    "publisher": { "@type": "Organization", "name": {{ shop.name | json }} }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "SEORA מגזין: מאמר",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "checkbox", "id": "show_tag", "label": "הצג נושא מעל הכותרת", "default": true },
+    { "type": "checkbox", "id": "show_reading_time", "label": "הצג זמן קריאה", "default": true },
+    { "type": "header", "content": "תמונת באנר" },
+    { "type": "select", "id": "banner_ratio", "label": "יחס תמונה במחשב", "options": [
+      { "value": "21 / 9", "label": "רחב מאוד 21:9" },
+      { "value": "16 / 9", "label": "רחב 16:9" },
+      { "value": "3 / 2", "label": "3:2" },
+      { "value": "4 / 3", "label": "4:3" },
+      { "value": "1 / 1", "label": "ריבוע" }
+    ], "default": "16 / 9" },
+    { "type": "select", "id": "banner_ratio_mobile", "label": "יחס תמונה במובייל", "options": [
+      { "value": "16 / 9", "label": "רחב 16:9" },
+      { "value": "4 / 3", "label": "4:3" },
+      { "value": "1 / 1", "label": "ריבוע" },
+      { "value": "4 / 5", "label": "לאורך 4:5" }
+    ], "default": "4 / 3" },
+    { "type": "select", "id": "banner_fit", "label": "התאמת התמונה", "options": [
+      { "value": "cover", "label": "למלא את המסגרת (חותך קצוות)" },
+      { "value": "contain", "label": "להציג את כל התמונה" }
+    ], "default": "cover" },
+    { "type": "header", "content": "בסוף המאמר" },
+    { "type": "checkbox", "id": "show_share", "label": "כפתורי שיתוף", "default": true },
+    { "type": "checkbox", "id": "show_related", "label": "מאמרים נוספים", "default": true },
+    { "type": "text", "id": "related_heading", "label": "כותרת מאמרים נוספים", "default": "עוד מהמגזין" },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 56 }
+  ]
+}
+{% endschema %}
