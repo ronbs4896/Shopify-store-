@@ -15,5 +15,6 @@ The short version: no full stop at the end of headings, buttons or labels; no ch
 
 - Theme files are written only to an unpublished theme; the owner publishes.
 - Do not create a new theme for each change. Keep one staging theme and reuse it. When the owner publishes staging, the theme that was live becomes unpublished: bring it up to date with the live files (themeFilesCopy/Upsert) and use it as the next staging theme. Duplicate a theme only if no unpublished Claude theme exists, and tell the owner first.
+- Staging theme now: "SEORA - טיוטה קבועה (Claude)", gid://shopify/OnlineStoreTheme/190441914664 (in sync with live as of 2026-10-07). Live: 190447812904.
 - Prices and discounts change only with the owner's explicit approval.
 - No invented reviews or ratings.
