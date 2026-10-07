@@ -1,8 +1,9 @@
 {%- comment -%}
   ŚEORA - "what to know" spec table next to a product image.
   The plating row is worked out per product: metafield custom.plating wins; otherwise
-  gold is detected from the title and option values (זהב / צהוב / רוז), and silver from
-  option values (כסף / לבן). Gold + silver = both texts; nothing found = rhodium.
+  gold is detected from the title, option values and description (זהב / צהוב / רוז; the
+  descriptions carry "צבע: זהב" and "ציפוי זהב 18K"), and silver from option values
+  (כסף / לבן). Gold + silver options = both texts; nothing found = rhodium.
 {%- endcomment -%}
 {{ 'seora-cro.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'seora-cro.js' | asset_url }}" defer="defer"></script>
@@ -32,6 +33,8 @@
       endif
     endfor
     if haystack contains 'זהב' or haystack contains 'צהוב' or haystack contains 'רוז'
+      assign has_gold = true
+    elsif product.description contains 'זהב'
       assign has_gold = true
     endif
   endif
@@ -133,11 +136,11 @@
       "name": "שורת ציפוי (אוטומטית)",
       "limit": 1,
       "settings": [
-        { "type": "paragraph", "content": "הערך נבחר לפי המוצר: זהב אם בשם או באפשרויות מופיע זהב/צהוב/רוז, שניהם אם יש גם כסף/לבן באפשרויות, אחרת רודיום. שדה מוצר custom.plating גובר על הכל." },
+        { "type": "paragraph", "content": "הערך נבחר לפי המוצר: זהב אם בשם, באפשרויות או בתיאור מופיע זהב/צהוב/רוז, שניהם אם יש גם כסף/לבן באפשרויות, אחרת רודיום. שדה מוצר custom.plating גובר על הכל." },
         { "type": "text", "id": "label", "label": "שם", "default": "ציפוי" },
         { "type": "text", "id": "value", "label": "ערך רגיל", "default": "רודיום" },
-        { "type": "text", "id": "value_gold", "label": "ערך למוצר בגוון זהב", "default": "זהב" },
-        { "type": "text", "id": "value_both", "label": "ערך למוצר עם כמה גוונים", "default": "רודיום או זהב, לפי הגוון שבוחרים" }
+        { "type": "text", "id": "value_gold", "label": "ערך למוצר בגוון זהב", "default": "זהב 18K" },
+        { "type": "text", "id": "value_both", "label": "ערך למוצר עם כמה גוונים", "default": "רודיום או זהב 18K, לפי הגוון שבוחרים" }
       ]
     }
   ],
