@@ -1,0 +1,102 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "seora_announcement": {
+      "type": "seora-announcement",
+      "settings": {
+        "line_1": "<strong>20% הנחה על כל האתר</strong>",
+        "line_2": "<strong>משלוח חינם</strong> בהזמנה מעל 300 ₪",
+        "link": "",
+        "bg_color": "#1c3027",
+        "text_color": "#ffffff",
+        "size_desktop": 15,
+        "size_mobile": 14,
+        "padding_desktop": 10,
+        "padding_mobile": 8
+      }
+    },
+    "lumin_scrolling_text_BRdDdB": {
+      "type": "lumin-scrolling-text",
+      "disabled": true,
+      "blocks": {
+        "announcement_j8pyT6": {
+          "type": "announcement",
+          "settings": {
+            "Announcement": "<p>40% הנחה על כל האתר עד חצות</p>",
+            "announcement_size": 18,
+            "announcement_size_m": 16,
+            "text_spacing": 0,
+            "text_transform": "none",
+            "announcement_color": "#ffffff",
+            "icon": "none",
+            "text_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_j8pyT6"
+      ],
+      "settings": {
+        "scroll_speed": 15,
+        "reverse": false,
+        "fade": false,
+        "color_scheme": "background-2",
+        "padding_desktop": 8,
+        "padding_mobile": 8,
+        "padding_item_desktop": 16,
+        "padding_item_mobile": 8,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "header": {
+      "type": "header",
+      "custom_css": [],
+      "settings": {
+        "logo_position": "middle-left",
+        "hide_search": false,
+        "menu": "main-menu",
+        "sticky_header_type": "reduce-logo-size",
+        "show_line_separator": true,
+        "transparent_header": "none",
+        "content_color": "#ffffff",
+        "menu_type_desktop": "mega",
+        "menu_hover": true,
+        "mega_columns": "20",
+        "menu_align": "start",
+        "extended-megamenu-show-imgs": "yes",
+        "link_img_size": 100,
+        "img_radius": 4,
+        "mega_menu_head_size": 20,
+        "head_menu_bold": true,
+        "mega_menu_link_size": 14,
+        "menu_bold": true,
+        "mega_menu_head_color": "#000000",
+        "mega_menu_link_color": "#000000",
+        "color_scheme": "background-1",
+        "menu_color_scheme": "accent-2",
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "mobile_logo_position": "center",
+        "margin_bottom": 0,
+        "padding_top": 4,
+        "padding_bottom": 4
+      }
+    }
+  },
+  "order": [
+    "seora_announcement",
+    "lumin_scrolling_text_BRdDdB",
+    "header"
+  ]
+}
