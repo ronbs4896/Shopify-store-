@@ -20,7 +20,8 @@
             "count": "984",
             "count_label": "ביקורות",
             "star_color": "#f5a623"
-          }
+          },
+          "disabled": true
         },
         "badges": {
           "type": "badges",
@@ -807,7 +808,7 @@
       "type": "seora-final-cta",
       "settings": {
         "show_image": true,
-        "show_rating": true,
+        "show_rating": false,
         "rating": 5,
         "rating_text": "הבחירה של לקוחות ŚEORA",
         "heading": "מראה יוקרתי, בחירה חכמה",

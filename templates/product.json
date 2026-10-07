@@ -25,7 +25,8 @@
             "lrw_color": "#000000",
             "margin_top": 0,
             "margin_bottom": 10
-          }
+          },
+          "disabled": true
         },
         "8f8d8903-27e7-4cac-99c4-ec1b60b7f309": {
           "type": "fomo",
@@ -45,7 +46,8 @@
             "padding_bottom": 0,
             "margin_top": 4,
             "margin_bottom": 0
-          }
+          },
+          "disabled": true
         },
         "review_v1_Xridmh": {
           "type": "review_v1",
@@ -61,7 +63,8 @@
             "font_size": 12,
             "padding_top": 5,
             "padding_bottom": 15
-          }
+          },
+          "disabled": true
         },
         "title": {
           "type": "title",
@@ -210,7 +213,8 @@
             "text_size": 12,
             "padding_top": 20,
             "padding_bottom": 20
-          }
+          },
+          "disabled": true
         },
         "collapsible_description_dxHbmb": {
           "type": "collapsible_description",
