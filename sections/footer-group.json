@@ -1,0 +1,92 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "back_to_top_Ca7nbV": {
+      "type": "back-to-top",
+      "settings": {
+        "hide_on_mobile": false,
+        "show_when_precent_of_page": 60,
+        "button_position": "center",
+        "button_bg_color": "#ffffff",
+        "button_border_color": "#dddddd",
+        "icon_color": "#000000",
+        "button_diameter": 48,
+        "icon_size": 24,
+        "horizontal_padding": 20,
+        "vertical_padding": 100
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "link_list_YkcPW4": {
+          "type": "link_list",
+          "settings": {
+            "heading": "מידע",
+            "menu": "footer"
+          }
+        },
+        "0dfe9e9f-d96e-442f-be6e-881afaba1771": {
+          "type": "link_list",
+          "settings": {
+            "heading": "חנות",
+            "menu": "main-menu"
+          }
+        },
+        "text_y3qDPH": {
+          "type": "text",
+          "settings": {
+            "heading": "צריכים עזרה? דברו איתנו",
+            "subtext": "<p><strong>hello@seora.co.il</strong></p><p>חייגו אלינו: <strong>052-319-9277<br/>ימים א׳ עד ה׳, 8:00 עד 16:00</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "link_list_YkcPW4",
+        "0dfe9e9f-d96e-442f-be6e-881afaba1771",
+        "text_y3qDPH"
+      ],
+      "settings": {
+        "color_scheme": "background-2",
+        "show_collapse": true,
+        "show_border": false,
+        "show_body_font": "head",
+        "newsletter_enable": false,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "original": "custom",
+        "payment_icon": "visa,master,paypal,apple_pay,shopify-pay,google-pay,paypo,master",
+        "custom_icon_1_width": 34,
+        "custom_icon_2_width": 34,
+        "custom_icon_3_width": 34,
+        "hide_shopify": false,
+        "copyright": "- Theme by <a href=\"https://lumintheme.com/\" target=\"_blank\" title=\"https://lumintheme.com/\">Lumin<em>Theme</em></a> © 2024",
+        "show_bottom_text": false,
+        "bottom_text": "Note that all content and resources provided on our website are not medical advice nor should they be used as a substitute for professional medical treatment. For medical concerns and/or emergencies, consult your health care provider and emergency services immediately.",
+        "color_bottom_text": "#868686",
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 40,
+        "padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "back_to_top_Ca7nbV",
+    "footer"
+  ]
+}

@@ -1,0 +1,604 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_jAXVC4": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_hQh4mW": {
+          "type": "slide",
+          "settings": {
+            "image_mob": "shopify://shop_images/03b0b320-acda-4011-a2bb-b98a5da9fff6.png",
+            "caption": "",
+            "block_cap_size": 20,
+            "cap_color": "#ffffff",
+            "heading": "",
+            "block_head_size-2": 64,
+            "block_head_size-mobile": 36,
+            "block_head_line": 1,
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/all",
+            "link-2": "shopify://collections/all",
+            "button_style_secondary": false,
+            "box_align": "middle-left",
+            "show_text_box": false,
+            "text_alignment": "left",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center",
+            "mobile_box_align": "center",
+            "mobile_text_spacing": 0
+          }
+        }
+      },
+      "block_order": [
+        "slide_hQh4mW"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 750px) {.banner, slideshow-component {display: none; }}"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "banner_border": 0,
+        "slide_height": "large",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "hide_navigation": false,
+        "change_slides_speed": 5,
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "slideshow_eBbReU": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_ywtacY": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/67bdec1d-3512-4a05-a5ca-dedb5a96229d.png",
+            "caption": "",
+            "block_cap_size": 20,
+            "cap_color": "#ffffff",
+            "heading": "",
+            "block_head_size-2": 64,
+            "block_head_size-mobile": 36,
+            "block_head_line": 1,
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/all",
+            "link-2": "shopify://collections/all",
+            "button_style_secondary": false,
+            "box_align": "middle-left",
+            "show_text_box": false,
+            "text_alignment": "left",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center",
+            "mobile_box_align": "center",
+            "mobile_text_spacing": 0
+          }
+        }
+      },
+      "block_order": [
+        "slide_ywtacY"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 750px) {.banner, slideshow-component {display: none; }}"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "banner_border": 0,
+        "slide_height": "large",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "hide_navigation": false,
+        "change_slides_speed": 5,
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "collection_list_hXDpgw": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_YAEddW": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "צמידי-יהלומי-מוסאנייט"
+          }
+        },
+        "featured_collection_3AkzWy": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "עגילי-יהלומי-מואסנייט"
+          }
+        },
+        "featured_collection_rE87mk": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "שרשראות-יהלומי-מואסנייט"
+          }
+        },
+        "featured_collection_KHkxMX": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "טבעות-יהלומי-מוסאנייט"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_YAEddW",
+        "featured_collection_3AkzWy",
+        "featured_collection_rE87mk",
+        "featured_collection_KHkxMX"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "כל הקולקציות",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 4,
+        "color_scheme": "",
+        "subtitle_center": false,
+        "show_arrow": false,
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rich_text_qQUy8k": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_gUjRhA": {
+          "type": "heading",
+          "settings": {
+            "heading": "המוצרים הנמכרים ביותר",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_gUjRhA"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "background-1",
+        "full_width": true,
+        "padding_top": 24,
+        "padding_bottom": 0
+      }
+    },
+    "tabs_collection_qfp7rC": {
+      "type": "tabs-collection",
+      "blocks": {
+        "tab_H3PKEg": {
+          "type": "tab",
+          "disabled": true,
+          "settings": {
+            "heading": "הכי נמכר",
+            "collection": "",
+            "description": "",
+            "collection_text_alignment": "left",
+            "show_description": false,
+            "description_style": "body"
+          }
+        },
+        "tab_Ba9wyh": {
+          "type": "tab",
+          "settings": {
+            "heading": "טבעות",
+            "collection": "טבעות-יהלומי-מוסאנייט",
+            "description": "",
+            "collection_text_alignment": "center",
+            "show_description": true,
+            "description_style": "body"
+          }
+        },
+        "tab_piQnRt": {
+          "type": "tab",
+          "settings": {
+            "heading": "עגילים",
+            "collection": "עגילי-יהלומי-מואסנייט",
+            "description": "",
+            "collection_text_alignment": "left",
+            "show_description": true,
+            "description_style": "body"
+          }
+        },
+        "tab_XYGc7J": {
+          "type": "tab",
+          "settings": {
+            "heading": "שרשראות",
+            "collection": "שרשראות-יהלומי-מואסנייט",
+            "description": "",
+            "collection_text_alignment": "left",
+            "show_description": true,
+            "description_style": "body"
+          }
+        },
+        "tab_gkKCAw": {
+          "type": "tab",
+          "settings": {
+            "heading": "צמידים",
+            "collection": "צמידי-יהלומי-מוסאנייט",
+            "description": "",
+            "collection_text_alignment": "left",
+            "show_description": false,
+            "description_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "tab_H3PKEg",
+        "tab_Ba9wyh",
+        "tab_piQnRt",
+        "tab_XYGc7J",
+        "tab_gkKCAw"
+      ],
+      "custom_css": [
+        ".card__heading,.card__heading a,.product-card__title,.product-title,.price,.price-item,.price__current,.price__regular,.price__sale {direction: rtl; text-align: right; unicode-bidi: plaintext;}"
+      ],
+      "settings": {
+        "tabs_color_scheme": "background-1",
+        "tab_font": 16,
+        "tab_font_align": "center",
+        "tab_font_mb": 14,
+        "tab_font_mb_align": "center",
+        "show_border": false,
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "image_ratio": "adapt",
+        "image_no_crop": true,
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "show_scroll_tags": false,
+        "enable_quick_desc": false,
+        "quick_desc_legth": 90,
+        "quick_desc_size": 14,
+        "enable_quick_add": true,
+        "show_secondary_add": false,
+        "columns_mobile": "2",
+        "padding_top": 12,
+        "padding_bottom": 36
+      }
+    },
+    "shoppable_video_new_BdqjL9": {
+      "type": "shoppable-video-new",
+      "blocks": {
+        "item_jjWXKJ": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/IMG_7445.mp4",
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "1.7k",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
+        "item_MMTRx3": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/6d8f4924-be97-478f-b8b6-dadd7bd95947.MP4",
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "1.7k",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
+        "item_zpbzYa": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/bbf01170-e1f0-4c59-96d1-3b24994cc302.MP4",
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "1.7k",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
+        "item_cWPRim": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/acf9637b-0bbb-4fd6-8ea8-ad0a6a0765b9.MP4",
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "1.7k",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
+        "item_jKdchp": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/39e746bc-297b-47be-a01d-cc1a24fc2ebf.MP4",
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "1.7k",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "item_jjWXKJ",
+        "item_MMTRx3",
+        "item_zpbzYa",
+        "item_cWPRim",
+        "item_jKdchp"
+      ],
+      "name": "Shoppable videos",
+      "settings": {
+        "color_scheme": "",
+        "container": true,
+        "heading": "לקוחות ממליצים",
+        "heading_size": "h1",
+        "description": "<p>ככה זה נראה אצל הלקוחות שלנו</p>",
+        "slider_speed": 300,
+        "slider_nav": true,
+        "slider_pagination": true,
+        "slider_pagination_type": "bullets",
+        "slider_scrollbar": true,
+        "slider_partial_slides_mobile": true,
+        "slider_autoplay": 0,
+        "gap": 10,
+        "card_border_width": 1,
+        "card_border_radius": 16,
+        "badge_border_radius": 3,
+        "card_box_shadow": false,
+        "card_equal_height": true,
+        "breakpoint_xs": 1,
+        "breakpoint_sm": 2,
+        "breakpoint_md": 3,
+        "breakpoint_lg": 3,
+        "breakpoint_xl": 4,
+        "breakpoint_xxl": 4,
+        "padding_top": 36,
+        "padding_bottom": 32
+      }
+    },
+    "collapsible_content_k74NUT": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_azizBe": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "תוך כמה זמן ההזמנה מגיעה?",
+            "icon": "none",
+            "row_content": "<p>ההזמנה מגיעה תוך 5 ימי עסקים לכל היותר (ראשון עד חמישי, לא כולל חגים). המשלוח חינם בהזמנה מעל 299 ₪, ומתחת לסכום הזה הוא עולה 35 ₪. כשההזמנה יוצאת, נשלח מספר מעקב.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_RcXDDz": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "איך אפשר לשלם?",
+            "icon": "none",
+            "row_content": "<p>אפשר לשלם בכרטיס אשראי בתשלום מאובטח. בהתאם לסכום ההזמנה אפשר לחלק לתשלומים, בכפוף לתנאי חברת האשראי.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_fVArDn": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "יש אחריות?",
+            "icon": "none",
+            "row_content": "<p>כן. על כל מוצר יש אחריות יבואן: שנה על תכשיטים ושנתיים על שעונים. האחריות לא מכסה נזק משימוש לא נכון, מכה, שבר, שריטה או אובדן.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_dTM9e9": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "אפשר להחליף או להחזיר?",
+            "icon": "none",
+            "row_content": "<p>אפשר להחליף מוצר תוך 14 ימי עסקים מקבלת המשלוח, כל עוד לא נעשה בו שימוש והוא באריזה המקורית עם כל מה שהגיע איתו. ביטול עסקה והחזר כספי מתבצעים לפי <a href=\"/pages/מדיניות-החזרות\">מדיניות ההחזרות</a>, בכפוף לדמי ביטול.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_DL44De": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "אפשר לשנות מידה של טבעת אחרי ההזמנה?",
+            "icon": "none",
+            "row_content": "<p>בחלק מהדגמים אפשר לשנות מידה. כדאי לבדוק את המידה לפני ההזמנה בעזרת מדריך המידות. אם טעיתם במידה, פנו לשירות הלקוחות ונבדוק מה אפשר לעשות.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_ydb68K": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "איך עוקבים אחרי ההזמנה?",
+            "icon": "none",
+            "row_content": "<p>כשההזמנה יוצאת למשלוח, נשלחת הודעה עם מספר מעקב וקישור לבדיקת הסטטוס. אפשר גם לפנות לשירות הלקוחות עם מספר ההזמנה.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_azizBe",
+        "collapsible_row_RcXDDz",
+        "collapsible_row_fVArDn",
+        "collapsible_row_dTM9e9",
+        "collapsible_row_DL44De",
+        "collapsible_row_ydb68K"
+      ],
+      "name": "t:sections.collapsible_content.presets.name",
+      "settings": {
+        "caption": "",
+        "heading": "שאלות נפוצות",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 20,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection_HbUw9e": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "title": "שרשראות לכל יום ולכל ערב",
+        "description": "",
+        "collection_text_alignment": "center",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "שרשראות-יהלומי-מואסנייט",
+        "show_collection_image": false,
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "navigation_on_desk": true,
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_no_crop": true,
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "show_scroll_tags": false,
+        "enable_quick_desc": false,
+        "quick_desc_legth": 90,
+        "quick_desc_size": 14,
+        "enable_quick_add": false,
+        "show_secondary_add": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "navigation_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "newsletter_EddyTa": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_Xkkar4": {
+          "type": "heading",
+          "settings": {
+            "heading": "הצטרפו למועדון הלקוחות של SEORA",
+            "heading_size": "h2"
+          }
+        },
+        "paragraph_N8Uw3p": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>נרשמים ומקבלים ראשונים הטבות ומבצעים.</p>"
+          }
+        },
+        "email_form_URQjkU": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_Xkkar4",
+        "paragraph_N8Uw3p",
+        "email_form_URQjkU"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "color_scheme": "background-2",
+        "full_width": true,
+        "text_align": "left",
+        "news_alignment": "horizontal",
+        "show_small_text": true,
+        "small_text": "* You can unsubscribe at any time.",
+        "padding_top": 40,
+        "padding_bottom": 44,
+        "margin_top": 0,
+        "margin_bottom": 0
+      }
+    },
+    "6b53f861-3aae-4cc4-a699-aca63db5c942": {
+      "type": "timer",
+      "settings": {
+        "color_scheme": "accent-2",
+        "layout": "grid",
+        "show_border": false,
+        "video_border": 6,
+        "first_text": "Shop our best deals for",
+        "third_text": "Offers ends in",
+        "small_text": 16,
+        "small_text_mb": 16,
+        "second_text": "BLACK FRIDAY",
+        "big_text": 28,
+        "big_text_mb": 16,
+        "url": "#",
+        "timer": "10/31/2025 23:20",
+        "timer_days": "D",
+        "timer_text": 16,
+        "timer_text_mb": 16,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "margin_top": 0,
+        "margin_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "slideshow_jAXVC4",
+    "slideshow_eBbReU",
+    "collection_list_hXDpgw",
+    "rich_text_qQUy8k",
+    "tabs_collection_qfp7rC",
+    "shoppable_video_new_BdqjL9",
+    "collapsible_content_k74NUT",
+    "featured_collection_HbUw9e",
+    "newsletter_EddyTa",
+    "6b53f861-3aae-4cc4-a699-aca63db5c942"
+  ]
+}
