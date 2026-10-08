@@ -15,6 +15,6 @@ The short version: no full stop at the end of headings, buttons or labels; no ch
 
 - Theme files are written only to an unpublished theme; the owner publishes.
 - Do not create a new theme for each change. Keep one staging theme and reuse it. When the owner publishes staging, the theme that was live becomes unpublished: bring it up to date with the live files (themeFilesCopy/Upsert) and use it as the next staging theme. Duplicate a theme only if no unpublished Claude theme exists, and tell the owner first.
-- Staging theme now: "SEORA - טיוטה (Claude)", gid://shopify/OnlineStoreTheme/190447812904 (in sync with live as of 2026-10-08). Live: 190441914664. They swap each time the owner publishes; check roles with `themes { id name role }` before writing.
+- Staging theme now: "SEORA - טיוטה קבועה (Claude)", gid://shopify/OnlineStoreTheme/190441914664 (synced with live on 2026-10-08, plus the hidden video view counts). Live: 190447812904. They swap each time the owner publishes; check roles with `themes { id name role }` before writing.
 - Prices and discounts change only with the owner's explicit approval.
 - No invented reviews or ratings.

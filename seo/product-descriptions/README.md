@@ -45,3 +45,32 @@ Originals: before-2026-10-07.tar.gz (one <handle>.before.html per product; Ś500
 
 Also: metafield custom.plating = "רודיום וזהב" on SR1042, SE1061, SE1062 (spec table override).
 Not changed: model numbers that differ between title and description (awaiting confirmation).
+
+## 2026-10-08: model numbers
+
+The owner confirmed the code in the product title is correct. The description now shows the title code (bloated wrapper divs removed, visible text otherwise unchanged). Originals: `before-models-2026-10-08.json.gz`.
+
+| Product | Description had | Now |
+|---|---|---|
+| שרשרת טניס בשיבוץ יהלומי מואסנייט דגם SE1054 | SE1053 | SE1054 |
+| שרשרת לירון בשיבוץ יהלום מוסאנייט בסגנון מריחה דגם SN1089 | SE1089 | SN1089 |
+| שרשרת אמרלד בשיבוץ יהלום מוסאנייט בסגנון מריחה דגם SN1092 | SE1092 | SN1092 |
+| שרשרת רדיאנט בשיבוץ יהלום מוסאנייט דגם SN1094 | SE1094 | SN1094 |
+| שרשרת סוליטר בשיבוץ יהלום מוסאנייט דגם SN1096 | SE1096 | SN1096 |
+| שרשרת סוליטר בשיבוץ יהלום מוסאנייט דגם קלואי  SN1098 | SE1098 | SN1098 |
+| שרשרת ליהי בשיבוץ יהלום מוסאנייט SN1099 | SE1099 | SN1099 |
+| שרשרת בלום בשיבוץ יהלומי מוסאנייט דגם SN1108 | SE1108 | SN1108 |
+| טבעת טניס בחיתוך אובלי בשיבוץ יהלומי מוסאנייט דגם SR1122 | SR1120 | SR1122 |
+| שרשרת פאר בשיבוץ יהלומי מוסאנייט דגם SN1125 | SE1125 | SN1125 |
+| צמיד לינוי בשיבוץ יהלומי מוסאנייט דגם SB1129 | SB1127 | SB1129 |
+| צמיד עין בשיבוץ יהלומי מואסנייט דגם SB1141 | SE1141 | SB1141 |
+| שרשרת טניס דגרדה בשיבוץ יהלומי מוסאנייט דגם SN1999 | SE1125 | SN1999 |
+| עגילי דיאנה SM3003 | SM3002 | SM3003 |
+| עגילי סוליטר נופלים בשיבוץ יהלומי מוסאנייט דגם SE1254 | SE1255 | SE1254 |
+| צמיד פרפרים בשיבוץ יהלומי מואסנייט דגם SB1177 | SB1140 | SB1177 |
+| צמיד פרפר בשיבוץ יהלומי מואסנייט דגם SB1178 | SE1141 | SB1178 |
+| עגילי סוליטרי בשיבוץ יהלומי מוסאנייט דגם SE1158 | SE1190 | SE1158 |
+| טבעת פוראל בשיבוץ יהלום מוסאנייט דגם SR1301 | SR1179 | SR1301 |
+| עגילי מרקיזה בשיבוץ יהלומי מואסנייט דגם SE1302 | SE1161 | SE1302 |
+
+Not changed: צמיד טבעת דגם Ś5000 and Ś5001 (description says SB1163; Ś is not a normal model prefix, waiting for the owner).
