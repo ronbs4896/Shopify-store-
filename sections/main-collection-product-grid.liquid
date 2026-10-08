@@ -162,16 +162,26 @@
                 grid--{{ section.settings.columns_desktop }}-col-desktop
               "
             >
+              {%- comment -%} SEORA: in-stock products first, sold-out ones at the end of the page {%- endcomment -%}
+              {%- assign card_index = 0 -%}
+              {%- for pass in (1..2) -%}
               {%- for product in collection.products -%}
+                {%- if section.settings.sold_out_last != false -%}
+                  {%- if pass == 1 and product.available == false -%}{%- continue -%}{%- endif -%}
+                  {%- if pass == 2 and product.available -%}{%- continue -%}{%- endif -%}
+                {%- elsif pass == 2 -%}
+                  {%- break -%}
+                {%- endif -%}
+                {%- assign card_index = card_index | plus: 1 -%}
                 {% assign lazy_load = false %}
-                {%- if forloop.index > 2 -%}
+                {%- if card_index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
                 <li
                   class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                   {% if settings.animations_reveal_on_scroll %}
                     data-cascade
-                    style="--animation-order: {{ forloop.index }};"
+                    style="--animation-order: {{ card_index }};"
                   {% endif %}
                 >
                   {% render 'card-product',
@@ -190,6 +200,7 @@
                     section_id: section.id
                   %}
                 </li>
+              {%- endfor -%}
               {%- endfor -%}
             </ul>
 
@@ -219,6 +230,12 @@
       "step": 4,
       "default": 16,
       "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "sold_out_last",
+      "default": true,
+      "label": "מוצרים שאזלו מהמלאי בסוף כל עמוד"
     },
     {
       "type": "range",
