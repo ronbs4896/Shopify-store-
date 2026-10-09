@@ -3,12 +3,14 @@
   "url": "seora.co.il",
   "handle": "",
   "logo": null,
+  "fonts": {"display": "FrankRuhlLibre", "body": "Heebo"},
   "colors": {
-    "ink": "#111111",
+    "ink": "#0e0c0a",
+    "ink2": "#1b1611",
     "cream": "#f7f3ec",
     "sand": "#ece6dc",
-    "gold": "#a8894f",
+    "gold": "#b08d57",
     "gold_dark": "#7d6232",
-    "gold_light": "#d3b277"
+    "gold_light": "#e3c78d"
   }
 }
