@@ -134,53 +134,53 @@ CSS = """
 *{box-sizing:border-box}html,body{margin:0;background:#000}
 .slide{position:relative;width:@W@px;height:@H@px;overflow:hidden;display:flex;flex-direction:column;padding:@PT@px @PS@px @PB@px;
   direction:rtl;font-family:'body',sans-serif;--k:1;--u:@U@;color:#f7f3ec;
-  background:radial-gradient(90% 55% at 100% 0%,rgba(227,199,141,.22) 0%,transparent 60%),radial-gradient(80% 50% at 0% 100%,rgba(176,141,87,.20) 0%,transparent 62%),linear-gradient(180deg,#171109 0%,#0c0906 55%,#0a0806 100%)}
+  background:radial-gradient(70% 38% at 88% 0%,rgba(214,176,112,.15) 0%,transparent 70%),radial-gradient(70% 36% at 8% 100%,rgba(176,132,72,.13) 0%,transparent 70%),linear-gradient(180deg,#120d09 0%,#0b0807 100%)}
 .slide *{letter-spacing:0}
 .bgart{position:absolute;inset:0;z-index:0;overflow:hidden}.bgart>*{position:absolute}
 .hdr{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;flex:0 0 auto;height:56px}
-.cnt{font-family:'display',sans-serif;font-weight:500;font-size:30px;color:rgba(247,243,236,.62);direction:ltr}
+.cnt{font-family:'display',sans-serif;font-weight:500;font-size:28px;color:rgba(247,243,236,.62);direction:ltr}
 .cnt b{color:#e3c78d;font-weight:700}
-.wm{font-family:'display',sans-serif;font-weight:800;font-size:38px;letter-spacing:.32em!important;direction:ltr;color:#f7f3ec;margin-inline-end:-.32em}
+.wm{font-family:'display',sans-serif;font-weight:800;font-size:34px;letter-spacing:.32em!important;direction:ltr;color:#f7f3ec;margin-inline-end:-.32em}
 .main{position:relative;z-index:3;flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding:18px 0 10px}
 .main.top{justify-content:flex-start;padding-top:34px}
-.eyebrow{align-self:flex-start;font-size:calc(30px*var(--u));font-weight:600;color:#e3c78d;margin-bottom:10px;display:flex;gap:12px;align-items:center}
+.eyebrow{align-self:flex-start;font-size:calc(27px*var(--u));font-weight:600;color:#e3c78d;margin-bottom:10px;display:flex;gap:12px;align-items:center}
 .eyebrow:before{content:"";width:34px;height:3px;border-radius:2px;background:#e3c78d}
 .gt{background:linear-gradient(180deg,#fbeec6 0%,#e3c78d 40%,#b08d57 78%,#98733a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 h1,h2,h3{font-family:'display',sans-serif;margin:0;text-wrap:balance}
-h2{font-weight:800;font-size:calc(80px*var(--k)*var(--u));line-height:1.12;margin-bottom:calc(30px*var(--k))}
-p{text-wrap:pretty;margin:0;font-size:calc(40px*var(--k)*var(--u));line-height:1.48;color:rgba(247,243,236,.88)}
-.chip{display:inline-flex;align-items:center;gap:12px;border:1.5px solid rgba(227,199,141,.55);background:rgba(227,199,141,.10);color:#e3c78d;border-radius:999px;padding:9px 26px;font-size:calc(28px*var(--u));font-weight:600}
+h2{font-weight:800;font-size:calc(66px*var(--k)*var(--u));line-height:1.15;margin-bottom:calc(24px*var(--k))}
+p{text-wrap:pretty;margin:0;font-size:calc(36px*var(--k)*var(--u));line-height:1.48;color:rgba(247,243,236,.88)}
+.chip{display:inline-flex;align-items:center;gap:12px;border:1.5px solid rgba(227,199,141,.55);background:rgba(227,199,141,.10);color:#e3c78d;border-radius:999px;padding:8px 24px;font-size:calc(26px*var(--u));font-weight:600}
 .chip svg{width:30px;height:30px}
 .card{position:relative;border-radius:30px;padding:calc(26px*var(--k)) calc(32px*var(--k));background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.03));border:1.5px solid rgba(227,199,141,.26);box-shadow:0 18px 50px rgba(0,0,0,.35)}
 .cards{display:flex;flex-direction:column;gap:calc(20px*var(--k))}
 .ci{display:flex;gap:26px;align-items:flex-start}
-.ci .n{flex:0 0 auto;font-family:'display',sans-serif;font-weight:800;font-size:calc(58px*var(--k)*var(--u));line-height:1;color:#e3c78d;min-width:calc(84px*var(--k));text-align:left;direction:ltr;padding-top:4px}
+.ci .n{flex:0 0 auto;font-family:'display',sans-serif;font-weight:800;font-size:calc(46px*var(--k)*var(--u));line-height:1;color:#e3c78d;min-width:calc(68px*var(--k));text-align:left;direction:ltr;padding-top:4px}
 .ci .t{flex:1;min-width:0}
-.ci h3{font-weight:700;font-size:calc(44px*var(--k)*var(--u));line-height:1.2;margin-bottom:8px}
-.ci p{font-size:calc(34px*var(--k)*var(--u));line-height:1.45}
+.ci h3{font-weight:700;font-size:calc(40px*var(--k)*var(--u));line-height:1.2;margin-bottom:8px}
+.ci p{font-size:calc(32px*var(--k)*var(--u));line-height:1.45}
 .tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
-.tag{font-family:'display',sans-serif;font-size:calc(26px*var(--u));font-weight:500;color:#e3c78d;background:rgba(227,199,141,.12);border:1px solid rgba(227,199,141,.35);border-radius:10px;padding:2px 14px;direction:ltr}
+.tag{font-family:'display',sans-serif;font-size:calc(24px*var(--u));font-weight:500;color:#e3c78d;background:rgba(227,199,141,.12);border:1px solid rgba(227,199,141,.35);border-radius:10px;padding:2px 14px;direction:ltr}
 .big{font-family:'display',sans-serif;font-weight:900;line-height:.98;direction:rtl}
 .src{margin-top:26px;font-size:calc(30px*var(--u));color:rgba(227,199,141,.85);font-weight:500}
-table{width:100%;border-collapse:separate;border-spacing:0;font-size:calc(38px*var(--k)*var(--u));border-radius:30px;overflow:hidden;border:1.5px solid rgba(227,199,141,.26);background:rgba(255,255,255,.04)}
-th{background:rgba(227,199,141,.16);color:#e3c78d;font-weight:700;padding:calc(24px*var(--k)) 16px;text-align:right;font-size:calc(34px*var(--k)*var(--u))}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:calc(32px*var(--k)*var(--u));border-radius:30px;overflow:hidden;border:1.5px solid rgba(227,199,141,.26);background:rgba(255,255,255,.04)}
+th{background:rgba(227,199,141,.16);color:#e3c78d;font-weight:700;padding:calc(24px*var(--k)) 16px;text-align:right;font-size:calc(28px*var(--k)*var(--u))}
 td{padding:calc(24px*var(--k)) 16px;text-align:right;border-top:1.5px solid rgba(227,199,141,.16);line-height:1.3}
 td:first-child{font-weight:700}td.hl{background:rgba(227,199,141,.13);font-weight:700;color:#fbeec6}
 .panel.m{border-color:rgba(255,130,130,.5);background:linear-gradient(160deg,rgba(190,60,60,.20),rgba(190,60,60,.06))}
 .panel.t{border-color:rgba(227,199,141,.7);background:linear-gradient(160deg,rgba(227,199,141,.24),rgba(227,199,141,.07))}
 .pt{display:flex;align-items:center;gap:12px;font-weight:800;font-size:calc(34px*var(--u));margin-bottom:12px;font-family:'display',sans-serif}
 .pt svg{width:38px;height:38px}
-.opt{display:flex;align-items:center;gap:24px;border-radius:26px;border:1.5px solid rgba(227,199,141,.35);background:rgba(255,255,255,.05);padding:calc(20px*var(--k)) 28px;margin-top:calc(18px*var(--k));font-size:calc(42px*var(--k)*var(--u));font-weight:600}
+.opt{display:flex;align-items:center;gap:24px;border-radius:26px;border:1.5px solid rgba(227,199,141,.35);background:rgba(255,255,255,.05);padding:calc(20px*var(--k)) 28px;margin-top:calc(18px*var(--k));font-size:calc(36px*var(--k)*var(--u));font-weight:600}
 .opt .l{flex:0 0 68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'display',sans-serif;font-weight:800;font-size:40px;background:linear-gradient(145deg,#fbeec6,#c9a35a);color:#14100b}
-.ask{margin-top:26px;text-align:center;font-size:calc(34px*var(--u));color:#e3c78d;font-weight:500;line-height:1.4}
+.ask{margin-top:26px;text-align:center;font-size:calc(30px*var(--u));color:#e3c78d;font-weight:500;line-height:1.4}
 .vis{position:relative;display:flex;align-items:center;justify-content:center}
 .tiles{display:flex;gap:18px;margin-top:calc(26px*var(--k))}
 .tile{flex:1;border-radius:26px;padding:calc(26px*var(--k)) 14px;text-align:center;background:rgba(255,255,255,.05);border:1.5px solid rgba(227,199,141,.3)}
 .tile .bd{display:flex;justify-content:center;margin-bottom:14px}
-.tile b{display:block;font-size:calc(38px*var(--u));font-family:'display',sans-serif;font-weight:700;margin-bottom:4px}
-.tile span{font-size:calc(28px*var(--u));line-height:1.35;opacity:.8;display:block}
-.kw{display:inline-block;font-family:'display',sans-serif;font-weight:800;font-size:calc(64px*var(--k)*var(--u));line-height:1;color:#14100b;background:linear-gradient(135deg,#fbeec6,#d3b277 55%,#a67f3f);border-radius:20px;padding:10px 30px 14px;margin:0 18px;box-shadow:0 10px 30px rgba(176,141,87,.35)}
-.savebar{display:flex;align-items:center;gap:14px;font-size:calc(30px*var(--u));font-weight:600;color:rgba(247,243,236,.85)}
+.tile b{display:block;font-size:calc(34px*var(--u));font-family:'display',sans-serif;font-weight:700;margin-bottom:4px}
+.tile span{font-size:calc(26px*var(--u));line-height:1.35;opacity:.8;display:block}
+.kw{display:inline-block;font-family:'display',sans-serif;font-weight:800;font-size:calc(52px*var(--k)*var(--u));line-height:1;color:#14100b;background:linear-gradient(135deg,#fbeec6,#d3b277 55%,#a67f3f);border-radius:20px;padding:10px 30px 14px;margin:0 18px;box-shadow:0 10px 30px rgba(176,141,87,.35)}
+.savebar{display:flex;align-items:center;gap:14px;font-size:calc(28px*var(--u));font-weight:600;color:rgba(247,243,236,.85)}
 .savebar svg{width:34px;height:34px;color:#e3c78d}
 .ftr{position:relative;z-index:3;flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;height:50px}
 .hint{display:flex;align-items:center;gap:12px;font-size:28px;font-weight:600;color:rgba(247,243,236,.7)}
@@ -191,7 +191,7 @@ td:first-child{font-weight:700}td.hl{background:rgba(227,199,141,.13);font-weigh
 .url{font-family:'display',sans-serif;font-size:28px;font-weight:600;color:#e3c78d;direction:ltr;letter-spacing:.06em!important}
 .guides{position:absolute;inset:0;z-index:50;pointer-events:none}.guides div{position:absolute;border:3px dashed}
 """
-K0 = {"cover": 1.0, "cards": 1.25, "point": 1.3, "stat": 1.15, "compare": 1.35, "myth": 1.3, "quiz": 1.3, "list": 1.15, "quote": 1.1, "product": 1.0, "engage": 1.3, "cta": 1.0}
+K0 = {"cover": 1.0, "cards": 1.0, "point": 1.0, "stat": 1.0, "compare": 1.0, "myth": 1.0, "quiz": 1.0, "list": 1.0, "quote": 1.0, "product": 1.0, "engage": 1.0, "cta": 1.0}
 
 
 # ---------------------------------------------------------------- slide bodies
@@ -224,19 +224,19 @@ def build_body(s, idx, n, ctx):
                          f'<div style="position:absolute;inset:-36px;color:#e3c78d;opacity:.8">{art.orbit(gs + 72)}</div></div>')
             vis = f'<div class="vis" style="margin:22px 0 10px;height:{gs + 40}px">{inner}</div>'
         chip = f'<div class="chip" style="align-self:flex-start;margin-bottom:22px">{rich(s["eyebrow"])}</div>' if s.get("eyebrow") else ""
-        big = f'<div class="big gt" style="font-size:calc(230px*var(--k)*var(--u))">{rich(s["big"])}</div>' if s.get("big") else ""
-        mid = f'<div style="font-family:display;font-weight:500;font-size:calc(52px*var(--k)*var(--u));margin:6px 0 4px;color:rgba(247,243,236,.92)">{rich(s["mid"])}</div>' if s.get("mid") else ""
-        sz = 104 if (s.get("big") or s.get("mid")) else 118
+        big = f'<div class="big gt" style="font-size:calc(170px*var(--k)*var(--u))">{rich(s["big"])}</div>' if s.get("big") else ""
+        mid = f'<div style="font-family:display;font-weight:500;font-size:calc(42px*var(--k)*var(--u));margin:6px 0 4px;color:rgba(247,243,236,.92)">{rich(s["mid"])}</div>' if s.get("mid") else ""
+        sz = 84 if (s.get("big") or s.get("mid")) else 96
         hl = f'<h1 style="font-weight:800;font-size:calc({sz}px*var(--k)*var(--u));line-height:1.08;margin-top:6px" class="{"" if (s.get("big") or s.get("mid")) else "gt"}">{rich(s["title"])}</h1>'
-        sub = f'<p style="margin-top:20px;font-size:calc(38px*var(--k)*var(--u))">{rich(s["subtitle"])}</p>' if s.get("subtitle") else ""
+        sub = f'<p style="margin-top:18px;font-size:calc(32px*var(--k)*var(--u))">{rich(s["subtitle"])}</p>' if s.get("subtitle") else ""
         save = f'<div class="savebar" style="margin-top:26px">{ic("bookmark", 34, 3)}{rich(s.get("save", "שמרו את הפוסט לפני שבוחרים אבן"))}</div>'
         return f'<div class="main">{chip}{big}{mid}{hl}{sub}{vis}{save}</div>'
     if t in ("cards", "point"):
         if t == "point":  # single large card: title + text (+ callout)
             items = [{"title": s.get("title2") or "", "text": s.get("text", "")}]
-            body = (f'<div class="card"><p style="font-size:calc(44px*var(--k)*var(--u))">{rich(s["text"])}</p></div>'
+            body = (f'<div class="card"><p style="font-size:calc(38px*var(--k)*var(--u))">{rich(s["text"])}</p></div>'
                     + (f'<div class="card" style="margin-top:20px;border-color:rgba(227,199,141,.6)"><div class="ci">{ic("star", 52, 3)}<div class="t"><p style="color:#fbeec6;font-weight:500">{rich(s["callout"])}</p></div></div></div>' if s.get("callout") else ""))
-            num = (f'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div class="big gt" style="font-size:calc(150px*var(--k)*var(--u))">{rich(s["number"])}</div>'
+            num = (f'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div class="big gt" style="font-size:calc(120px*var(--k)*var(--u))">{rich(s["number"])}</div>'
                    + (art.badge(s["icon"], 150) if s.get("icon") else "") + '</div>') if s.get("number") else (f'<div style="margin-bottom:18px">{art.badge(s["icon"], 120)}</div>' if s.get("icon") else "")
             return f'<div class="main">{eyebrow}{num}<h2>{rich(s["title"])}</h2>{body}</div>'
         start = s.get("start")
@@ -249,7 +249,7 @@ def build_body(s, idx, n, ctx):
         return f'<div class="main top">{eyebrow}<h2>{rich(s["title"])}</h2><div class="cards">{"".join(rows)}</div></div>'
     if t == "stat":
         src = f'<div class="src">{rich("מקור: " + s["source"])}</div>' if s.get("source") else ""
-        return (f'<div class="main">{eyebrow}<div class="big gt" style="font-size:calc(270px*var(--k)*var(--u))">{rich(s["value"])}</div>'
+        return (f'<div class="main">{eyebrow}<div class="big gt" style="font-size:calc(200px*var(--k)*var(--u))">{rich(s["value"])}</div>'
                 f'<h2 style="margin-top:14px">{rich(s["title"])}</h2><div class="card"><p>{rich(s.get("text", ""))}</p></div>{src}</div>')
     if t == "compare":
         hl = s.get("highlight", 1)
@@ -260,9 +260,9 @@ def build_body(s, idx, n, ctx):
     if t == "myth":
         return (f'<div class="main">{eyebrow or "<div class=eyebrow>מיתוס או עובדה</div>"}<div class="cards" style="gap:24px">'
                 f'<div class="card panel m"><div class="pt" style="color:#ff9a9a">{art.icon("x", 38, color="#ff9a9a")}מיתוס</div>'
-                f'<h2 style="font-size:calc(66px*var(--k)*var(--u));margin:0">{rich(s["myth"])}</h2></div>'
+                f'<h2 style="font-size:calc(54px*var(--k)*var(--u));margin:0">{rich(s["myth"])}</h2></div>'
                 f'<div class="card panel t"><div class="pt" style="color:#e3c78d">{ic("check", 38, 4)}האמת</div>'
-                f'<p style="font-size:calc(42px*var(--k)*var(--u));font-weight:500;color:#fff">{rich(s["truth"])}</p></div></div></div>')
+                f'<p style="font-size:calc(36px*var(--k)*var(--u));font-weight:500;color:#fff">{rich(s["truth"])}</p></div></div></div>')
     if t == "quiz":
         letters = ["א", "ב", "ג", "ד"]
         opts = "".join(f'<div class="opt"><div class="l">{letters[i]}</div><div>{rich(o)}</div></div>' for i, o in enumerate(s["options"]))
@@ -274,7 +274,7 @@ def build_body(s, idx, n, ctx):
     if t == "quote":
         who = f'<p style="margin-top:20px;color:#e3c78d">{rich(s["by"])}</p>' if s.get("by") else ""
         return (f'<div class="main">{eyebrow}<div class="card" style="padding:48px 44px"><div class="big gt" style="font-size:220px;height:120px;line-height:.9">”</div>'
-                f'<div style="font-family:display;font-weight:600;font-size:calc(66px*var(--k)*var(--u));line-height:1.28">{rich(s["text"])}</div>{who}</div></div>')
+                f'<div style="font-family:display;font-weight:600;font-size:calc(54px*var(--k)*var(--u));line-height:1.3">{rich(s["text"])}</div>{who}</div></div>')
     if t == "product":
         if "price" in s and not ctx["spec"].get("prices_approved"):
             sys.exit('a product slide has a price but the spec has no "prices_approved": true (store rule: prices only with owner approval)')
@@ -297,8 +297,8 @@ def build_body(s, idx, n, ctx):
         action = s.get("action") or ACTIONS.get(fmt, "הקישור בביו")
         kw = s.get("keyword")
         if kw:
-            q = (f'<p style="text-align:center;font-size:calc(40px*var(--k)*var(--u));color:#fff">{rich(s.get("ask", ""))}</p>'
-                 f'<div style="text-align:center;margin-top:18px;font-family:display;font-weight:800;font-size:calc(56px*var(--k)*var(--u))">הגיבו<span class="kw">{html.escape(kw)}</span></div>'
+            q = (f'<p style="text-align:center;font-size:calc(34px*var(--k)*var(--u));color:#fff">{rich(s.get("ask", ""))}</p>'
+                 f'<div style="text-align:center;margin-top:18px;font-family:display;font-weight:800;font-size:calc(46px*var(--k)*var(--u))">הגיבו<span class="kw">{html.escape(kw)}</span></div>'
                  f'<p style="text-align:center;margin-top:16px;font-size:calc(30px*var(--u));opacity:.8">{rich(s.get("text", ""))}</p>')
         else:
             q = (f'<h2 class="gt" style="text-align:center;margin:0 0 12px">{rich(s["title"])}</h2>'
@@ -314,7 +314,7 @@ def build_body(s, idx, n, ctx):
         tag = f'<p style="text-align:center;margin-top:10px;font-size:calc(32px*var(--u));opacity:.8">{rich(s["tagline"])}</p>' if s.get("tagline") else ""
         return (f'<div class="main">{chip}<div class="card" style="padding:calc(34px*var(--k)) 30px">{q}</div>'
                 f'<div style="text-align:center;margin-top:calc(28px*var(--k));font-family:display;font-weight:500;font-size:calc(40px*var(--u));color:rgba(247,243,236,.85)">ועקבו אחרי</div>'
-                f'<div class="big gt" style="text-align:center;font-size:calc(96px*var(--k)*var(--u));letter-spacing:.14em!important;direction:ltr">{html.escape(handle)}</div>{tag}<div class="tiles">{tiles}</div></div>')
+                f'<div class="big gt" style="text-align:center;font-size:calc(76px*var(--k)*var(--u));letter-spacing:.14em!important;direction:ltr">{html.escape(handle)}</div>{tag}<div class="tiles">{tiles}</div></div>')
     sys.exit(f"unknown slide type: {t}")
 
 

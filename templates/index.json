@@ -281,6 +281,54 @@
     "shoppable_video_new_BdqjL9": {
       "type": "shoppable-video-new",
       "blocks": {
+        "item_jRWpRj": {
+          "type": "item",
+          "settings": {
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
+        "item_cGNDED": {
+          "type": "item",
+          "settings": {
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
+        "item_YRCqya": {
+          "type": "item",
+          "settings": {
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
         "item_jjWXKJ": {
           "type": "item",
           "settings": {
@@ -368,6 +416,9 @@
         }
       },
       "block_order": [
+        "item_jRWpRj",
+        "item_cGNDED",
+        "item_YRCqya",
         "item_jjWXKJ",
         "item_MMTRx3",
         "item_zpbzYa",
