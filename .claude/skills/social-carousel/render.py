@@ -6,7 +6,7 @@
 Structure is enforced: slide 1 is the cover (the thumbnail), the last slide is the CTA, every slide shows a numbered pager.
 Formats: ig-feed 1080x1350 | ig-feed-34 1080x1440 | ig-square 1080x1080 | fb-carousel 1080x1080 | fb-feed 1080x1350 |
          ig-story 1080x1920 | fb-story 1080x1920
-Slide types: cover, point, stat, compare, myth, quiz, list, quote, product, engage, cta   (see SKILL.md)
+Slide types: cover, cards, point, stat, compare, myth, quiz, list, quote, product, engage, cta   (see SKILL.md)
 """
 import argparse, html, importlib.util, json, os, re, sys
 from pathlib import Path
@@ -117,241 +117,222 @@ def img_css(path, base):
     return f"background-image:url('file://{p}')"
 
 
-# ---------------------------------------------------------------- css
+# ---------------------------------------------------------------- css (v3: dark card system)
 CSS = """
 *{box-sizing:border-box}html,body{margin:0;background:#000}
 .slide{position:relative;width:@W@px;height:@H@px;overflow:hidden;display:flex;flex-direction:column;padding:@PT@px @PS@px @PB@px;
-  direction:rtl;font-family:'body',sans-serif;--k:1;--u:@U@;--small:@SMALL@;--fg:@FG@;background:@BG@;color:@FG@}
+  direction:rtl;font-family:'body',sans-serif;--k:1;--u:@U@;color:#f7f3ec;
+  background:radial-gradient(90% 55% at 100% 0%,rgba(227,199,141,.22) 0%,transparent 60%),radial-gradient(80% 50% at 0% 100%,rgba(176,141,87,.20) 0%,transparent 62%),linear-gradient(180deg,#171109 0%,#0c0906 55%,#0a0806 100%)}
 .slide *{letter-spacing:0}
 .bgart{position:absolute;inset:0;z-index:0;overflow:hidden}.bgart>*{position:absolute}
-.frame{position:absolute;inset:30px;border:1.5px solid @GOLDL@;opacity:.55;z-index:1;pointer-events:none}
-.cn{position:absolute;z-index:1;width:60px;height:60px}
-.cn.a{top:18px;left:18px}.cn.b{top:18px;right:18px;transform:scaleX(-1)}.cn.c{bottom:18px;left:18px;transform:scaleY(-1)}.cn.d{bottom:18px;right:18px;transform:scale(-1,-1)}
-.hdr{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;flex:0 0 auto;height:60px}
-.wm{font-family:'display',serif;font-weight:700;letter-spacing:.3em!important;font-size:34px;direction:ltr;color:@FG@}
-.lbl{font-size:30px;font-weight:500;color:@SMALL@}
-.main{position:relative;z-index:3;flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
-.main.bottom{justify-content:flex-end}.main.start{justify-content:flex-start;padding-top:26px}
-.gt{background:linear-gradient(180deg,#fbeec6 0%,#e3c78d 38%,#b08d57 70%,#8a6a35 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-h1,h2,h3{font-family:'display',serif;margin:0;text-wrap:balance}
-h1{font-weight:700;font-size:calc(112px*var(--k)*var(--u));line-height:1.1}
-h2{font-weight:700;font-size:calc(82px*var(--k)*var(--u));line-height:1.16}
-h3{font-weight:700;font-size:calc(52px*var(--k)*var(--u));line-height:1.2}
-p{text-wrap:pretty;margin:0;font-size:calc(44px*var(--k)*var(--u));line-height:1.48}
-.sub{margin-top:30px;opacity:.94}
-.chip{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;border:2px solid @GOLDL@;color:@SMALL@;border-radius:999px;padding:10px 28px;font-size:calc(34px*var(--u));font-weight:500;margin-bottom:30px}
-.chip svg{width:34px;height:34px}
-.rule{width:130px;height:5px;border-radius:3px;background:linear-gradient(90deg,#e3c78d,#b08d57);margin:30px 0}
-.num{font-family:'display',serif;font-weight:900;font-size:calc(240px*var(--k)*var(--u));line-height:.92;direction:rtl}
-.src{margin-top:34px;font-size:calc(32px*var(--u));color:@SMALL@;font-weight:500}
-.ico{width:150px;height:150px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#14100b;
-  background:linear-gradient(145deg,#fbeec6,#d3b277 55%,#9a7a3f);box-shadow:0 18px 40px rgba(0,0,0,.28)}
-.ico svg{width:84px;height:84px}
-.row{display:flex;align-items:center;gap:36px}
-.callout{margin-top:40px;display:flex;gap:26px;align-items:flex-start;border-radius:24px;padding:28px 32px;background:@CARD@;border:2px solid @GOLDL@;font-size:calc(40px*var(--u));line-height:1.4}
-.callout svg{flex:0 0 56px;width:56px;height:56px;color:@SMALL@}
-ul.ck{list-style:none;margin:34px 0 0;padding:0;display:flex;flex-direction:column;gap:22px}
-ul.ck li{display:flex;gap:26px;align-items:center;background:@CARD@;border:2px solid @RULE@;border-radius:24px;padding:24px 30px;font-size:calc(44px*var(--k)*var(--u));line-height:1.3}
-ul.ck li .b{flex:0 0 64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#fbeec6,#c9a35a);color:#14100b}
-ul.ck li .b svg{width:38px;height:38px}
-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:34px;font-size:calc(40px*var(--k)*var(--u));background:@CARD@;border-radius:26px;overflow:hidden;border:2px solid @RULE@}
-th{background:#14100b;color:#e3c78d;font-weight:700;padding:26px 18px;text-align:right;font-size:calc(36px*var(--k)*var(--u))}
-td{padding:26px 18px;text-align:right;border-top:2px solid @RULE@;line-height:1.3}
-td:first-child{font-weight:700}tr:nth-child(even) td{background:rgba(176,141,87,.07)}
-td.hl{background:rgba(176,141,87,.20)!important;font-weight:700}
-.panel{border-radius:34px;padding:44px 48px;position:relative}
-.panel.m{background:rgba(190,60,60,.14);border:2px solid rgba(220,90,90,.55)}
-.panel.t{background:linear-gradient(160deg,#f3e2b5,#d5b574);color:#14100b}
-.tag{display:inline-flex;align-items:center;gap:14px;font-weight:700;font-size:calc(38px*var(--u));margin-bottom:18px}
-.tag svg{width:44px;height:44px}
-.opt{display:flex;align-items:center;gap:26px;border-radius:999px;border:2px solid @GOLDL@;background:@CARD@;padding:20px 34px;margin-top:22px;font-size:calc(46px*var(--k)*var(--u));font-weight:500}
-.opt .l{flex:0 0 74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'display',serif;font-weight:700;font-size:44px;background:linear-gradient(145deg,#fbeec6,#c9a35a);color:#14100b}
-.q{font-family:'display',serif;font-weight:500;font-size:calc(84px*var(--k)*var(--u));line-height:1.26;text-wrap:balance}
-.qm{font-family:'display',serif;font-size:360px;line-height:.6;height:170px;opacity:.9}
-.pimg{width:100%;flex:1;min-height:0;border-radius:200px 200px 28px 28px;background-size:cover;background-position:center;background-color:rgba(176,141,87,.18);border:3px solid @GOLDL@}
-.tiles{display:flex;gap:22px;margin-top:40px}
-.tile{flex:1;border-radius:28px;padding:34px 22px;text-align:center;background:@CARD@;border:2px solid @GOLDL@}
-.tile .ico{width:112px;height:112px;margin:0 auto 22px}.tile .ico svg{width:62px;height:62px}
-.tile b{display:block;font-size:calc(40px*var(--u));margin-bottom:8px;font-family:'display',serif}
-.tile span{font-size:calc(32px*var(--u));line-height:1.35;opacity:.9;display:block}
-.btn{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:44px;border-radius:999px;padding:34px 44px;
-  background:linear-gradient(135deg,#fbeec6,#d3b277 50%,#a67f3f);color:#14100b;font-weight:800;font-size:calc(54px*var(--k)*var(--u));
-  box-shadow:0 22px 50px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.55)}
-.btn svg{width:60px;height:60px}
-.ask{margin-top:34px;text-align:center;font-size:calc(40px*var(--u));color:@SMALL@;font-weight:500;line-height:1.4}
-.teaser{position:relative;z-index:3;flex:0 0 auto;text-align:center;font-size:32px;color:@SMALL@;font-weight:500;padding-bottom:14px}
-.pager{position:relative;z-index:3;flex:0 0 auto;display:flex;justify-content:center;align-items:center;gap:12px;height:82px;padding-top:12px}
-.pg{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'display',serif;font-weight:700;font-size:30px;
-  border:2px solid @PGLINE@;color:@PGTXT@}
-.pg.on{width:68px;height:68px;font-size:36px;background:linear-gradient(145deg,#fbeec6,#c9a35a 60%,#9a7a3f);border-color:transparent;color:#14100b;box-shadow:0 8px 24px rgba(0,0,0,.35)}
-.pg.done{border-color:@GOLDL@;color:@SMALL@}
-.bar{display:flex;gap:8px;width:100%}.bar i{flex:1;height:10px;border-radius:5px;background:@PGLINE@}.bar i.done{background:@GOLDL@}.bar i.on{background:linear-gradient(90deg,#fbeec6,#c9a35a)}
-.pgn{font-size:34px;font-weight:700;color:@SMALL@;margin-inline-start:20px;direction:ltr}
+.hdr{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;flex:0 0 auto;height:56px}
+.cnt{font-family:'display',sans-serif;font-weight:500;font-size:30px;color:rgba(247,243,236,.62);direction:ltr}
+.cnt b{color:#e3c78d;font-weight:700}
+.wm{font-family:'display',sans-serif;font-weight:800;font-size:38px;letter-spacing:.32em!important;direction:ltr;color:#f7f3ec;margin-inline-end:-.32em}
+.main{position:relative;z-index:3;flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding:18px 0 10px}
+.main.top{justify-content:flex-start;padding-top:34px}
+.eyebrow{align-self:flex-start;font-size:calc(30px*var(--u));font-weight:600;color:#e3c78d;margin-bottom:10px;display:flex;gap:12px;align-items:center}
+.eyebrow:before{content:"";width:34px;height:3px;border-radius:2px;background:#e3c78d}
+.gt{background:linear-gradient(180deg,#fbeec6 0%,#e3c78d 40%,#b08d57 78%,#98733a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1,h2,h3{font-family:'display',sans-serif;margin:0;text-wrap:balance}
+h2{font-weight:800;font-size:calc(80px*var(--k)*var(--u));line-height:1.12;margin-bottom:calc(30px*var(--k))}
+p{text-wrap:pretty;margin:0;font-size:calc(40px*var(--k)*var(--u));line-height:1.48;color:rgba(247,243,236,.88)}
+.chip{display:inline-flex;align-items:center;gap:12px;border:1.5px solid rgba(227,199,141,.55);background:rgba(227,199,141,.10);color:#e3c78d;border-radius:999px;padding:9px 26px;font-size:calc(28px*var(--u));font-weight:600}
+.chip svg{width:30px;height:30px}
+.card{position:relative;border-radius:30px;padding:calc(26px*var(--k)) calc(32px*var(--k));background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.03));border:1.5px solid rgba(227,199,141,.26);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.cards{display:flex;flex-direction:column;gap:calc(20px*var(--k))}
+.ci{display:flex;gap:26px;align-items:flex-start}
+.ci .n{flex:0 0 auto;font-family:'display',sans-serif;font-weight:800;font-size:calc(58px*var(--k)*var(--u));line-height:1;color:#e3c78d;min-width:calc(84px*var(--k));text-align:left;direction:ltr;padding-top:4px}
+.ci .t{flex:1;min-width:0}
+.ci h3{font-weight:700;font-size:calc(44px*var(--k)*var(--u));line-height:1.2;margin-bottom:8px}
+.ci p{font-size:calc(34px*var(--k)*var(--u));line-height:1.45}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.tag{font-family:'display',sans-serif;font-size:calc(26px*var(--u));font-weight:500;color:#e3c78d;background:rgba(227,199,141,.12);border:1px solid rgba(227,199,141,.35);border-radius:10px;padding:2px 14px;direction:ltr}
+.big{font-family:'display',sans-serif;font-weight:900;line-height:.98;direction:rtl}
+.src{margin-top:26px;font-size:calc(30px*var(--u));color:rgba(227,199,141,.85);font-weight:500}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:calc(38px*var(--k)*var(--u));border-radius:30px;overflow:hidden;border:1.5px solid rgba(227,199,141,.26);background:rgba(255,255,255,.04)}
+th{background:rgba(227,199,141,.16);color:#e3c78d;font-weight:700;padding:calc(24px*var(--k)) 16px;text-align:right;font-size:calc(34px*var(--k)*var(--u))}
+td{padding:calc(24px*var(--k)) 16px;text-align:right;border-top:1.5px solid rgba(227,199,141,.16);line-height:1.3}
+td:first-child{font-weight:700}td.hl{background:rgba(227,199,141,.13);font-weight:700;color:#fbeec6}
+.panel.m{border-color:rgba(255,130,130,.5);background:linear-gradient(160deg,rgba(190,60,60,.20),rgba(190,60,60,.06))}
+.panel.t{border-color:rgba(227,199,141,.7);background:linear-gradient(160deg,rgba(227,199,141,.24),rgba(227,199,141,.07))}
+.pt{display:flex;align-items:center;gap:12px;font-weight:800;font-size:calc(34px*var(--u));margin-bottom:12px;font-family:'display',sans-serif}
+.pt svg{width:38px;height:38px}
+.opt{display:flex;align-items:center;gap:24px;border-radius:26px;border:1.5px solid rgba(227,199,141,.35);background:rgba(255,255,255,.05);padding:calc(20px*var(--k)) 28px;margin-top:calc(18px*var(--k));font-size:calc(42px*var(--k)*var(--u));font-weight:600}
+.opt .l{flex:0 0 68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'display',sans-serif;font-weight:800;font-size:40px;background:linear-gradient(145deg,#fbeec6,#c9a35a);color:#14100b}
+.ask{margin-top:26px;text-align:center;font-size:calc(34px*var(--u));color:#e3c78d;font-weight:500;line-height:1.4}
+.vis{position:relative;display:flex;align-items:center;justify-content:center}
+.tiles{display:flex;gap:18px;margin-top:calc(26px*var(--k))}
+.tile{flex:1;border-radius:26px;padding:calc(26px*var(--k)) 14px;text-align:center;background:rgba(255,255,255,.05);border:1.5px solid rgba(227,199,141,.3)}
+.tile svg{width:56px;height:56px;color:#e3c78d;margin:0 auto 12px;display:block}
+.tile b{display:block;font-size:calc(38px*var(--u));font-family:'display',sans-serif;font-weight:700;margin-bottom:4px}
+.tile span{font-size:calc(28px*var(--u));line-height:1.35;opacity:.8;display:block}
+.kw{display:inline-block;font-family:'display',sans-serif;font-weight:800;font-size:calc(64px*var(--k)*var(--u));line-height:1;color:#14100b;background:linear-gradient(135deg,#fbeec6,#d3b277 55%,#a67f3f);border-radius:20px;padding:10px 30px 14px;margin:0 18px;box-shadow:0 10px 30px rgba(176,141,87,.35)}
+.savebar{display:flex;align-items:center;gap:14px;font-size:calc(30px*var(--u));font-weight:600;color:rgba(247,243,236,.85)}
+.savebar svg{width:34px;height:34px;color:#e3c78d}
+.ftr{position:relative;z-index:3;flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;height:50px}
+.hint{display:flex;align-items:center;gap:12px;font-size:28px;font-weight:600;color:rgba(247,243,236,.7)}
+.hint svg{width:30px;height:30px;color:#e3c78d;transform:scaleX(-1)}
+.dash{display:flex;gap:8px;direction:rtl}
+.dash i{display:block;width:34px;height:6px;border-radius:3px;background:rgba(247,243,236,.20)}
+.dash i.done{background:rgba(227,199,141,.62)}.dash i.on{background:linear-gradient(90deg,#fbeec6,#c9a35a);width:52px}
+.url{font-family:'display',sans-serif;font-size:28px;font-weight:600;color:#e3c78d;direction:ltr;letter-spacing:.06em!important}
 .guides{position:absolute;inset:0;z-index:50;pointer-events:none}.guides div{position:absolute;border:3px dashed}
 """
-
-THEMES = {
-    "ink":   dict(BG="radial-gradient(120% 90% at 50% 18%,#2b2118 0%,#120e0a 55%,#0a0806 100%)", FG="#f7f3ec", SMALL="#e3c78d",
-                  CARD="rgba(255,255,255,.06)", RULE="rgba(247,243,236,.16)", PGLINE="rgba(247,243,236,.35)", PGTXT="rgba(247,243,236,.6)"),
-    "cream": dict(BG="linear-gradient(180deg,#faf6ee 0%,#f1eadc 100%)", FG="#14100b", SMALL="#7d6232",
-                  CARD="rgba(255,255,255,.75)", RULE="rgba(20,16,11,.14)", PGLINE="rgba(20,16,11,.28)", PGTXT="rgba(20,16,11,.5)"),
-    "sand":  dict(BG="linear-gradient(180deg,#efe7d8 0%,#e4d9c3 100%)", FG="#14100b", SMALL="#6e5428",
-                  CARD="rgba(255,255,255,.62)", RULE="rgba(20,16,11,.16)", PGLINE="rgba(20,16,11,.3)", PGTXT="rgba(20,16,11,.55)"),
-}
-K0 = {"cover": 1.0, "point": 1.12, "stat": 1.05, "compare": 1.2, "myth": 1.08, "quiz": 1.1, "list": 1.2, "quote": 1.1, "product": 1.0, "engage": 1.05, "cta": 1.05}
+K0 = {"cover": 1.0, "cards": 1.25, "point": 1.3, "stat": 1.15, "compare": 1.35, "myth": 1.3, "quiz": 1.3, "list": 1.15, "quote": 1.1, "product": 1.0, "engage": 1.3, "cta": 1.0}
 
 
 # ---------------------------------------------------------------- slide bodies
-def pager_html(idx, n):
-    if n <= 9:
-        cells = "".join(
-            f'<div class="pg {"on" if i == idx else "done" if i < idx else ""}"><bdi>{i}</bdi></div>' for i in range(1, n + 1))
-        return f'<div class="pager">{cells}</div>'
-    segs = "".join(f'<i class="{"on" if i == idx else "done" if i < idx else ""}"></i>' for i in range(1, n + 1))
-    return f'<div class="pager"><div class="bar">{segs}</div><span class="pgn"><bdi>{idx}/{n}</bdi></span></div>'
+def dashes(idx, n):
+    return '<div class="dash">' + "".join(f'<i class="{"on" if i == idx else "done" if i < idx else ""}"></i>' for i in range(1, n + 1)) + "</div>"
 
 
-def watermark(size, style="gold", opacity=.10, where="left:-120px;bottom:60px", seed=5):
-    return f'<div style="{where};opacity:{opacity};width:{size}px;height:{size}px">{art.gem(size, style, seed, "wm")}</div>'
+def tags_html(tags):
+    return '<div class="tags">' + "".join(f'<span class="tag">{html.escape(t)}</span>' for t in tags) + "</div>" if tags else ""
 
 
 def build_body(s, idx, n, ctx):
     t, base, kind, fmt = s["type"], ctx["base"], ctx["kind"], ctx["fmt"]
     story = kind == "story"
     ic = lambda name, size=64, st=3.2: art.icon(name, size, st)
+    eyebrow = f'<div class="eyebrow">{rich(s["label"])}</div>' if s.get("label") else (f'<div class="eyebrow">{rich(s["eyebrow"])}</div>' if s.get("eyebrow") and t != "cover" else "")
     if t == "cover":
         pad = PAD[kind]
-        main_h = ctx["H"] - pad["top"] - 60 - pad["bottom"] - 82 - 46
-        gs = int(max(220, min(560, main_h - 428 - 90)))
+        main_h = ctx["H"] - pad["top"] - 56 - pad["bottom"] - 50 - 28
+        text_h = 60 + (230 if s.get("big") else 0) + (80 if s.get("mid") else 0) + 120 + (70 if s.get("subtitle") else 0) + 60
+        gs = int(max(0, min(600, main_h - text_h - 30)))
         img = img_css(s.get("image"), base)
-        if img:
-            hero = (f'<div style="position:relative;width:{gs}px;height:{gs}px;margin:0 auto;border-radius:50%;{img};background-size:cover;'
-                    f'background-position:center;border:4px solid #e3c78d;box-shadow:0 30px 80px rgba(0,0,0,.6)"></div>')
-        else:
-            hero = (f'<div style="position:relative;width:{gs+90}px;height:{gs+90}px;margin:0 auto;flex:0 0 auto">'
-                    f'<div style="position:absolute;inset:-90px;opacity:.9">{art.rays(gs + 270, 28, .2, .98, .09)}</div>'
-                    f'<div style="position:absolute;left:45px;top:45px">{art.gem(gs, s.get("gem", "fire"), s.get("seed", 7), "cv")}</div>'
-                    f'<div style="position:absolute;inset:0;color:#e3c78d">{art.orbit(gs + 90)}</div></div>')
-        pills = f'<div class="chip" style="align-self:center;margin:6px 0 20px">{rich(s["eyebrow"])}</div>' if s.get("eyebrow") else ""
-        sub = f'<p class="sub" style="text-align:center;margin-top:16px;font-size:calc(42px*var(--k)*var(--u))">{rich(s["subtitle"])}</p>' if s.get("subtitle") else ""
-        main = (f'<div class="main" style="justify-content:center;gap:28px">{hero}<div style="text-align:center;display:flex;flex-direction:column;align-items:center">'
-                f'{pills}<h1 class="gt" style="font-size:calc(100px*var(--k)*var(--u))">{rich(s["title"])}</h1>{sub}</div></div>')
-        return main, "ink", ""
-    if t == "point":
-        icon = s.get("icon", "gem")
-        callout = (f'<div class="callout">{ic("star", 56)}<div>{rich(s["callout"])}</div></div>') if s.get("callout") else ""
-        num = f'<div class="num gt">{rich(s["number"])}</div>' if s.get("number") else ""
-        top = f'<div class="row" style="justify-content:space-between;margin-bottom:10px"><div class="ico">{ic(icon, 84, 3)}</div>{num}</div>'
-        main = f'<div class="main">{top}<div class="rule"></div><h2>{rich(s["title"])}</h2><p class="sub">{rich(s["text"])}</p>{callout}</div>'
-        return main, s.get("theme", "cream"), watermark(560, "gold", .10, "left:-150px;bottom:40px")
+        vis = ""
+        if gs >= 200:
+            if img:
+                inner = f'<div style="width:{gs}px;height:{gs}px;border-radius:50%;{img};background-size:cover;background-position:center;border:3px solid #e3c78d;box-shadow:0 30px 80px rgba(0,0,0,.6)"></div>'
+            else:
+                inner = (f'<div style="position:relative;width:{gs}px;height:{gs}px"><div style="position:absolute;inset:-70px;opacity:.85">{art.rays(gs + 140, 28, .2, .98, .08)}</div>'
+                         f'<div style="position:absolute;inset:0">{art.gem(gs, s.get("gem", "fire"), s.get("seed", 7), "cv")}</div>'
+                         f'<div style="position:absolute;inset:-36px;color:#e3c78d;opacity:.8">{art.orbit(gs + 72)}</div></div>')
+            vis = f'<div class="vis" style="margin:22px 0 10px;height:{gs + 40}px">{inner}</div>'
+        chip = f'<div class="chip" style="align-self:flex-start;margin-bottom:22px">{rich(s["eyebrow"])}</div>' if s.get("eyebrow") else ""
+        big = f'<div class="big gt" style="font-size:calc(230px*var(--k)*var(--u))">{rich(s["big"])}</div>' if s.get("big") else ""
+        mid = f'<div style="font-family:display;font-weight:500;font-size:calc(52px*var(--k)*var(--u));margin:6px 0 4px;color:rgba(247,243,236,.92)">{rich(s["mid"])}</div>' if s.get("mid") else ""
+        sz = 104 if (s.get("big") or s.get("mid")) else 118
+        hl = f'<h1 style="font-weight:800;font-size:calc({sz}px*var(--k)*var(--u));line-height:1.08;margin-top:6px" class="{"" if (s.get("big") or s.get("mid")) else "gt"}">{rich(s["title"])}</h1>'
+        sub = f'<p style="margin-top:20px;font-size:calc(38px*var(--k)*var(--u))">{rich(s["subtitle"])}</p>' if s.get("subtitle") else ""
+        save = f'<div class="savebar" style="margin-top:26px">{ic("bookmark", 34, 3)}{rich(s.get("save", "שמרו את הפוסט לפני שבוחרים אבן"))}</div>'
+        return f'<div class="main">{chip}{big}{mid}{hl}{sub}{vis}{save}</div>'
+    if t in ("cards", "point"):
+        if t == "point":  # single large card: title + text (+ callout)
+            items = [{"title": s.get("title2") or "", "text": s.get("text", "")}]
+            body = (f'<div class="card"><p style="font-size:calc(44px*var(--k)*var(--u))">{rich(s["text"])}</p></div>'
+                    + (f'<div class="card" style="margin-top:20px;border-color:rgba(227,199,141,.6)"><div class="ci">{ic("star", 52, 3)}<div class="t"><p style="color:#fbeec6;font-weight:500">{rich(s["callout"])}</p></div></div></div>' if s.get("callout") else ""))
+            num = f'<div class="big gt" style="font-size:calc(150px*var(--k)*var(--u));margin-bottom:10px">{rich(s["number"])}</div>' if s.get("number") else ""
+            return f'<div class="main">{eyebrow}{num}<h2>{rich(s["title"])}</h2>{body}</div>'
+        start = s.get("start")
+        rows = []
+        for j, it in enumerate(s["items"]):
+            num = f'{(start + j):02d}' if start is not None else f'{j + 1:02d}'
+            rows.append(f'<div class="card"><div class="ci"><div class="n"><bdi>{num}</bdi></div><div class="t">{tags_html(it.get("tags"))}'
+                        f'<h3>{rich(it["title"])}</h3><p>{rich(it.get("text", ""))}</p></div></div></div>')
+        return f'<div class="main top">{eyebrow}<h2>{rich(s["title"])}</h2><div class="cards">{"".join(rows)}</div></div>'
     if t == "stat":
         src = f'<div class="src">{rich("מקור: " + s["source"])}</div>' if s.get("source") else ""
-        main = (f'<div class="main"><div class="num gt" style="font-size:calc(300px*var(--k)*var(--u))">{rich(s["value"])}</div><div class="rule"></div>'
-                f'<h2>{rich(s["title"])}</h2><p class="sub">{rich(s.get("text", ""))}</p>{src}</div>')
-        return main, s.get("theme", "ink"), watermark(640, s.get("gem", "ice"), .11, "left:-250px;top:150px", 11)
+        return (f'<div class="main">{eyebrow}<div class="big gt" style="font-size:calc(270px*var(--k)*var(--u))">{rich(s["value"])}</div>'
+                f'<h2 style="margin-top:14px">{rich(s["title"])}</h2><div class="card"><p>{rich(s.get("text", ""))}</p></div>{src}</div>')
     if t == "compare":
         hl = s.get("highlight", 1)
         head = "".join(f"<th>{rich(c)}</th>" for c in s["cols"])
         rows = "".join("<tr>" + "".join(f'<td class="{"hl" if j == hl else ""}">{rich(c)}</td>' for j, c in enumerate(r)) + "</tr>" for r in s["rows"])
         src = f'<div class="src">{rich("מקור: " + s["source"])}</div>' if s.get("source") else ""
-        chip = f'<div class="chip">{ic("scale", 34, 3)}{rich(s.get("eyebrow", "השוואה"))}</div>'
-        main = f'<div class="main">{chip}<h2>{rich(s["title"])}</h2><table><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table>{src}</div>'
-        return main, s.get("theme", "cream"), ""
+        return f'<div class="main">{eyebrow or f"<div class=eyebrow>השוואה</div>"}<h2>{rich(s["title"])}</h2><table><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table>{src}</div>'
     if t == "myth":
-        main = (f'<div class="main" style="gap:26px"><div class="panel m"><div class="tag" style="color:#ff9a9a">{ic("cross", 44, 4)}מיתוס</div>'
-                f'<h2 style="font-size:calc(72px*var(--k)*var(--u))">{rich(s["myth"])}</h2></div>'
-                f'<div class="panel t"><div class="tag" style="color:#5b4318">{ic("check", 44, 4)}האמת</div>'
-                f'<p style="font-size:calc(46px*var(--k)*var(--u));font-weight:500;line-height:1.4">{rich(s["truth"])}</p></div></div>')
-        return main, s.get("theme", "ink"), ""
+        return (f'<div class="main">{eyebrow or "<div class=eyebrow>מיתוס או עובדה</div>"}<div class="cards" style="gap:24px">'
+                f'<div class="card panel m"><div class="pt" style="color:#ff9a9a">{ic("cross", 38, 4)}מיתוס</div>'
+                f'<h2 style="font-size:calc(66px*var(--k)*var(--u));margin:0">{rich(s["myth"])}</h2></div>'
+                f'<div class="card panel t"><div class="pt" style="color:#e3c78d">{ic("check", 38, 4)}האמת</div>'
+                f'<p style="font-size:calc(42px*var(--k)*var(--u));font-weight:500;color:#fff">{rich(s["truth"])}</p></div></div></div>')
     if t == "quiz":
         letters = ["א", "ב", "ג", "ד"]
         opts = "".join(f'<div class="opt"><div class="l">{letters[i]}</div><div>{rich(o)}</div></div>' for i, o in enumerate(s["options"]))
         ask = f'<div class="ask">{rich(s.get("ask", "כתבו את התשובה בתגובות, והאמת בשקף הבא"))}</div>'
-        main = (f'<div class="main"><div class="chip">{ic("question", 34, 3)}{rich(s.get("eyebrow", "בוחנים את עצמנו"))}</div><h2>{rich(s["title"])}</h2>{opts}{ask}</div>')
-        return main, s.get("theme", "cream"), watermark(520, "gold", .09, "left:-130px;top:90px", 9)
+        return f'<div class="main">{eyebrow or "<div class=eyebrow>בוחנים את עצמנו</div>"}<h2>{rich(s["title"])}</h2>{opts}{ask}</div>'
     if t == "list":
-        items = "".join(f'<li><div class="b">{ic("check", 38, 4)}</div><div>{rich(i)}</div></li>' for i in s["items"])
-        main = f'<div class="main"><h2>{rich(s["title"])}</h2><ul class="ck">{items}</ul></div>'
-        return main, s.get("theme", "sand"), ""
+        items = "".join(f'<div class="card"><div class="ci"><div class="n" style="min-width:0">{ic("check", 46, 4)}</div><div class="t"><p style="font-size:calc(40px*var(--k)*var(--u));color:#fff;font-weight:500">{rich(i)}</p></div></div></div>' for i in s["items"])
+        return f'<div class="main top">{eyebrow}<h2>{rich(s["title"])}</h2><div class="cards">{items}</div></div>'
     if t == "quote":
-        who = f'<p class="sub" style="color:var(--small)">{rich(s["by"])}</p>' if s.get("by") else ""
-        main = f'<div class="main"><div class="qm gt">”</div><div class="q">{rich(s["text"])}</div><div class="rule"></div>{who}</div>'
-        return main, s.get("theme", "sand"), ""
+        who = f'<p style="margin-top:20px;color:#e3c78d">{rich(s["by"])}</p>' if s.get("by") else ""
+        return (f'<div class="main">{eyebrow}<div class="card" style="padding:48px 44px"><div class="big gt" style="font-size:220px;height:120px;line-height:.9">”</div>'
+                f'<div style="font-family:display;font-weight:600;font-size:calc(66px*var(--k)*var(--u));line-height:1.28">{rich(s["text"])}</div>{who}</div></div>')
     if t == "product":
         if "price" in s and not ctx["spec"].get("prices_approved"):
             sys.exit('a product slide has a price but the spec has no "prices_approved": true (store rule: prices only with owner approval)')
         img = img_css(s.get("image"), base)
-        price = f'<p class="sub"><bdi>{html.escape(str(s["price"]))}</bdi></p>' if "price" in s else ""
-        main = (f'<div class="main start"><div class="pimg" style="{img}"></div><h2 style="margin-top:34px">{rich(s["title"])}</h2>'
-                f'<p class="sub" style="margin-top:10px">{rich(s.get("text", ""))}</p>{price}</div>')
-        return main, s.get("theme", "cream"), ""
+        price = f'<p style="margin-top:8px;color:#e3c78d;font-weight:700"><bdi>{html.escape(str(s["price"]))}</bdi></p>' if "price" in s else ""
+        return (f'<div class="main top">{eyebrow}<div style="flex:1;min-height:0;border-radius:30px;{img};background-size:cover;background-position:center;'
+                f'background-color:rgba(227,199,141,.12);border:1.5px solid rgba(227,199,141,.4)"></div><h2 style="margin:26px 0 8px;font-size:calc(64px*var(--k)*var(--u))">{rich(s["title"])}</h2>'
+                f'<p>{rich(s.get("text", ""))}</p>{price}</div>')
     if t == "engage":
         items = s.get("items") or [
             {"icon": "bookmark", "title": "שמרו", "text": "לפעם הבאה שבוחרים תכשיט"},
             {"icon": "send", "title": "שלחו", "text": "למי שמחפשת רעיון"},
             {"icon": "comment", "title": "הגיבו", "text": "ספרו מה חשבתם"}]
-        tiles = "".join(f'<div class="tile"><div class="ico">{ic(i.get("icon", "heart"), 62, 3)}</div><b>{rich(i["title"])}</b><span>{rich(i.get("text", ""))}</span></div>' for i in items)
-        main = (f'<div class="main"><div class="chip">{ic("heart", 34, 3)}{rich(s.get("eyebrow", "לפני שממשיכים"))}</div><h2>{rich(s["title"])}</h2>'
-                f'<p class="sub">{rich(s.get("text", ""))}</p><div class="tiles">{tiles}</div></div>')
-        return main, s.get("theme", "sand"), ""
+        tiles = "".join(f'<div class="tile">{ic(i.get("icon", "heart"), 56, 3)}<b>{rich(i["title"])}</b><span>{rich(i.get("text", ""))}</span></div>' for i in items)
+        return (f'<div class="main">{eyebrow or "<div class=eyebrow>לפני שממשיכים</div>"}<h2>{rich(s["title"])}</h2>'
+                f'<div class="card"><p>{rich(s.get("text", ""))}</p></div><div class="tiles">{tiles}</div></div>')
     if t == "cta":
+        brand = ctx["brand"]
+        handle = s.get("follow", brand.get("handle") or brand.get("wordmark", "SEORA"))
         action = s.get("action") or ACTIONS.get(fmt, "הקישור בביו")
-        gsz = 330 if not story else 380
-        gem = (f'<div style="margin:0 auto 26px;width:{gsz}px;height:{gsz}px;position:relative"><div style="position:absolute;inset:-60px;opacity:.9">{art.rays(gsz + 120, 24, .2, .98, .10)}</div>'
-               f'<div style="position:absolute;inset:0">{art.gem(gsz, "gold", 4, "ct")}</div></div>')
-        ask = f'<div class="ask">{rich(s["ask"])}</div>' if s.get("ask") else ""
-        url = s.get("url", ctx["brand"].get("url", ""))
-        u = f'<div class="ask" style="margin-top:22px;color:var(--fg);direction:ltr;font-size:calc(42px*var(--u));letter-spacing:.04em!important">{html.escape(url)}</div>' if url else ""
-        sec = f'<p class="sub" style="text-align:center;margin-top:20px">{rich(s["text"])}</p>' if s.get("text") else ""
-        main = (f'<div class="main" style="text-align:center">{gem}<h2 class="gt" style="text-align:center">{rich(s["title"])}</h2>{sec}'
-                f'<div class="btn">{rich(action)}{ic("arrow", 60, 4)}</div>{ask}{u}</div>')
-        return main, "ink", ""
+        kw = s.get("keyword")
+        if kw:
+            q = (f'<p style="text-align:center;font-size:calc(40px*var(--k)*var(--u));color:#fff">{rich(s.get("ask", ""))}</p>'
+                 f'<div style="text-align:center;margin-top:18px;font-family:display;font-weight:800;font-size:calc(56px*var(--k)*var(--u))">הגיבו<span class="kw">{html.escape(kw)}</span></div>'
+                 f'<p style="text-align:center;margin-top:16px;font-size:calc(30px*var(--u));opacity:.8">{rich(s.get("text", ""))}</p>')
+        else:
+            q = (f'<h2 class="gt" style="text-align:center;margin:0 0 12px">{rich(s["title"])}</h2>'
+                 + (f'<p style="text-align:center">{rich(s["text"])}</p>' if s.get("text") else "")
+                 + f'<div style="text-align:center;margin-top:22px"><span class="kw" style="font-size:calc(46px*var(--k)*var(--u));margin:0">{rich(action)}</span></div>'
+                 + (f'<div class="ask" style="margin-top:18px">{rich(s["ask"])}</div>' if s.get("ask") else ""))
+        items = s.get("items") or [
+            {"icon": "bookmark", "title": "שמרו", "text": "לפעם הבאה"},
+            {"icon": "send", "title": "שתפו", "text": "עם מי שמחפשת"},
+            {"icon": "comment", "title": "הגיבו", "text": "ספרו לנו"}]
+        tiles = "".join(f'<div class="tile">{ic(i.get("icon", "heart"), 52, 3)}<b>{rich(i["title"])}</b><span>{rich(i.get("text", ""))}</span></div>' for i in items)
+        chip = f'<div style="text-align:center;margin-bottom:24px"><span class="chip">{rich(s.get("eyebrow", "וזה לא נגמר כאן"))}</span></div>'
+        tag = f'<p style="text-align:center;margin-top:10px;font-size:calc(32px*var(--u));opacity:.8">{rich(s["tagline"])}</p>' if s.get("tagline") else ""
+        return (f'<div class="main">{chip}<div class="card" style="padding:calc(34px*var(--k)) 30px">{q}</div>'
+                f'<div style="text-align:center;margin-top:calc(28px*var(--k));font-family:display;font-weight:500;font-size:calc(40px*var(--u));color:rgba(247,243,236,.85)">ועקבו אחרי</div>'
+                f'<div class="big gt" style="text-align:center;font-size:calc(96px*var(--k)*var(--u));letter-spacing:.14em!important;direction:ltr">{html.escape(handle)}</div>{tag}<div class="tiles">{tiles}</div></div>')
     sys.exit(f"unknown slide type: {t}")
 
 
 def build_slide(s, idx, n, ctx):
     W, H, kind = ctx["W"], ctx["H"], ctx["kind"]
-    main, theme_name, extra = build_body(s, idx, n, ctx)
-    th = THEMES[theme_name]
-    c = ctx["colors"]
+    main = build_body(s, idx, n, ctx)
     pad = PAD[kind]
     css = CSS
-    mapping = dict(W=W, H=H, PT=pad["top"], PS=pad["side"], PB=pad["bottom"], U=1.08 if kind == "story" else 1, GOLDL=c["gold_light"] if theme_name == "ink" else c["gold"], **th)
-    for k, v in mapping.items():
+    for k, v in dict(W=W, H=H, PT=pad["top"], PS=pad["side"], PB=pad["bottom"], U=1.08 if kind == "story" else 1).items():
         css = css.replace(f"@{k}@", str(v))
     wm = html.escape(ctx["brand"].get("wordmark", "SEORA"))
-    label = ""
-    if s["type"] != "cover" and ctx.get("label"):
-        label = html.escape(ctx["label"])
-    teaser = ""
-    if s.get("teaser") and idx < n:
-        teaser = f'<div class="teaser">{rich("בשקף הבא: " + s["teaser"])}</div>'
-    hint = ""
-    if s["type"] == "cover" and n > 1:
-        hint = f'<div class="teaser">{"הקישו להמשך" if kind == "story" else "החליקו לגלות"}</div>'
-    bg = ""
-    if theme_name == "ink":
-        bg = (f'<div class="bgart"><div style="inset:0;opacity:.9">{art.lattice("#e3c78d", .05)}</div>'
-              f'<div style="left:-200px;top:-160px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(227,199,141,.20),transparent 65%)"></div>'
-              f'<div style="right:-220px;bottom:-200px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(227,199,141,.14),transparent 65%)"></div>'
-              f'<div style="inset:0;mix-blend-mode:overlay;opacity:.7">{art.grain(.22)}</div>{extra}</div>')
+    last = idx == n
+    if last:
+        left = f'<span class="url">{html.escape(ctx["brand"].get("url", ""))}</span>'
     else:
-        bg = (f'<div class="bgart"><div style="inset:0">{art.lattice("#7d6232", .06)}</div>'
-              f'<div style="inset:0;mix-blend-mode:multiply;opacity:.5">{art.grain(.10)}</div>{extra}</div>')
-    corners = "".join(f'<div class="cn {x}">{art.corner(c["gold_light"] if theme_name == "ink" else c["gold"])}</div>' for x in "abcd")
+        left = f'<span class="hint">{art.icon("arrow", 30, 3.4)}{"הקישו להמשך" if kind == "story" else "החליקו"}</span>'
+    bg = (f'<div class="bgart"><div style="inset:0;opacity:.9">{art.lattice("#e3c78d", .045)}</div>'
+          f'<div style="inset:0;mix-blend-mode:overlay;opacity:.6">{art.grain(.2)}</div></div>')
     guides = ""
     if ctx["guides"]:
         side = 65 if kind == "story" else 40
-        top = 270 if kind == "story" else 0
-        bot = 384 if kind == "story" else 0
+        top, bot = (270, 384) if kind == "story" else (0, 0)
         guides = f'<div class="guides"><div style="left:{side}px;right:{side}px;top:{top}px;bottom:{bot}px;border-color:#e0245e"></div>'
         if kind == "feed" and idx == 1 and int(H * 0.75) < W:
             cw = int(H * 0.75)
             guides += f'<div style="left:{(W - cw)//2}px;width:{cw}px;top:0;bottom:0;border-color:#1d9bf0"></div>'
         guides += "</div>"
     return (f'<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><style>{fonts_css(ctx["brand"])}{css}</style></head><body>'
-            f'<div class="slide" id="s" data-k0="{K0.get(s["type"], 1)}">{bg}<div class="frame"></div>{corners}'
-            f'<div class="hdr"><span class="wm">{wm}</span><span class="lbl">{label}</span></div>{main}{teaser or hint}{pager_html(idx, n)}{guides}</div></body></html>')
+            f'<div class="slide" id="s" data-k0="{K0.get(s["type"], 1)}">{bg}'
+            f'<div class="hdr"><span class="wm">{wm}</span><span class="cnt"><b>{idx:02d}</b> / {n:02d}</span></div>{main}'
+            f'<div class="ftr">{dashes(idx, n)}{left}</div>{guides}</div></body></html>')
+
 
 
 FIT_JS = """() => document.fonts.ready.then(() => {

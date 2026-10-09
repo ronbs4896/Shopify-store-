@@ -1,6 +1,6 @@
 ---
 name: social-carousel
-description: Build Hebrew (RTL) Instagram and Facebook carousels and story frames for the SEORA store from a short JSON spec, rendered by headless Chromium to exact-size PNG or JPG. The first slide is the thumbnail, the last is the call to action, every slide has a numbered pager, and there is always an interactive slide. Use whenever the owner asks for a carousel, a swipe post, a feed series, a story series, or "קרוסלה" for Instagram or Facebook, including turning a blog article into a carousel.
+description: Build Hebrew (RTL) Instagram and Facebook carousels and story frames for the SEORA store from a short JSON spec, rendered by headless Chromium to exact-size PNG or JPG. The first slide is the thumbnail, the last is the call to action, every slide has a counter and progress dashes, and there is always an interactive slide. Use whenever the owner asks for a carousel, a swipe post, a feed series, a story series, or "קרוסלה" for Instagram or Facebook, including turning a blog article into a carousel.
 ---
 
 # Social carousels (Instagram + Facebook, Hebrew RTL)
@@ -18,11 +18,11 @@ Chromium is expected at `/opt/pw-browsers/chromium` (override with `CHROMIUM_PAT
 
 ## The structure is fixed
 
-1. **Slide 1 is the thumbnail** (`cover`). It is what people see in the feed and in the 3:4 profile tile, so it has the hero art, a short tag line (`eyebrow`, for example "מדריך · 8 שקפים"), a title of up to about 7 words and a one-line promise.
+1. **Slide 1 is the thumbnail** (`cover`). It is what people see in the feed and in the 3:4 profile tile, so it has a chip (`eyebrow`, for example "מדריך · 8 שקפים"), a huge gold number or phrase (`big`), a white lead-in (`mid`), the highlighted title, a one-line promise, a visual (gem or photo) and a "שמרו את הפוסט..." line (`save`).
 2. **Slides 2 to N-1 are content.** One idea per slide. At least one of them must be interactive (`quiz`, `myth` or `engage`); the renderer warns when none is.
-3. **The last slide is the CTA** (`cta`): one clear action as a large button, a question that invites a comment, and the site address. The default action text depends on the format (feed: "הקישור בביו", story: "הקישו על הסטיקר", Facebook post: "הקישור בתגובה הראשונה"); override with `action`.
-4. **Every slide shows a numbered pager** (1, 2, 3 ... N, the current one filled in gold, 1 on the right). With more than 9 slides it becomes a segmented bar plus "5/12".
-5. Optional `teaser` on a slide shows "בשקף הבא: ..." above the pager and gives a reason to keep swiping.
+3. **The last slide is the CTA** (`cta`): one clear action as a card with a question and a comment keyword (`keyword`, only if the owner will really send something to people who comment it) or a button, "ועקבו אחרי SEORA", and three tiles (שמרו, שתפו, הגיבו). The default action text depends on the format (feed: "הקישור בביו", story: "הקישו על הסטיקר", Facebook post: "הקישור בתגובה הראשונה"); override with `action`.
+4. **Every slide shows where you are**: a counter "03 / 08" top-left, the wordmark top-right, and segmented dashes bottom-right that fill from the right (slide 1 is the right-most dash), plus "החליקו" with an arrow bottom-left (on the last slide the site address instead).
+5. Content slides group at most 4 numbered cards (`cards`), each with a bold title, optional Latin `tags` and 2 to 3 lines of text. The section label (`label`, for example "שלב 2 מתוך 3") sits above the title.
 6. The renderer refuses a spec whose first slide is not `cover` or whose last is not `cta` (set `"strict": false` only for a deliberate exception).
 
 ## Interaction (what makes people comment, save and share)
@@ -31,7 +31,7 @@ Chromium is expected at `/opt/pw-browsers/chromium` (override with `CHROMIUM_PAT
 - `myth`: "מיתוס" and "האמת" on one slide. Good for sharing.
 - `engage`: the "שווה לשמור" slide with three tiles (שמרו, שלחו, הגיבו). Put it second from the end.
 - `cta` `ask`: a closing question, such as "איזו אבן הייתם בוחרים? כתבו בתגובות".
-- Hook on slide 1 (a question or a surprising claim that slide 3 answers), `teaser` lines in between, and a caption that repeats the question.
+- Hook on slide 1 (a question or a surprising claim that slide 3 answers), and a caption that repeats the question.
 - Stories: use `quiz` frames and leave the middle band free for a poll or question sticker, and the lower third for the link sticker.
 
 ## Formats
@@ -60,8 +60,9 @@ Stories have no native carousel: post the frames in order. The renderer keeps ev
 
 | `type` | Fields |
 |---|---|
-| `cover` | `title`, `eyebrow`, `subtitle`, `gem` (`fire`, `ice`, `gold`), `seed`, `image` (optional round photo instead of the gem) |
-| `point` | `number`, `icon`, `title`, `text`, `callout` |
+| `cover` | `title`, `eyebrow` (chip), `big`, `mid`, `subtitle`, `save`, `gem` (`fire`, `ice`, `gold`), `seed`, `image` (optional round photo instead of the gem) |
+| `cards` | `label`, `title`, `items` (1 to 4 of `title`, `text`, `tags`), `start` (first number, to continue across slides) |
+| `point` | `label`, `number`, `title`, `text`, `callout` |
 | `stat` | `value`, `title`, `text`, `source`, `gem` |
 | `compare` | `eyebrow`, `title`, `cols`, `rows`, `highlight` (column index), `source` |
 | `myth` | `myth`, `truth` |
@@ -70,13 +71,13 @@ Stories have no native carousel: post the frames in order. The renderer keeps ev
 | `quote` | `text`, `by` |
 | `product` | `title`, `text`, `image`, `price` (only with `"prices_approved": true`) |
 | `engage` | `title`, `text`, `items` (`icon`, `title`, `text`; defaults to שמרו, שלחו, הגיבו) |
-| `cta` | `title`, `text`, `action`, `ask`, `url` |
+| `cta` | `eyebrow`, `ask`, `keyword`, `text`, `follow` (default: wordmark), `tagline`, `items` (three tiles); without `keyword`: `title`, `action` button |
 
-Every slide accepts `theme` (`ink`, `cream`, `sand`), `teaser` and `hint`. Text fields accept `<b>`, `<i>` and `<br>`; Latin letters and numbers are isolated automatically so punctuation does not flip in RTL. Icons for `point` and `engage`: gem, ruler, scale, shield, drop, magnifier, bolt, check, cross, bookmark, send, comment, heart, star, gift, tag, question, clock, flame, arrow, link, globe. Image paths are relative to the spec file. In the cloud session `cdn.shopify.com` is blocked, so photos have to be local files the owner supplies.
+All slides share one dark gold design (ink background, warm gold glows, faint lattice). Text fields accept `<b>`, `<i>` and `<br>`; Latin letters and numbers are isolated automatically so punctuation does not flip in RTL. Icons for `point` and `engage`: gem, ruler, scale, shield, drop, magnifier, bolt, check, cross, bookmark, send, comment, heart, star, gift, tag, question, clock, flame, arrow, link, globe. Image paths are relative to the spec file. In the cloud session `cdn.shopify.com` is blocked, so photos have to be local files the owner supplies.
 
 ## Fonts: one family for Hebrew, numbers and English
 
-Headlines, numbers, the wordmark and the pager all use the **display** font and body text uses the **body** font, both configured in `brand.json` (`fonts`). Today they are Frank Ruhl Libre and Heebo, which contain Hebrew, Latin and digits. To change a font, put `Family-400.ttf`, `Family-700.ttf` and so on in `assets/fonts` and change the name in `brand.json`. Before rendering, the script checks every character in the spec against the font and **stops with an error if the font has no glyph for a Hebrew letter, a digit or a Latin letter**, so a font that only works in English cannot slip through. The brand font the owner wants is still to be confirmed (see the open item below).
+Headlines, numbers, the wordmark and the pager all use the **display** font and body text uses the **body** font, both configured in `brand.json` (`fonts`). Today they are Rubik (display, numbers, wordmark) and Heebo (body), which contain Hebrew, Latin and digits. To change a font, put `Family-400.ttf`, `Family-700.ttf` and so on in `assets/fonts` and change the name in `brand.json`. Before rendering, the script checks every character in the spec against the font and **stops with an error if the font has no glyph for a Hebrew letter, a digit or a Latin letter**, so a font that only works in English cannot slip through. Rubik was chosen to match the reference carousel the owner approved as the direction; the owner's named font is still to be confirmed (see the open item below).
 
 ## Store rules that apply to every slide
 
@@ -98,15 +99,15 @@ Headlines, numbers, the wordmark and the pager all use the **display** font and 
 
 ## Design rules
 
-- Type: headlines 80 px or more, body 44 px or more, labels 30 px or more.
-- Contrast: gold on cream is used for large text and decoration only; small gold text is the darker gold.
+- Type (1080 wide): page title 80 px, card title 44 px, card text 34 px, tags and chips 26 to 30 px. Cards are the only place text goes below 40 px.
+- Contrast: small text is white or light gold on the dark background; never dark text on a mid-tone.
 - Slide 1 must work as a 3:4 tile and as a standalone post: keep its key content between x = 40 and x = 1040.
 - Keep every slide the same size. Never reverse the file order for Hebrew: slide 1 is the cover.
 - If a slide reports `text shrunk` or `overflows`, shorten the copy instead of accepting it.
 
 ## Direction (RTL) and swipe cues
 
-No source says how Instagram's carousel behaves in Hebrew UI (swipe direction, dots, counter). The design therefore uses direction-agnostic cues: the numbered pager and the words "החליקו לגלות". Do not write "החליקו שמאלה", do not draw a big arrow and do not run a panorama across slides until the owner has run the two-phone test in `references/specs.md`.
+No source says how Instagram's carousel behaves in Hebrew UI (swipe direction, dots, counter). The design therefore uses direction-agnostic cues: the counter, the dashes and the word "החליקו" with a small arrow (taken from the approved reference; it points left, which is unverified for Instagram's Hebrew UI). Do not write "החליקו שמאלה" and do not run a panorama across slides until the owner has run the two-phone test in `references/specs.md`.
 
 ## Known gaps
 
