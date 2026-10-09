@@ -1,0 +1,99 @@
+{%- comment -%}
+  SEORA home page: our blog, placed before the footer.
+  Desktop: 5 articles per page with page numbers. Mobile: 2 articles, "more" button, and a link to all articles.
+{%- endcomment -%}
+{{ 'seora-blog.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign ss = section.settings
+  assign src = ss.blog | default: blogs.magazine
+-%}
+{%- if src != blank and src.articles_count > 0 -%}
+  <section id="shb-{{ section.id }}" class="seora-hb seora-mag" data-seora-hb data-per-desktop="{{ ss.per_page_desktop }}" data-per-mobile="{{ ss.per_page_mobile }}">
+    <div class="seora-hb__wrap">
+      <header class="seora-hb__head">
+        <div>
+          {%- if ss.eyebrow != blank -%}<p class="seora-hb__eyebrow">{{ ss.eyebrow | escape }}</p>{%- endif -%}
+          <h2 class="seora-hb__title">{{ ss.heading | escape }}</h2>
+        </div>
+        <a class="seora-hb__all" href="{{ src.url }}">{{ ss.all_label | escape }}</a>
+      </header>
+
+      <div class="seora-hb__grid" data-hb-grid>
+        {%- for article in src.articles limit: ss.max_articles -%}
+          {%- render 'seora-article-card',
+            article: article,
+            show_excerpt: false,
+            show_author: false,
+            show_date: true,
+            heading_tag: 'h3',
+            lazy: true
+          -%}
+        {%- endfor -%}
+      </div>
+
+      <nav class="seora-hb__pager" data-hb-pager aria-label="עמודי מאמרים" hidden></nav>
+
+      <div class="seora-hb__more">
+        <button type="button" class="seora-hb__btn" data-hb-more>{{ ss.more_label | escape }}</button>
+        <a class="seora-hb__btn seora-hb__btn--solid" href="{{ src.url }}">{{ ss.all_label | escape }}</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var root = document.getElementById('shb-{{ section.id }}');
+      if (!root) return;
+      var cards = Array.prototype.slice.call(root.querySelectorAll('[data-hb-grid] > .seora-card'));
+      var pager = root.querySelector('[data-hb-pager]');
+      var moreBtn = root.querySelector('[data-hb-more]');
+      var perDesk = parseInt(root.getAttribute('data-per-desktop'), 10) || 5;
+      var perMob = parseInt(root.getAttribute('data-per-mobile'), 10) || 2;
+      var mq = window.matchMedia('(min-width: 750px)');
+      var page = 1, shown = perMob;
+
+      function renderDesktop() {
+        var pages = Math.max(1, Math.ceil(cards.length / perDesk));
+        cards.forEach(function (c, i) { c.hidden = !(i >= (page - 1) * perDesk && i < page * perDesk); });
+        pager.innerHTML = '';
+        if (pages < 2) { pager.hidden = true; return; }
+        pager.hidden = false;
+        for (var p = 1; p <= pages; p++) {
+          var b = document.createElement('button');
+          b.type = 'button'; b.className = 'seora-hb__page'; b.textContent = p;
+          b.setAttribute('aria-label', 'עמוד ' + p);
+          if (p === page) b.setAttribute('aria-current', 'true');
+          b.addEventListener('click', (function (n) { return function () { page = n; renderDesktop(); }; })(p));
+          pager.appendChild(b);
+        }
+      }
+      function renderMobile() {
+        cards.forEach(function (c, i) { c.hidden = i >= shown; });
+        pager.hidden = true;
+        if (moreBtn) moreBtn.hidden = shown >= cards.length;
+      }
+      function render() { if (mq.matches) renderDesktop(); else renderMobile(); }
+      if (moreBtn) moreBtn.addEventListener('click', function () { shown += perMob; renderMobile(); });
+      if (mq.addEventListener) mq.addEventListener('change', render); else mq.addListener(render);
+      render();
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "SEORA: הבלוג בדף הבית",
+  "tag": "div",
+  "settings": [
+    { "type": "blog", "id": "blog", "label": "בלוג (ריק = המגזין)" },
+    { "type": "text", "id": "eyebrow", "label": "כותרת קטנה", "default": "המגזין של SEORA" },
+    { "type": "text", "id": "heading", "label": "כותרת", "default": "הבלוג שלנו" },
+    { "type": "text", "id": "all_label", "label": "טקסט הקישור לכל המאמרים", "default": "לכל המאמרים" },
+    { "type": "text", "id": "more_label", "label": "טקסט כפתור פתיחת עוד (מובייל)", "default": "עוד מאמרים" },
+    { "type": "range", "id": "max_articles", "label": "מספר מאמרים שנטענים", "min": 5, "max": 50, "step": 5, "default": 25 },
+    { "type": "range", "id": "per_page_desktop", "label": "מאמרים בעמוד (דסקטופ)", "min": 3, "max": 6, "step": 1, "default": 5 },
+    { "type": "range", "id": "per_page_mobile", "label": "מאמרים בתצוגה (מובייל)", "min": 2, "max": 4, "step": 1, "default": 2 }
+  ],
+  "presets": [{ "name": "SEORA: הבלוג בדף הבית" }]
+}
+{% endschema %}

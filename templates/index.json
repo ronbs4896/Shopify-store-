@@ -638,6 +638,10 @@
         "margin_top": 0,
         "margin_bottom": 0
       }
+    },
+    "seora_home_blog": {
+      "type": "seora-home-blog",
+      "settings": {}
     }
   },
   "order": [
@@ -650,6 +654,7 @@
     "collapsible_content_k74NUT",
     "featured_collection_HbUw9e",
     "newsletter_EddyTa",
-    "6b53f861-3aae-4cc4-a699-aca63db5c942"
+    "6b53f861-3aae-4cc4-a699-aca63db5c942",
+    "seora_home_blog"
   ]
 }

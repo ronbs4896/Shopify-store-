@@ -23,3 +23,5 @@ The short version: no full stop at the end of headings, buttons or labels; no ch
 - Staging theme now: "SEORA - טיוטה קבועה (Claude)", gid://shopify/OnlineStoreTheme/190441914664 (synced with live on 2026-10-08, plus the hidden video view counts). Live: 190447812904. They swap each time the owner publishes; check roles with `themes { id name role }` before writing.
 - Prices and discounts change only with the owner's explicit approval.
 - No invented reviews or ratings.
+- Iron rule for every blog article: it goes up with internal links (to other articles and to collections) and with a named author. Authors alternate by article order, odd orders "רון בן שושן" and even orders "מתן כלפון". Each author has a photo that the theme shows next to the byline (the owner supplies the photos). Never publish with "צוות SEORA" or without an author.
+- Article tables must be 100% width with no horizontal scroll on mobile (theme CSS in `assets/seora-blog.css` enforces it; keep table markup plain).

@@ -13,6 +13,17 @@
   if read_min < 1
     assign read_min = 1
   endif
+  comment
+    Author photos are theme assets: assets/author-ron-ben-shushan.jpg and assets/author-matan-kalfon.jpg.
+    While a photo is missing the initial letter shows instead.
+  endcomment
+  assign author_file = ''
+  case article.author
+    when 'רון בן שושן'
+      assign author_file = 'author-ron-ben-shushan.jpg'
+    when 'מתן כלפון'
+      assign author_file = 'author-matan-kalfon.jpg'
+  endcase
 -%}
 {%- style -%}
   #sart-{{ section.id }} { padding-top: {{ ss.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ ss.padding_bottom | times: 0.75 | round: 0 }}px; }
@@ -35,7 +46,9 @@
       <p class="seora-art__meta">
         {%- if article.author != blank -%}
           <span class="seora-art__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
-            <span class="seora-art__avatar" aria-hidden="true">{{ article.author | slice: 0 }}</span>
+            <span class="seora-art__avatar" aria-hidden="true">{{ article.author | slice: 0 }}
+              {%- if author_file != blank -%}<img src="{{ author_file | asset_url }}" alt="" width="44" height="44" loading="lazy" onerror="this.remove()">{%- endif -%}
+            </span>
             <span itemprop="name">{{ article.author | escape }}</span>
           </span>
         {%- endif -%}

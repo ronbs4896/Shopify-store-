@@ -50,7 +50,7 @@ h3.seora-card__title { font-size: clamp(1.6rem, 1.45rem + 0.4vw, 1.9rem); }
 .seora-art__title { margin: 0; font-size: clamp(2.8rem, 1.9rem + 2.4vw, 4.6rem); line-height: 1.18; }
 .seora-art__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.4rem; margin: 2rem 0 0; font-size: 1.4rem; color: var(--sm-muted); }
 .seora-art__author { display: inline-flex; align-items: center; gap: 0.9rem; font-weight: 700; color: rgb(var(--color-foreground)); }
-.seora-art__avatar { display: inline-grid; place-items: center; width: 3.4rem; height: 3.4rem; border-radius: 50%; background: var(--sm-soft); color: var(--sm-accent); font-weight: 800; font-size: 1.4rem; }
+.seora-art__avatar { position: relative; overflow: hidden; display: inline-grid; place-items: center; width: 4.4rem; height: 4.4rem; border-radius: 50%; background: var(--sm-soft); color: var(--sm-accent); font-weight: 800; font-size: 1.4rem; }
 .seora-art__meta > * + *::before { content: '·'; margin-inline-end: 1.4rem; color: var(--sm-muted); font-weight: 400; }
 
 .seora-art__banner { margin: 0 0 clamp(2.8rem, 4.5vw, 4.8rem); overflow: hidden; border-radius: 1.4rem; background: var(--sm-soft); }
@@ -73,10 +73,14 @@ h3.seora-card__title { font-size: clamp(1.6rem, 1.45rem + 0.4vw, 1.9rem); }
 .seora-art__body img { max-width: 100%; height: auto; border-radius: 1rem; }
 .seora-art__body figure { margin: 3rem 0; }
 .seora-art__body figcaption { margin-top: 0.8rem; font-size: 1.3rem; color: var(--sm-muted); text-align: center; }
-.seora-art__body div:has(> table) { overflow-x: auto; }
+.seora-art__body div:has(> table) { overflow: visible !important; margin: 0 !important; }
 .seora-art__body hr { margin: 3.6rem 0; border: 0; border-top: 1px solid var(--sm-border); }
-.seora-art__body table { width: 100%; margin: 2.4rem 0; border-collapse: collapse; font-size: 0.92em; line-height: 1.6; }
-.seora-art__body th, .seora-art__body td { padding: 1rem 1.2rem; border: 0; border-bottom: 1px solid var(--sm-border); text-align: start; vertical-align: top; white-space: normal; }
+.seora-art__body table { width: 100% !important; min-width: 0 !important; max-width: 100%; table-layout: fixed; margin: 2.4rem 0; border-collapse: collapse; font-size: 0.92em; line-height: 1.6; }
+.seora-art__body th, .seora-art__body td { padding: 1rem 1.2rem; border: 0; border-bottom: 1px solid var(--sm-border); text-align: start; vertical-align: top; white-space: normal; overflow-wrap: anywhere; word-break: normal; }
+@media screen and (max-width: 749px) {
+  .seora-art__body table { font-size: 0.82em; line-height: 1.45; }
+  .seora-art__body th, .seora-art__body td { padding: 0.8rem 0.5rem; }
+}
 .seora-art__body thead th { background: var(--sm-soft); font-weight: 700; color: rgb(var(--color-foreground)); }
 
 /* small product card inside articles */
@@ -112,4 +116,36 @@ h3.seora-card__title { font-size: clamp(1.6rem, 1.45rem + 0.4vw, 1.9rem); }
 .seora-art__btn[hidden] { display: none; }
 @media screen and (min-width: 990px) {
   .seora-art__related-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3.2rem 2.4rem; }
+}
+
+.seora-art__avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+/* ---------- home page: our blog ---------- */
+.seora-hb { padding: 4.8rem 0 5.6rem; background: var(--sm-bg, #fff); }
+.seora-hb__wrap { max-width: 140rem; margin: 0 auto; padding: 0 1.6rem; }
+.seora-hb__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.6rem; margin-bottom: 2.8rem; }
+.seora-hb__eyebrow { margin: 0 0 0.6rem; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.12em; color: var(--sm-accent); }
+.seora-hb__title { margin: 0; font-size: clamp(2.4rem, 2rem + 1.2vw, 3.4rem); line-height: 1.2; }
+.seora-hb__all { flex: 0 0 auto; font-size: 1.5rem; font-weight: 700; color: rgb(var(--color-foreground)); text-decoration: underline; text-decoration-color: var(--sm-accent); text-underline-offset: 0.4rem; }
+.seora-hb__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.2rem; }
+.seora-hb__grid .seora-card[hidden] { display: none; }
+.seora-hb__grid .seora-card__title { font-size: 1.5rem; line-height: 1.4; }
+.seora-hb__grid .seora-card__body { padding-top: 1.1rem; }
+.seora-hb__more { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; margin-top: 2.8rem; }
+.seora-hb__btn { display: inline-flex; align-items: center; justify-content: center; min-width: 22rem; min-height: 4.8rem; padding: 0 2.6rem; border-radius: 99rem; border: 1.5px solid rgb(var(--color-foreground)); background: transparent; color: rgb(var(--color-foreground)); font: inherit; font-size: 1.5rem; font-weight: 700; text-decoration: none; cursor: pointer; }
+.seora-hb__btn--solid { background: rgb(var(--color-foreground)); color: rgb(var(--color-background)); }
+.seora-hb__btn[hidden] { display: none; }
+.seora-hb__pager { display: none; justify-content: center; align-items: center; gap: 0.8rem; margin-top: 3.2rem; }
+.seora-hb__page { width: 4.2rem; height: 4.2rem; border-radius: 50%; border: 1px solid var(--sm-border); background: transparent; color: rgb(var(--color-foreground)); font: inherit; font-size: 1.5rem; font-weight: 700; cursor: pointer; }
+.seora-hb__page[aria-current="true"] { background: rgb(var(--color-foreground)); color: rgb(var(--color-background)); border-color: transparent; }
+@media screen and (min-width: 750px) {
+  .seora-hb { padding: 6.4rem 0 7.2rem; }
+  .seora-hb__wrap { padding: 0 4rem; }
+  .seora-hb__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem 2rem; }
+  .seora-hb__more { display: none; }
+  .seora-hb__pager { display: flex; }
+  .seora-hb__pager[hidden] { display: none; }
+}
+@media screen and (min-width: 1100px) {
+  .seora-hb__grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }

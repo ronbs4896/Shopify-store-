@@ -13,15 +13,19 @@
   assign d_day = article.published_at | date: '%-d'
   assign d_year = article.published_at | date: '%Y'
   assign date_label = d_day | append: ' ב' | append: months[m_idx] | append: ' ' | append: d_year
+  comment
+    custom.thumbnail (file_reference metafield) is the card image when set, otherwise the article image.
+  endcomment
+  assign card_img = article.metafields.custom.thumbnail.value | default: article.image
 -%}
 <article class="seora-card">
   <a class="seora-card__media" href="{{ article.url }}" tabindex="-1" aria-hidden="true">
-    {%- if article.image -%}
-      {{ article.image | image_url: width: 1100 | image_tag:
+    {%- if card_img -%}
+      {{ card_img | image_url: width: 1100 | image_tag:
         widths: '360, 550, 720, 900, 1100',
         sizes: '(min-width: 990px) 560px, (min-width: 750px) 45vw, 92vw',
         loading: load,
-        alt: article.image.alt
+        alt: card_img.alt | default: article.title
       }}
     {%- else -%}
       <span class="seora-card__ph"></span>
