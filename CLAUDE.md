@@ -11,6 +11,11 @@ python3 .claude/skills/hebrew-punctuation/check_he.py templates/product.seora.js
 
 The short version: no full stop at the end of headings, buttons or labels; no chains of short fragments separated by full stops; no space before punctuation; a hyphen between a prefix letter and a number or Latin word (ב-5, ה-GRA); ״ in acronyms (ש״ח, ס״מ); no em dashes.
 
+## Skills
+
+- `.claude/skills/hebrew-punctuation`: every Hebrew text (see above).
+- `.claude/skills/social-carousel`: Instagram and Facebook carousels and story frames in Hebrew, rendered from a JSON spec. Read its SKILL.md first; it also lists the store rules that apply to social copy.
+
 ## Store rules
 
 - Theme files are written only to an unpublished theme; the owner publishes.
