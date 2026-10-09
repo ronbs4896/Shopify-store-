@@ -386,7 +386,12 @@
       "2567389343055140935": {
         "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
         "disabled": false,
+        "settings": {},
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
         "settings": {}
+      }
       }
     },
     "color_schemes": {
@@ -695,7 +700,15 @@
   },
   "platform_customizations": {
     "custom_css": [
-      ".product-popup-modal__content {height: -webkit-fit-content; transform: translate(-50%, 50%);}"
+      ".product-popup-modal__content {height: -webkit-fit-content; transform: translate(-50%, 50%);}",
+      " /* SEORA Klaviyo popup RTL */form[data-testid=\"klaviyo-form-U9gS5n\"],form[data-testid=\"klaviyo-form-U9gS5n\"] * {direction: rtl !important;}",
+      "form[data-testid=\"klaviyo-form-U9gS5n\"] input {text-align: right !important;}",
+      "form[data-testid=\"klaviyo-form-U9gS5n\"] input[type=\"email\"],form[data-testid=\"klaviyo-form-U9gS5n\"] input[type=\"tel\"] {direction: ltr !important;}",
+      "form[data-testid=\"klaviyo-form-U9gS5n\"] h1 strong {font-weight: 900 !important;}",
+      "form[data-testid=\"klaviyo-form-U9gS5n\"] button div {font-weight: 700 !important;}",
+      "form[data-testid=\"klaviyo-form-U9gS5n\"] input[type=\"text\"],form[data-testid=\"klaviyo-form-U9gS5n\"] input[type=\"email\"] {padding-right: 16px !important; padding-left: 16px !important;}",
+      " /* SEORA phone IL only */ form[data-testid=\"klaviyo-form-U9gS5n\"] .klaviyo-phoneinput button[role=\"combobox\"]{display:none!important}",
+      " form[data-testid=\"klaviyo-form-U9gS5n\"] input[type=\"tel\"]{padding-right:16px!important;padding-left:16px!important}"
     ]
   }
 }

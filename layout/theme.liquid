@@ -74,9 +74,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="{{ settings.theme_color }}">
     <link rel="canonical" href="{{ canonical_url }}">
-    {%- if settings.favicon != blank -%}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-    {%- endif -%}
+    {%- comment -%} SEORA favicon: sizes that are multiples of 48 px for Google search results {%- endcomment -%}
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ 'seora-favicon-48.png' | asset_url }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ 'seora-favicon-96.png' | asset_url }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ 'seora-favicon-192.png' | asset_url }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ 'seora-favicon-32.png' | asset_url }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ 'seora-favicon-180.png' | asset_url }}">
 
     {%- unless settings.type_header_font.system?
       and settings.type_body_font.system?
