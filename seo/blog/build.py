@@ -10,6 +10,7 @@ Classes named sk-* are turned into inline styles, because the theme has no CSS f
 Every handle is checked against data/products.json and the known collections, pages and articles.
 """
 import json
+import os
 import re
 import sys
 from html import escape
@@ -21,6 +22,15 @@ BLOG = "magazine"
 PRODUCTS = json.loads((ROOT / "data/products.json").read_text(encoding="utf-8"))
 META = json.loads((ROOT / "articles.json").read_text(encoding="utf-8"))
 ARTICLES = {a["handle"] for a in META}
+# DRAFTS=1 python3 build.py: build the unapproved drafts in drafts/ (links to published articles still validated)
+if os.environ.get("DRAFTS") == "1":
+    DRAFT_META = json.loads((ROOT / "drafts/articles.json").read_text(encoding="utf-8"))
+    ARTICLES |= {a["handle"] for a in DRAFT_META}
+    META = DRAFT_META
+    SRC_DIR, OUT_DIR = ROOT / "drafts/src", ROOT / "drafts/out"
+else:
+    SRC_DIR, OUT_DIR = ROOT / "src", ROOT / "out"
+OUT_DIR.mkdir(exist_ok=True)
 COLLECTIONS = {
     "טבעות-יהלומי-מוסאנייט", "צמידי-יהלומי-מוסאנייט", "עגילי-יהלומי-מואסנייט",
     "שרשראות-יהלומי-מואסנייט", "סט-תכשיטי-מוסאנייט", "הנמכרים-ביותר", "שעונים-לגברים",
@@ -148,7 +158,7 @@ def text_of(html):
 manifest = []
 for meta in META:
     h = meta["handle"]
-    src = (ROOT / "src" / f"{h}.html").read_text(encoding="utf-8")
+    src = (SRC_DIR / f"{h}.html").read_text(encoding="utf-8")
     out = build(src)
     ids = set(re.findall(r'id="([^"]+)"', out))
     for anchor in re.findall(r'href="#([^"]+)"', out):
@@ -161,14 +171,14 @@ for meta in META:
         warnings.append(f"{h}: seo_title {len(meta['seo_title'])} chars")
     if not 110 <= len(meta["seo_description"]) <= 160:
         warnings.append(f"{h}: seo_description {len(meta['seo_description'])} chars")
-    (ROOT / "out" / f"{h}.html").write_text(out, encoding="utf-8")
-    img = PRODUCTS[meta["image_product"]]["image"]
+    (OUT_DIR / f"{h}.html").write_text(out, encoding="utf-8")
+    img = meta.get("image_url") or PRODUCTS[meta["image_product"]]["image"]
     n_links = len(re.findall(r'href="/', out))
     manifest.append({**meta, "body": out, "image_url": img, "words": len(txt.split()),
                      "internal_links": n_links})
     print(f"{h}: {len(txt.split())} words, {n_links} internal links, {len(ids)} anchors")
 
-(ROOT / "out" / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
+(OUT_DIR / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
 for w in sorted(set(warnings)):
     print("WARN", w)
 for e in errors:
