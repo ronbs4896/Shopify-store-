@@ -73,6 +73,21 @@ def all_text(spec):
     return out
 
 
+def font_files(fam):
+    return sorted(list(FONTS.glob(f"{fam}-*.ttf")) + list(FONTS.glob(f"{fam}-*.otf")))
+
+
+def resolve_fonts(brand):
+    """Use the configured family; if its files are missing (licensed fonts are not committed), fall back to brand['fallback']."""
+    for role, fam in list(brand["fonts"].items()):
+        if not font_files(fam):
+            fb = brand.get("fallback", {}).get(role)
+            if not fb or not font_files(fb):
+                sys.exit(f"font '{fam}' ({role}) has no files in {FONTS} named {fam}-<weight>.ttf or .otf")
+            print(f"WARNING font '{fam}' ({role}) not found in assets/fonts, using fallback '{fb}'")
+            brand["fonts"][role] = fb
+
+
 def check_fonts(spec, brand):
     """Fail when a font has no glyph for a character used in the slides (the 'font only works in English' problem)."""
     try:
@@ -81,19 +96,15 @@ def check_fonts(spec, brand):
         print("note: fontTools not installed, skipping the glyph coverage check (pip install fonttools)")
         return
     text = "".join(plain(t) for t in all_text(spec)) + "0123456789 ,.:%/-"
-    chars = sorted({c for c in text if not c.isspace() and c not in "‎‏"})
+    chars = sorted({c for c in text if not c.isspace() and c not in "\u200e\u200f"})
     bad = False
     for role, fam in brand["fonts"].items():
-        files = sorted(FONTS.glob(f"{fam}-*.ttf"))
-        if not files:
-            sys.exit(f"font '{fam}' ({role}) has no files in {FONTS} named {fam}-<weight>.ttf")
-        cmap = TTFont(files[0]).getBestCmap()
-        miss = [c for c in chars if ord(c) not in cmap and not (role == "body" and False)]
-        # characters the font lacks only matter if that role renders them; report Hebrew, digits and Latin
-        miss = [c for c in miss if re.match(r"[֐-׿A-Za-z0-9₪%]", c)]
-        if miss:
-            bad = True
-            print(f"ERROR font {fam} ({role}) has no glyph for: {' '.join(miss)}")
+        for f in font_files(fam):
+            cmap = TTFont(f).getBestCmap()
+            miss = [c for c in chars if ord(c) not in cmap and re.match(r"[\u0590-\u05ff A-Za-z0-9₪%]".replace(" ", ""), c)]
+            if miss:
+                bad = True
+                print(f"ERROR font {f.name} ({role}) has no glyph for: {' '.join(miss)}")
     if bad:
         sys.exit(1)
 
@@ -101,9 +112,10 @@ def check_fonts(spec, brand):
 def fonts_css(brand):
     out = []
     for role, fam in brand["fonts"].items():
-        for f in sorted(FONTS.glob(f"{fam}-*.ttf")):
+        for f in font_files(fam):
             w = f.stem.split("-")[1]
-            out.append(f"@font-face{{font-family:'{role}';src:url('file://{f}') format('truetype');font-weight:{w};}}")
+            fmt = "opentype" if f.suffix == ".otf" else "truetype"
+            out.append(f"@font-face{{font-family:'{role}';src:url('file://{f}') format('{fmt}');font-weight:{w};}}")
     return "\n".join(out)
 
 
@@ -164,7 +176,7 @@ td:first-child{font-weight:700}td.hl{background:rgba(227,199,141,.13);font-weigh
 .vis{position:relative;display:flex;align-items:center;justify-content:center}
 .tiles{display:flex;gap:18px;margin-top:calc(26px*var(--k))}
 .tile{flex:1;border-radius:26px;padding:calc(26px*var(--k)) 14px;text-align:center;background:rgba(255,255,255,.05);border:1.5px solid rgba(227,199,141,.3)}
-.tile svg{width:56px;height:56px;color:#e3c78d;margin:0 auto 12px;display:block}
+.tile .bd{display:flex;justify-content:center;margin-bottom:14px}
 .tile b{display:block;font-size:calc(38px*var(--u));font-family:'display',sans-serif;font-weight:700;margin-bottom:4px}
 .tile span{font-size:calc(28px*var(--u));line-height:1.35;opacity:.8;display:block}
 .kw{display:inline-block;font-family:'display',sans-serif;font-weight:800;font-size:calc(64px*var(--k)*var(--u));line-height:1;color:#14100b;background:linear-gradient(135deg,#fbeec6,#d3b277 55%,#a67f3f);border-radius:20px;padding:10px 30px 14px;margin:0 18px;box-shadow:0 10px 30px rgba(176,141,87,.35)}
@@ -224,14 +236,16 @@ def build_body(s, idx, n, ctx):
             items = [{"title": s.get("title2") or "", "text": s.get("text", "")}]
             body = (f'<div class="card"><p style="font-size:calc(44px*var(--k)*var(--u))">{rich(s["text"])}</p></div>'
                     + (f'<div class="card" style="margin-top:20px;border-color:rgba(227,199,141,.6)"><div class="ci">{ic("star", 52, 3)}<div class="t"><p style="color:#fbeec6;font-weight:500">{rich(s["callout"])}</p></div></div></div>' if s.get("callout") else ""))
-            num = f'<div class="big gt" style="font-size:calc(150px*var(--k)*var(--u));margin-bottom:10px">{rich(s["number"])}</div>' if s.get("number") else ""
+            num = (f'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div class="big gt" style="font-size:calc(150px*var(--k)*var(--u))">{rich(s["number"])}</div>'
+                   + (art.badge(s["icon"], 150) if s.get("icon") else "") + '</div>') if s.get("number") else (f'<div style="margin-bottom:18px">{art.badge(s["icon"], 120)}</div>' if s.get("icon") else "")
             return f'<div class="main">{eyebrow}{num}<h2>{rich(s["title"])}</h2>{body}</div>'
         start = s.get("start")
         rows = []
         for j, it in enumerate(s["items"]):
             num = f'{(start + j):02d}' if start is not None else f'{j + 1:02d}'
             rows.append(f'<div class="card"><div class="ci"><div class="n"><bdi>{num}</bdi></div><div class="t">{tags_html(it.get("tags"))}'
-                        f'<h3>{rich(it["title"])}</h3><p>{rich(it.get("text", ""))}</p></div></div></div>')
+                        f'<h3>{rich(it["title"])}</h3><p>{rich(it.get("text", ""))}</p></div>'
+                        + (art.badge(it["icon"], 84) if it.get("icon") else "") + '</div></div>')
         return f'<div class="main top">{eyebrow}<h2>{rich(s["title"])}</h2><div class="cards">{"".join(rows)}</div></div>'
     if t == "stat":
         src = f'<div class="src">{rich("מקור: " + s["source"])}</div>' if s.get("source") else ""
@@ -245,7 +259,7 @@ def build_body(s, idx, n, ctx):
         return f'<div class="main">{eyebrow or f"<div class=eyebrow>השוואה</div>"}<h2>{rich(s["title"])}</h2><table><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table>{src}</div>'
     if t == "myth":
         return (f'<div class="main">{eyebrow or "<div class=eyebrow>מיתוס או עובדה</div>"}<div class="cards" style="gap:24px">'
-                f'<div class="card panel m"><div class="pt" style="color:#ff9a9a">{ic("cross", 38, 4)}מיתוס</div>'
+                f'<div class="card panel m"><div class="pt" style="color:#ff9a9a">{art.icon("x", 38, color="#ff9a9a")}מיתוס</div>'
                 f'<h2 style="font-size:calc(66px*var(--k)*var(--u));margin:0">{rich(s["myth"])}</h2></div>'
                 f'<div class="card panel t"><div class="pt" style="color:#e3c78d">{ic("check", 38, 4)}האמת</div>'
                 f'<p style="font-size:calc(42px*var(--k)*var(--u));font-weight:500;color:#fff">{rich(s["truth"])}</p></div></div></div>')
@@ -255,7 +269,7 @@ def build_body(s, idx, n, ctx):
         ask = f'<div class="ask">{rich(s.get("ask", "כתבו את התשובה בתגובות, והאמת בשקף הבא"))}</div>'
         return f'<div class="main">{eyebrow or "<div class=eyebrow>בוחנים את עצמנו</div>"}<h2>{rich(s["title"])}</h2>{opts}{ask}</div>'
     if t == "list":
-        items = "".join(f'<div class="card"><div class="ci"><div class="n" style="min-width:0">{ic("check", 46, 4)}</div><div class="t"><p style="font-size:calc(40px*var(--k)*var(--u));color:#fff;font-weight:500">{rich(i)}</p></div></div></div>' for i in s["items"])
+        items = "".join(f'<div class="card"><div class="ci"><div class="n" style="min-width:0">{art.badge("check", 64, True)}</div><div class="t"><p style="font-size:calc(40px*var(--k)*var(--u));color:#fff;font-weight:500">{rich(i)}</p></div></div></div>' for i in s["items"])
         return f'<div class="main top">{eyebrow}<h2>{rich(s["title"])}</h2><div class="cards">{items}</div></div>'
     if t == "quote":
         who = f'<p style="margin-top:20px;color:#e3c78d">{rich(s["by"])}</p>' if s.get("by") else ""
@@ -274,7 +288,7 @@ def build_body(s, idx, n, ctx):
             {"icon": "bookmark", "title": "שמרו", "text": "לפעם הבאה שבוחרים תכשיט"},
             {"icon": "send", "title": "שלחו", "text": "למי שמחפשת רעיון"},
             {"icon": "comment", "title": "הגיבו", "text": "ספרו מה חשבתם"}]
-        tiles = "".join(f'<div class="tile">{ic(i.get("icon", "heart"), 56, 3)}<b>{rich(i["title"])}</b><span>{rich(i.get("text", ""))}</span></div>' for i in items)
+        tiles = "".join(f'<div class="tile"><div class="bd">{art.badge(i.get("icon", "heart"), 92, True)}</div><b>{rich(i["title"])}</b><span>{rich(i.get("text", ""))}</span></div>' for i in items)
         return (f'<div class="main">{eyebrow or "<div class=eyebrow>לפני שממשיכים</div>"}<h2>{rich(s["title"])}</h2>'
                 f'<div class="card"><p>{rich(s.get("text", ""))}</p></div><div class="tiles">{tiles}</div></div>')
     if t == "cta":
@@ -295,7 +309,7 @@ def build_body(s, idx, n, ctx):
             {"icon": "bookmark", "title": "שמרו", "text": "לפעם הבאה"},
             {"icon": "send", "title": "שתפו", "text": "עם מי שמחפשת"},
             {"icon": "comment", "title": "הגיבו", "text": "ספרו לנו"}]
-        tiles = "".join(f'<div class="tile">{ic(i.get("icon", "heart"), 52, 3)}<b>{rich(i["title"])}</b><span>{rich(i.get("text", ""))}</span></div>' for i in items)
+        tiles = "".join(f'<div class="tile"><div class="bd">{art.badge(i.get("icon", "heart"), 84, True)}</div><b>{rich(i["title"])}</b><span>{rich(i.get("text", ""))}</span></div>' for i in items)
         chip = f'<div style="text-align:center;margin-bottom:24px"><span class="chip">{rich(s.get("eyebrow", "וזה לא נגמר כאן"))}</span></div>'
         tag = f'<p style="text-align:center;margin-top:10px;font-size:calc(32px*var(--u));opacity:.8">{rich(s["tagline"])}</p>' if s.get("tagline") else ""
         return (f'<div class="main">{chip}<div class="card" style="padding:calc(34px*var(--k)) 30px">{q}</div>'
@@ -409,6 +423,7 @@ def main():
             brand.setdefault(k, {}).update(v)
         else:
             brand[k] = v
+    resolve_fonts(brand)
     check_fonts(spec, brand)
     errs, warns = validate(spec, fmt, kind)
     for w in warns:

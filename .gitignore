@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+
+# licensed brand font (Birzia), kept local, not in the public repo
+.claude/skills/social-carousel/assets/fonts/Birzia-*

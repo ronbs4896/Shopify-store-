@@ -3,7 +3,10 @@
   "url": "seora.co.il",
   "handle": "",
   "logo": null,
-  "fonts": {"display": "Rubik", "body": "Heebo"},
+  "fonts": {
+    "display": "Birzia",
+    "body": "Birzia"
+  },
   "colors": {
     "ink": "#0e0c0a",
     "ink2": "#1b1611",
@@ -12,5 +15,9 @@
     "gold": "#b08d57",
     "gold_dark": "#7d6232",
     "gold_light": "#e3c78d"
+  },
+  "fallback": {
+    "display": "Rubik",
+    "body": "Heebo"
   }
 }

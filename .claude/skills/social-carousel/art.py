@@ -131,36 +131,45 @@ def lattice(color="#ffffff", opacity=.05, step=90):
             f'<rect width="100%" height="100%" fill="url(#l)"/></svg>')
 
 
-ICONS = {  # 48x48 line icons
-    "gem": "M12 18l6-8h12l6 8-12 20zM12 18h24M18 10l6 8 6-8M24 18l-6 20M24 18l6 20",
-    "ruler": "M6 32L32 6l10 10L16 42zM14 28l4 4M20 22l4 4M26 16l4 4",
-    "scale": "M24 8v32M12 40h24M10 14h28M10 14l-6 14a6 6 0 0012 0zM38 14l-6 14a6 6 0 0012 0z",
-    "shield": "M24 6l14 5v11c0 9-6 15-14 20C16 37 10 31 10 22V11z M18 24l5 5 8-10",
-    "drop": "M24 6C16 18 12 24 12 30a12 12 0 0024 0c0-6-4-12-12-24z",
-    "magnifier": "M20 8a12 12 0 100 24 12 12 0 000-24zM29 29l13 13",
-    "bolt": "M26 4L10 26h12l-2 18 18-24H26z",
-    "check": "M8 25l11 11 21-24",
-    "cross": "M12 12l24 24M36 12L12 36",
-    "bookmark": "M12 6h24v36L24 32 12 42z",
-    "send": "M42 6L6 20l14 6 6 14zM20 26L42 6",
-    "comment": "M6 10h36v24H20l-10 8v-8H6z",
-    "heart": "M24 40C8 28 6 18 12 12c5-5 11-2 12 3 1-5 7-8 12-3 6 6 4 16-12 28z",
-    "star": "M24 6l5 12 13 1-10 9 3 13-11-7-11 7 3-13-10-9 13-1z",
-    "gift": "M6 18h36v8H6zM10 26h28v16H10zM24 18v24M24 18c-8 0-12-10-4-10 4 0 4 6 4 10zM24 18c8 0 12-10 4-10-4 0-4 6-4 10z",
-    "tag": "M6 8h20l16 16-16 16L6 24z M16 16a2 2 0 100 .1",
-    "question": "M16 17a8 8 0 1114 5c-3 2-6 3-6 8M24 38v2",
-    "clock": "M24 6a18 18 0 100 36 18 18 0 000-36zM24 14v11l8 5",
-    "flame": "M24 4c2 8 12 12 12 24a12 12 0 01-24 0c0-6 4-8 5-14 3 3 4 6 4 9 3-4 4-12 3-19z",
-    "arrow": "M8 24h32M30 14l10 10-10 10",
-    "link": "M20 28a8 8 0 0011 0l6-6a8 8 0 00-11-11l-3 3M28 20a8 8 0 00-11 0l-6 6a8 8 0 0011 11l3-3",
-    "globe": "M24 6a18 18 0 100 36 18 18 0 000-36zM6 24h36M24 6c-8 9-8 27 0 36M24 6c8 9 8 27 0 36",
-}
+ICON_DIR = __import__("pathlib").Path(__file__).resolve().parent / "assets" / "icons"
+ALIAS = {"gem": "diamond", "ruler": "ruler", "scale": "scales", "shield": "shield-check", "magnifier": "magnifying-glass", "bolt": "lightning",
+         "bookmark": "bookmark-simple", "send": "paper-plane-tilt", "comment": "chat-circle", "cross": "x", "arrow": "arrow-right",
+         "crown": "crown-simple", "share": "share-network", "swipe": "hand-swipe-left", "verified": "seal-check", "cert": "certificate"}
+_n = [0]
 
 
-def icon(name, size=64, stroke=3.2, color="currentColor"):
-    d = ICONS.get(name, ICONS["gem"])
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="{size}" height="{size}" fill="none" stroke="{color}" '
-            f'stroke-width="{stroke}" stroke-linecap="round" stroke-linejoin="round"><path d="{d}"/></svg>')
+def icon_names():
+    return sorted(p.stem for p in ICON_DIR.glob("*.svg"))
+
+
+def icon(name, size=64, stroke=None, color=None):
+    """Phosphor duotone icon (MIT). color=None paints a gold gradient, otherwise any CSS colour or 'currentColor'."""
+    import re
+    name = ALIAS.get(name, name)
+    f = ICON_DIR / f"{name}.svg"
+    if not f.exists():
+        f = ICON_DIR / "diamond.svg"
+    svg = f.read_text(encoding="utf-8")
+    _n[0] += 1
+    gid = f"ig{_n[0]}"
+    paint = color or f"url(#{gid})"
+    defs = (f'<defs><linearGradient id="{gid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cf"/>'
+            f'<stop offset=".5" stop-color="#e3c78d"/><stop offset="1" stop-color="#b08d57"/></linearGradient></defs>') if not color else ""
+    svg = svg.replace('fill="currentColor"', f'fill="{paint}"', 1).replace('opacity="0.2"', 'opacity="0.38"')
+    svg = svg.replace("<svg ", f'<svg width="{size}" height="{size}" ', 1)
+    return re.sub(r"(<svg[^>]*>)", lambda m: m.group(1) + defs, svg, count=1)
+
+
+def badge(name, size=96, filled=False):
+    """Icon medallion: glass tile with gold rim and glow (outlined) or solid gold tile with a dark icon (filled)."""
+    r = size * .30
+    inner = icon(name, int(size * .58), color="#17110a") if filled else icon(name, int(size * .60))
+    bg = ("background:linear-gradient(145deg,#fff3cf,#d3b277 55%,#a67f3f);box-shadow:0 10px 28px rgba(176,141,87,.45),inset 0 2px 0 rgba(255,255,255,.6)" if filled else
+          "background:radial-gradient(120% 120% at 30% 15%,rgba(227,199,141,.30),rgba(227,199,141,.06) 60%),rgba(255,255,255,.04);"
+          "border:1.5px solid rgba(227,199,141,.55);box-shadow:0 12px 30px rgba(0,0,0,.4),0 0 30px rgba(227,199,141,.18),inset 0 1px 0 rgba(255,255,255,.25)")
+    return (f'<div style="width:{size}px;height:{size}px;border-radius:{r:.0f}px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;position:relative;overflow:hidden;{bg}">'
+            f'<div style="position:absolute;left:0;right:0;top:0;height:48%;background:linear-gradient(180deg,rgba(255,255,255,{.34 if filled else .10}),transparent)"></div>'
+            f'<div style="position:relative;display:flex">{inner}</div></div>')
 
 
 def corner(color="#d3b277"):
