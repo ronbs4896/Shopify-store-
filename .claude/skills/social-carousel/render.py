@@ -6,7 +6,7 @@
 Structure is enforced: slide 1 is the cover (the thumbnail), the last slide is the CTA, every slide shows a numbered pager.
 Formats: ig-feed 1080x1350 | ig-feed-34 1080x1440 | ig-square 1080x1080 | fb-carousel 1080x1080 | fb-feed 1080x1350 |
          ig-story 1080x1920 | fb-story 1080x1920
-Slide types: cover, cards, point, stat, compare, myth, quiz, list, quote, product, engage, cta   (see SKILL.md)
+Slide types: cover, cards, point, stat, compare, myth, quiz, list, quote, shot, product, engage, cta   (see SKILL.md)
 """
 import argparse, html, importlib.util, json, os, re, sys
 from pathlib import Path
@@ -191,7 +191,7 @@ td:first-child{font-weight:700}td.hl{background:rgba(227,199,141,.13);font-weigh
 .url{font-family:'display',sans-serif;font-size:28px;font-weight:600;color:#e3c78d;direction:ltr;letter-spacing:.06em!important}
 .guides{position:absolute;inset:0;z-index:50;pointer-events:none}.guides div{position:absolute;border:3px dashed}
 """
-K0 = {"cover": 1.0, "cards": 1.0, "point": 1.0, "stat": 1.0, "compare": 1.0, "myth": 1.0, "quiz": 1.0, "list": 1.0, "quote": 1.0, "product": 1.0, "engage": 1.0, "cta": 1.0}
+K0 = {"cover": 1.0, "cards": 1.0, "point": 1.0, "stat": 1.0, "compare": 1.0, "myth": 1.0, "quiz": 1.0, "list": 1.0, "quote": 1.0, "shot": 1.0, "product": 1.0, "engage": 1.0, "cta": 1.0}
 
 
 # ---------------------------------------------------------------- slide bodies
@@ -275,6 +275,11 @@ def build_body(s, idx, n, ctx):
         who = f'<p style="margin-top:20px;color:#e3c78d">{rich(s["by"])}</p>' if s.get("by") else ""
         return (f'<div class="main">{eyebrow}<div class="card" style="padding:48px 44px"><div class="big gt" style="font-size:220px;height:120px;line-height:.9">”</div>'
                 f'<div style="font-family:display;font-weight:600;font-size:calc(54px*var(--k)*var(--u));line-height:1.3">{rich(s["text"])}</div>{who}</div></div>')
+    if t == "shot":
+        img = img_css(s.get("image"), base)
+        who = f'<p style="margin-top:22px;color:#e3c78d;text-align:center">{rich(s["by"])}</p>' if s.get("by") else ""
+        return (f'<div class="main">{eyebrow}<div style="flex:1;min-height:0;{img};background-size:contain;background-repeat:no-repeat;background-position:center;'
+                f'filter:drop-shadow(0 18px 40px rgba(0,0,0,.55))"></div>{who}</div>')
     if t == "product":
         if "price" in s and not ctx["spec"].get("prices_approved"):
             sys.exit('a product slide has a price but the spec has no "prices_approved": true (store rule: prices only with owner approval)')

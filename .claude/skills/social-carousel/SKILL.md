@@ -69,6 +69,7 @@ Stories have no native carousel: post the frames in order. The renderer keeps ev
 | `quiz` | `title`, `options`, `ask`, `eyebrow` |
 | `list` | `title`, `items` (3 to 5 short lines) |
 | `quote` | `text`, `by` |
+| `shot` | `image` (a real screenshot crop, for example a WhatsApp message bubble, shown as is on the brand background), `by` (caption), `eyebrow` |
 | `product` | `title`, `text`, `image`, `price` (only with `"prices_approved": true`) |
 | `engage` | `title`, `text`, `items` (`icon`, `title`, `text`; defaults to שמרו, שלחו, הגיבו) |
 | `cta` | `eyebrow`, `ask`, `keyword`, `text`, `follow` (default: wordmark), `tagline`, `items` (three tiles); without `keyword`: `title`, `action` button |
