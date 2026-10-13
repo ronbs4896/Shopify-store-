@@ -1,0 +1,74 @@
+/* SEORA collection filter bar: category chips instead of sort dropdown and product count */
+
+.seora-cats {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.4rem 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.seora-cats::-webkit-scrollbar {
+  display: none;
+}
+
+.seora-cats__label {
+  flex: none;
+  margin-inline-end: 0.4rem;
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.7);
+  white-space: nowrap;
+}
+
+.seora-cats__chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 3.6rem;
+  padding: 0 1.6rem;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.25);
+  border-radius: 999px;
+  font-size: 1.4rem;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.seora-cats__chip:hover {
+  border-color: rgb(var(--color-foreground));
+}
+
+.seora-cats__chip[aria-current='page'] {
+  background-color: rgb(var(--color-foreground));
+  border-color: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+/* the sort dropdown and the product count leave the bar */
+.facets-container-drawer #FacetSortDrawerForm,
+.facets-container-drawer > .product-count {
+  display: none;
+}
+
+@media screen and (min-width: 750px) {
+  .facets-container-drawer .mobile-facets__wrapper {
+    flex-grow: 0;
+  }
+
+  .facets-container-drawer .seora-cats {
+    flex: 1 1 0;
+    margin-inline-end: 2rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .facets-container-drawer .seora-cats {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 0.8rem;
+  }
+}

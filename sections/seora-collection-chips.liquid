@@ -1,0 +1,59 @@
+{%- comment -%}
+  SEORA: category chips for collection pages. They replace the sort dropdown and the product count
+  in the filter bar: the script moves the row next to the filter button, and without JS it stays
+  between the banner and the grid.
+{%- endcomment -%}
+{{ 'seora-collection-bar.css' | asset_url | stylesheet_tag }}
+
+{%- assign seora_cats = section.settings.categories | newline_to_br | strip_newlines | split: '<br />' -%}
+<nav class="seora-cats page-width" id="SeoraCategoryChips" aria-label="{{ section.settings.label | escape }}">
+  <span class="seora-cats__label">{{ section.settings.label }}</span>
+  {%- for item in seora_cats -%}
+    {%- assign parts = item | split: '|' -%}
+    {%- assign handle = parts[0] | strip -%}
+    {%- assign cat = collections[handle] -%}
+    {%- if cat != blank -%}
+      <a
+        class="seora-cats__chip"
+        href="{{ cat.url }}"
+        {% if collection.handle == cat.handle %}aria-current="page"{% endif %}
+      >{{ parts[1] | strip }}</a>
+    {%- endif -%}
+  {%- endfor -%}
+</nav>
+
+<script>
+  (function () {
+    function place() {
+      var nav = document.getElementById('SeoraCategoryChips');
+      var drawer = document.querySelector('.facets-container-drawer .mobile-facets__wrapper');
+      if (nav && drawer && drawer.nextElementSibling !== nav) {
+        nav.classList.remove('page-width');
+        drawer.insertAdjacentElement('afterend', nav);
+      }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', place);
+    else place();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "סינון לפי קטגוריה",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "כותרת",
+      "default": "סינון לפי קטגוריה"
+    },
+    {
+      "type": "textarea",
+      "id": "categories",
+      "label": "קטגוריות, שורה לכל קטגוריה: כתובת האוסף|שם להצגה",
+      "default": "סט-תכשיטי-מוסאנייט|סטים\nשרשראות-יהלומי-מואסנייט|שרשראות\nעגילי-יהלומי-מואסנייט|עגילים\nטבעות-יהלומי-מוסאנייט|טבעות\nצמידי-יהלומי-מוסאנייט|צמידים\nשעונים-לגברים|שעונים"
+    }
+  ]
+}
+{% endschema %}
