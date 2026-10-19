@@ -1,0 +1,15 @@
+@font-face{font-family:H;src:url('file:///home/user/Shopify-store-/.claude/skills/social-carousel/assets/fonts/Heebo-800.ttf');font-weight:800}
+@font-face{font-family:H;src:url('file:///home/user/Shopify-store-/.claude/skills/social-carousel/assets/fonts/Heebo-500.ttf');font-weight:500}
+@font-face{font-family:R;src:url('file:///home/user/Shopify-store-/.claude/skills/social-carousel/assets/fonts/Rubik-900.ttf');font-weight:900}
+*{box-sizing:border-box}html,body{margin:0;background:transparent}
+.b{position:relative;overflow:hidden;font-family:H;color:#fff;background:linear-gradient(100deg,#0b2735 0%,#0f3846 50%,#1d6a66 100%)}
+.b::before{content:"";position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(111,181,181,.35),transparent 65%);inset-inline-start:-250px;top:-380px}
+.k{font-weight:500;color:#d9b648;letter-spacing:.02em}
+.t{font-weight:800;line-height:1}
+.t i{font-style:normal;font-family:R;font-weight:900;letter-spacing:.04em;color:#d9b648}
+.s{font-weight:500;color:#dcebea}
+.card{position:absolute;border-radius:26px;background:linear-gradient(135deg,#238079 0%,#1a6762 55%,#14514f 100%);box-shadow:0 30px 60px rgba(0,0,0,.45),inset 0 0 0 2px rgba(255,255,255,.12);overflow:hidden;direction:ltr}
+.card svg{position:absolute;inset:0;width:100%;height:100%}
+.chip{position:absolute;left:8%;top:34%;width:13%;height:15%;border-radius:10px;background:linear-gradient(135deg,#f0d98a,#b8943a)}
+.fl{position:absolute;right:7%;top:9%;font-family:R;font-weight:900;font-size:26px;letter-spacing:.06em;color:#d9b648}
+
