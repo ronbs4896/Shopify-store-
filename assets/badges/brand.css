@@ -1,0 +1,20 @@
+@font-face{font-family:H;src:url('file:///home/user/Shopify-store-/.claude/skills/social-carousel/assets/fonts/Heebo-800.ttf');font-weight:800}
+@font-face{font-family:H;src:url('file:///home/user/Shopify-store-/.claude/skills/social-carousel/assets/fonts/Heebo-500.ttf');font-weight:500}
+@font-face{font-family:R;src:url('file:///home/user/Shopify-store-/.claude/skills/social-carousel/assets/fonts/Rubik-900.ttf');font-weight:900}
+@font-face{font-family:F;src:url('file:///home/user/Shopify-store-/.claude/skills/social-carousel/assets/fonts/FrankRuhlLibre-700.ttf');font-weight:700}
+@font-face{font-family:F;src:url('file:///home/user/Shopify-store-/.claude/skills/social-carousel/assets/fonts/FrankRuhlLibre-500.ttf');font-weight:500}
+*{box-sizing:border-box}html,body{margin:0;background:transparent}
+.b{position:relative;overflow:hidden;font-family:H;color:#f7f3ec;background:radial-gradient(ellipse at 20% 30%,#1b1611 0%,#0e0c0a 70%)}
+.b::after{content:"";position:absolute;inset:16px;border:2px solid rgba(176,141,87,.75);border-radius:6px;pointer-events:none}
+.glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(29,106,102,.55),transparent 65%)}
+.logo{font-family:F;font-weight:700;color:#e3c78d;letter-spacing:.42em;padding-inline-start:.42em}
+.rule{height:2px;background:linear-gradient(90deg,#b08d57,rgba(176,141,87,0))}
+.k{font-weight:500;color:#e3c78d}
+.t{font-weight:800;line-height:1;color:#f7f3ec}
+.t i{font-style:normal;font-family:R;font-weight:900;letter-spacing:.04em;color:#e3c78d}
+.s{font-weight:500;color:#ece6dc}
+.url{font-weight:500;color:#b08d57;letter-spacing:.2em;direction:ltr}
+.card{position:absolute;border-radius:26px;background:linear-gradient(135deg,#238079 0%,#1a6762 55%,#14514f 100%);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 0 2px #b08d57,inset 0 0 0 2px rgba(255,255,255,.12);overflow:hidden;direction:ltr}
+.card svg{position:absolute;inset:0;width:100%;height:100%}
+.chip{position:absolute;left:8%;top:34%;width:13%;height:15%;border-radius:10px;background:linear-gradient(135deg,#f0d98a,#b8943a)}
+.fl{position:absolute;right:7%;top:9%;font-family:R;font-weight:900;font-size:26px;letter-spacing:.06em;color:#e3c78d}
