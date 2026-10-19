@@ -57,7 +57,7 @@
           "type": "text",
           "settings": {
             "source": "metafield",
-            "text": "<p>תכשיט מכסף סטרלינג 925, משובץ באבני מואסנייט בצבע D וניקיון VVS1 בחיתוך Excellent. יש לו ברק של יהלום, והוא מתאים לענידה יומיומית. מגיע באריזת מתנה עם תעודת GRA.</p>"
+            "text": ""
           }
         },
         "feature_1": {
@@ -130,6 +130,14 @@
             "show_pickup": false
           }
         },
+        "product_details": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "פרטי המוצר",
+            "show_description": true,
+            "open": true
+          }
+        },
         "trust_bar": {
           "type": "trust_bar",
           "settings": {
@@ -163,6 +171,7 @@
         "variant_picker",
         "bundle",
         "buy_buttons",
+        "product_details",
         "trust_bar"
       ],
       "settings": {
