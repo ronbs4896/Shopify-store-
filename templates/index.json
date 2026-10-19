@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "seora_fighter_banner": {
+      "type": "seora-fighter-banner",
+      "settings": {}
+    },
     "slideshow_jAXVC4": {
       "type": "slideshow",
       "blocks": {
@@ -648,6 +652,7 @@
     "slideshow_jAXVC4",
     "slideshow_eBbReU",
     "collection_list_hXDpgw",
+    "seora_fighter_banner",
     "rich_text_qQUy8k",
     "tabs_collection_qfp7rC",
     "shoppable_video_new_BdqjL9",

@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "seora_fighter_banner": {
+      "type": "seora-fighter-banner",
+      "settings": {}
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -716,6 +720,7 @@
   },
   "order": [
     "main",
+    "seora_fighter_banner",
     "shoppable_video_new_yQVWcy",
     "featured_collection_tP9GP7",
     "image_banner_xBTq9P",

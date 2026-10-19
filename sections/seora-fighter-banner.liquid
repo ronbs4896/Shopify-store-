@@ -1,0 +1,39 @@
+{%- comment -%}
+  SEORA: "we honor the Fighter card" banner (reservists' card). Wide image on desktop and tablet,
+  taller image on phones. The images are theme assets, replace them to change the design.
+{%- endcomment -%}
+<style>
+  #fb-{{ section.id }} { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; }
+  #fb-{{ section.id }} picture, #fb-{{ section.id }} img { display: block; width: 100%; height: auto; }
+  #fb-{{ section.id }} img { border-radius: 10px; }
+</style>
+<div id="fb-{{ section.id }}" class="page-width">
+  <picture>
+    <source media="(min-width: 750px)" srcset="{{ 'seora-fighter-banner-wide.jpg' | asset_url }}" width="1920" height="420">
+    <img
+      src="{{ 'seora-fighter-banner-mobile.jpg' | asset_url }}"
+      alt="{{ section.settings.alt | escape }}"
+      width="1080"
+      height="760"
+      loading="lazy"
+    >
+  </picture>
+</div>
+
+{% schema %}
+{
+  "name": "באנר כרטיס FIGHTER",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "טקסט חלופי לתמונה",
+      "default": "מכבדים כרטיס FIGHTER, אתם שם בשבילנו ואנחנו כאן בשבילכם"
+    },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 24 }
+  ],
+  "presets": [{ "name": "באנר כרטיס FIGHTER" }]
+}
+{% endschema %}
