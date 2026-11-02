@@ -9,15 +9,12 @@
  */
 {
   "sections": {
-    "seora_fighter_banner": {
-      "type": "seora-fighter-banner",
-      "settings": {}
-    },
     "main": {
       "type": "main-product",
       "blocks": {
         "2fead2d5-7a3f-49d9-bacf-1d813be9861e": {
           "type": "review",
+          "disabled": true,
           "settings": {
             "lrw_text": "4.8/5 ומעל 2,600 לקוחות מרוצים",
             "text_size": 11,
@@ -29,11 +26,11 @@
             "lrw_color": "#000000",
             "margin_top": 0,
             "margin_bottom": 10
-          },
-          "disabled": true
+          }
         },
         "8f8d8903-27e7-4cac-99c4-ec1b60b7f309": {
           "type": "fomo",
+          "disabled": true,
           "settings": {
             "fomo_text_before": "<strong>(x) אנשים צופים במוצר הזה עכשיו</strong>",
             "text_style": "uppercase",
@@ -50,11 +47,11 @@
             "padding_bottom": 0,
             "margin_top": 4,
             "margin_bottom": 0
-          },
-          "disabled": true
+          }
         },
         "review_v1_Xridmh": {
           "type": "review_v1",
+          "disabled": true,
           "settings": {
             "name": "מישל",
             "text": "ו-758 אנשים כבר רכשו את המוצר.",
@@ -67,8 +64,7 @@
             "font_size": 12,
             "padding_top": 5,
             "padding_bottom": 15
-          },
-          "disabled": true
+          }
         },
         "title": {
           "type": "title",
@@ -197,6 +193,7 @@
         },
         "promo_slide_VbFPBy": {
           "type": "promo-slide",
+          "disabled": true,
           "settings": {
             "block_heading": "הרבה יותר יפה במציאות",
             "text_1": "<p><strong>מיכל, 22, נתיבות</strong><br/><br/>הזמנתי את השרשרת והיא פשוט מושלמת. היא עדינה, נוצצת ונראית יוקרתית מאוד. קיבלתי עליה כבר המון מחמאות, ואני לגמרי אחזור להזמין שוב. ★★★★★</p>",
@@ -217,8 +214,7 @@
             "text_size": 12,
             "padding_top": 20,
             "padding_bottom": 20
-          },
-          "disabled": true
+          }
         },
         "collapsible_description_dxHbmb": {
           "type": "collapsible_description",
@@ -333,6 +329,74 @@
     "shoppable_video_new_yQVWcy": {
       "type": "shoppable-video-new",
       "blocks": {
+        "item_7PW99j": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/5E50AE8B-C85B-4725-ACF0-DBE2BF396EFB.mp4",
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
+        "item_4HPNYy": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/IMG_3893.mov",
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
+        "item_K9A8PD": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/IMG_2187.MOV",
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
+        "item_6cg7TT": {
+          "type": "item",
+          "settings": {
+            "video": "shopify://files/videos/732270aea84e49faaa59f393c84927fc.MOV",
+            "video_autoplay": true,
+            "badge": "NEW",
+            "badge_bg_color": "#f6f6f6",
+            "badge_color": "#000000",
+            "icon": "eye",
+            "views": "1.7k",
+            "views_bg_color": "#fff7f9",
+            "views_color": "#d50000",
+            "product": "",
+            "product_bg_color": "#ffffff",
+            "product_text_color": "#000000"
+          }
+        },
         "item_YCKPFB": {
           "type": "item",
           "settings": {
@@ -417,65 +481,18 @@
             "product_bg_color": "#ffffff",
             "product_text_color": "#000000"
           }
-        },
-        "item_K9A8PD": {
-          "type": "item",
-          "settings": {
-            "video_autoplay": true,
-            "badge": "NEW",
-            "badge_bg_color": "#f6f6f6",
-            "badge_color": "#000000",
-            "icon": "eye",
-            "views": "",
-            "views_bg_color": "#fff7f9",
-            "views_color": "#d50000",
-            "product": "",
-            "product_bg_color": "#ffffff",
-            "product_text_color": "#000000"
-          }
-        },
-        "item_4HPNYy": {
-          "type": "item",
-          "settings": {
-            "video_autoplay": true,
-            "badge": "NEW",
-            "badge_bg_color": "#f6f6f6",
-            "badge_color": "#000000",
-            "icon": "eye",
-            "views": "",
-            "views_bg_color": "#fff7f9",
-            "views_color": "#d50000",
-            "product": "",
-            "product_bg_color": "#ffffff",
-            "product_text_color": "#000000"
-          }
-        },
-        "item_7PW99j": {
-          "type": "item",
-          "settings": {
-            "video_autoplay": true,
-            "badge": "NEW",
-            "badge_bg_color": "#f6f6f6",
-            "badge_color": "#000000",
-            "icon": "eye",
-            "views": "",
-            "views_bg_color": "#fff7f9",
-            "views_color": "#d50000",
-            "product": "",
-            "product_bg_color": "#ffffff",
-            "product_text_color": "#000000"
-          }
         }
       },
       "block_order": [
+        "item_7PW99j",
+        "item_4HPNYy",
+        "item_K9A8PD",
+        "item_6cg7TT",
         "item_YCKPFB",
         "item_n4tmFY",
         "item_k343zx",
         "item_PNQaaL",
-        "item_ckbtt7",
-        "item_K9A8PD",
-        "item_4HPNYy",
-        "item_7PW99j"
+        "item_ckbtt7"
       ],
       "name": "Shoppable videos",
       "settings": {
@@ -720,7 +737,6 @@
   },
   "order": [
     "main",
-    "seora_fighter_banner",
     "shoppable_video_new_yQVWcy",
     "featured_collection_tP9GP7",
     "image_banner_xBTq9P",

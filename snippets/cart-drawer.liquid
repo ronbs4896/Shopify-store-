@@ -652,24 +652,10 @@
             {% endif %}
             role="status"
           >
-            <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
+            <h2 class="totals__total">סך הכול</h2>
             <h2 class="totals__total-value">{{ cart.total_price | money_with_currency }}</h2>
           </div>
 
-          <small
-            class="tax-note caption-large rte{% if settings.hide_tax_drawer %} hidden{% endif %}"
-            style="font-size:{{ settings.tax_drawer_size }}px;"
-          >
-            {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
-              {{ 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
-            {%- elsif cart.taxes_included -%}
-              {{ 'sections.cart.taxes_included_but_shipping_at_checkout' | t }}
-            {%- elsif shop.shipping_policy.body != blank -%}
-              {{ 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
-            {%- else -%}
-              {{ 'sections.cart.taxes_and_shipping_at_checkout' | t }}
-            {%- endif -%}
-          </small>
         </div>
 
         <!-- CTAs -->
@@ -726,6 +712,7 @@
             {% if settings.show_checkout_price %} • {{ cart.items_subtotal_price | money }}{% endif %}
           </button>
         </div>
+        <p class="seora-cart-trust">2,000+ לקוחות מרוצים</p>
         {%- if settings.show_payment_icons -%}
           {% render 'payment-icons-drawer' %}
         {%- endif -%}
@@ -765,6 +752,31 @@
   </div>
 </cart-drawer>
 {% render 'cart-upsell' %}
+<style>
+  /* SEORA cart drawer: brand green (same as the announcement bar) */
+  .seora-cart-trust {
+    margin: 1rem 0 0;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1c3027;
+  }
+  #cart-drawer-upsell.gradient,
+  #cart-drawer-upsell {
+    background: #1c3027 !important;
+    border-top: 0 !important;
+  }
+  #cart-drawer-upsell .cart-drawer-upsell-title,
+  #cart-drawer-upsell .cart-drawer-upsell-title span {
+    color: #ffffff;
+  }
+  cart-drawer .goal-description {
+    white-space: nowrap;
+    direction: rtl;
+    text-align: right;
+  }
+</style>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

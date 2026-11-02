@@ -54,7 +54,7 @@
     "cart_progress_goal_threshold_1": "ILS:299, USD:90, EUR:90",
     "goal_1_pre_goal_message": "נותרו לך רק [x] עד לקבלת <strong>משלוח חינם</strong>",
     "goal_1_post_goal_message": "🎉 ההזמנה שלך זכאית ל<strong>משלוח חינם</strong>",
-    "goal_1_description": "[goal]",
+    "goal_1_description": "משלוחים חינם",
     "goal_1_icon": "truck",
     "goal_1_icon_reached": "truck",
     "enable_goal_2": false,
@@ -75,14 +75,14 @@
     "cart_bar_pl": 0,
     "show_progress_bar_animation": true,
     "cart_bar_color_container": "#ffffff",
-    "cart_progress_bar_background_color": "#ffe7ec",
-    "cart_progress_bar_color": "#1E2E6C",
-    "cart_progress_bar_full_color": "#5bc447",
-    "cart_progress_bar_icon_color": "#ff7e8d",
-    "progress_bar_icon_success_bg": "#ff7e8d",
+    "cart_progress_bar_background_color": "#e4ebe7",
+    "cart_progress_bar_color": "#1c3027",
+    "cart_progress_bar_full_color": "#1c3027",
+    "cart_progress_bar_icon_color": "#1c3027",
+    "progress_bar_icon_success_bg": "#1c3027",
     "collection": "טבעות-יהלומי-מוסאנייט",
     "limit": 6,
-    "title": "זה יושב עליך בול!",
+    "title": "מוצרים שאחרים הוסיפו",
     "title_text_align": "center",
     "list_style_cart_drawer": "scroll",
     "upsell_product_per_page": "two",
@@ -386,12 +386,7 @@
       "2567389343055140935": {
         "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
         "disabled": false,
-        "settings": {},
-      "855628211100114053": {
-        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
-        "disabled": false,
         "settings": {}
-      }
       }
     },
     "color_schemes": {
