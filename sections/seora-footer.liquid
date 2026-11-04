@@ -1,6 +1,6 @@
 {%- comment -%}
   SEORA footer: brand column (logo, short description, social icons) and four link columns
-  (jewelry, info, help, contact), then copyright and payment icons. RTL, brand green background.
+  (jewelry, info, help, contact), then copyright and payment icons. RTL, black background, regular-weight text.
   Ported from the "Footer4Col" React component; icons are Lucide paths inlined as SVG.
 {%- endcomment -%}
 {%- liquid
@@ -169,8 +169,10 @@
     color: var(--sf-text);
     border-radius: 14px 14px 0 0;
     width: 100%;
+    font-weight: 400;
   }
   .sf a { color: inherit; text-decoration: none; }
+  .sf p, .sf a, .sf span, .sf strong { font-weight: 400; }
   .sf ul { list-style: none; margin: 0; padding: 0; }
   .sf svg {
     fill: none;
@@ -189,7 +191,7 @@
   .sf__brand { text-align: center; }
   .sf__logo { display: inline-flex; align-items: center; gap: 10px; }
   .sf__logo img { width: 40px; height: 40px; border-radius: 10px; display: block; }
-  .sf__logo span { font-size: 2.4rem; font-weight: 700; letter-spacing: 0.04em; color: var(--sf-text); }
+  .sf__logo span { font-size: 2.4rem; font-weight: 400; letter-spacing: 0.04em; color: var(--sf-text); }
   .sf__desc {
     margin: 20px auto 0;
     max-width: 34rem;
@@ -204,7 +206,7 @@
 
   .sf__cols { display: grid; grid-template-columns: 1fr; gap: 32px; }
   .sf__col { text-align: center; }
-  .sf__heading { margin: 0; font-size: 1.7rem; font-weight: 600; color: var(--sf-text); }
+  .sf__heading { margin: 0; font-size: 1.7rem; font-weight: 400; color: var(--sf-text); }
   .sf .sf__col ul { margin-top: 18px; display: grid; gap: 12px; font-size: 1.45rem; }
   .sf__col a, .sf__row { color: var(--sf-muted); transition: color 0.2s ease; }
   .sf__col a:hover { color: var(--sf-text); }
@@ -270,7 +272,7 @@
     { "type": "text", "id": "phone", "label": "טלפון", "default": "052-319-9277" },
     { "type": "text", "id": "hours", "label": "שעות פעילות", "default": "ימים א׳ עד ה׳, 8:00 עד 16:00" },
     { "type": "header", "content": "עיצוב" },
-    { "type": "color", "id": "bg_color", "label": "צבע רקע", "default": "#1c3027" },
+    { "type": "color", "id": "bg_color", "label": "צבע רקע", "default": "#000000" },
     { "type": "color", "id": "text_color", "label": "צבע טקסט", "default": "#ffffff" },
     { "type": "color", "id": "accent_color", "label": "צבע אייקונים", "default": "#d4b67a" },
     { "type": "checkbox", "id": "show_payment_icons", "label": "להציג אמצעי תשלום", "default": true },
