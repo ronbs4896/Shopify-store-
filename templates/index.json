@@ -633,7 +633,8 @@
         "padding_bottom": 44,
         "margin_top": 0,
         "margin_bottom": 0
-      }
+      },
+      "disabled": true
     },
     "6b53f861-3aae-4cc4-a699-aca63db5c942": {
       "type": "timer",
@@ -672,6 +673,10 @@
         "per_page_desktop": 5,
         "per_page_mobile": 2
       }
+    },
+    "seora_newsletter": {
+      "type": "seora-newsletter",
+      "settings": {}
     }
   },
   "order": [
@@ -683,8 +688,9 @@
     "shoppable_video_new_BdqjL9",
     "collapsible_content_k74NUT",
     "featured_collection_HbUw9e",
-    "newsletter_EddyTa",
     "6b53f861-3aae-4cc4-a699-aca63db5c942",
-    "seora_home_blog"
+    "seora_home_blog",
+    "seora_newsletter",
+    "newsletter_EddyTa"
   ]
 }

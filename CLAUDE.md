@@ -19,6 +19,7 @@ The short version: no full stop at the end of headings, buttons or labels; no ch
 ## Store rules
 
 - WhatsApp: floating button snippets/seora-whatsapp.liquid (rendered in layout/theme.liquid), number 972523199277 with a prefilled message.
+- Newsletter: sections/seora-newsletter.liquid ("SEORA מועדון לקוחות"), last section on the home page under the blog; the old newsletter section is disabled. Shopify customer form, tag newsletter.
 - Footer: sections/seora-footer.liquid (section "SEORA פוטר" in the footer group; the old Lumin footer is disabled, not deleted). Social links are section settings; Instagram, Facebook and TikTok stay hidden until the owner fills them in.
 
 - Theme files are written only to an unpublished theme; the owner publishes.
