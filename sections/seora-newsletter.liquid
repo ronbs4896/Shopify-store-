@@ -352,6 +352,33 @@
   .snl.is-in .snl__perk:nth-child(2) { transition-delay: 0.4s; }
   .snl.is-in .snl__perk:nth-child(3) { transition-delay: 0.5s; }
 
+  /* mobile: rows like steps, icon on the right and text beside it, joined by a thin gold line */
+  @media screen and (max-width: 749px) {
+    .snl__perks { gap: 22px; padding-inline: 4px; }
+    .snl__perk {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: 16px;
+      row-gap: 2px;
+      align-items: center;
+      text-align: right;
+    }
+    .snl__medal { grid-row: 1 / span 2; width: 60px; height: 60px; margin: 0; }
+    .snl__medal svg { width: 30px; height: 30px; }
+    .snl__perk-title { align-self: end; }
+    .snl__perk-sub { align-self: start; }
+    .snl__perk:not(:last-child) .snl__medal::before {
+      content: '';
+      position: absolute;
+      top: calc(100% + 3px);
+      left: 50%;
+      width: 1px;
+      height: 16px;
+      background: linear-gradient(var(--snl-gold), transparent);
+      opacity: 0.6;
+    }
+  }
   @media screen and (min-width: 750px) {
     .snl__card { padding: 56px 48px 36px; }
     .snl__top { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: 48px; text-align: right; }
