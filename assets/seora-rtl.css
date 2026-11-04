@@ -26,3 +26,10 @@
 [dir='rtl'] .price__regular .price-item--regular {
   margin-left: 0;
 }
+
+/* cart drawer: progress message ("ההזמנה שלך זכאית למשלוח חינם") starts on the right */
+[dir='rtl'] cart-drawer .goal-message {
+  text-align: start;
+  margin: 0 0 10px;
+  margin-inline: 20px auto;
+}
