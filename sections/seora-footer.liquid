@@ -1,6 +1,6 @@
 {%- comment -%}
   SEORA footer: brand column (store name, short description, social icons) and four link columns
-  (jewelry, info, help, contact), then copyright and payment icons. RTL, black background, regular-weight text.
+  (jewelry, info, help, contact), then copyright and payment icons. RTL, full width; style setting: black-to-green gradient (default), solid or white with a top rule.
   Ported from the "Footer4Col" React component; icons are Lucide paths inlined as SVG.
 {%- endcomment -%}
 {%- liquid
@@ -13,14 +13,34 @@
   assign phone_digits = ss.phone | remove: '-' | remove: ' '
   assign phone_intl = phone_digits | remove_first: '0' | prepend: '+972'
 -%}
+{%- liquid
+  if ss.style == 'light'
+    assign sf_text = '#111111'
+    assign sf_accent = '#111111'
+  else
+    assign sf_text = ss.text_color
+    assign sf_accent = ss.accent_color
+  endif
+-%}
 {%- style -%}
   #sf-{{ section.id }} {
-    --sf-bg: {{ ss.bg_color }};
-    --sf-text: {{ ss.text_color }};
-    --sf-muted: {{ ss.text_color | color_modify: 'alpha', 0.72 }};
-    --sf-line: {{ ss.text_color | color_modify: 'alpha', 0.14 }};
-    --sf-accent: {{ ss.accent_color }};
+    --sf-text: {{ sf_text }};
+    --sf-muted: {{ sf_text | color_modify: 'alpha', 0.68 }};
+    --sf-line: {{ sf_text | color_modify: 'alpha', 0.13 }};
+    --sf-accent: {{ sf_accent }};
     margin-top: {{ ss.margin_top }}px;
+    {%- case ss.style -%}
+      {%- when 'light' %}
+        background: #ffffff;
+        border-top: 1px solid #111111;
+      {%- when 'solid' %}
+        background: {{ ss.bg_color }};
+      {%- else %}
+        background:
+          radial-gradient(900px 340px at 88% -10%, {{ ss.gold_color | color_modify: 'alpha', 0.14 }}, transparent 65%),
+          linear-gradient(172deg, {{ ss.bg_color }} 0%, {{ ss.bg_color }} 38%, {{ ss.gradient_to }} 100%);
+        border-top: 1px solid {{ ss.gold_color | color_modify: 'alpha', 0.45 }};
+    {%- endcase %}
   }
 {%- endstyle -%}
 
@@ -158,9 +178,7 @@
 
 <style>
   .sf {
-    background: var(--sf-bg);
     color: var(--sf-text);
-    border-radius: 14px 14px 0 0;
     width: 100%;
     font-weight: 400;
   }
@@ -175,9 +193,10 @@
     stroke-linejoin: round;
   }
   .sf__inner {
-    max-width: 1280px;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
     padding: 56px 16px 24px;
+    box-sizing: border-box;
   }
   .sf__grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
 
@@ -235,7 +254,7 @@
     .sf .sf__social, .sf__live, .sf__contact a, .sf__row { justify-content: flex-start; }
   }
   @media screen and (min-width: 750px) {
-    .sf__inner { padding: 72px 32px 24px; }
+    .sf__inner { padding: 72px clamp(32px, 5vw, 96px) 24px; }
     .sf__cols { grid-template-columns: 1fr 1fr 1fr 1.35fr; }
     .sf__row { white-space: nowrap; }
     .sf__bottom { flex-direction: row; justify-content: space-between; }
@@ -264,7 +283,14 @@
     { "type": "text", "id": "phone", "label": "טלפון", "default": "052-319-9277" },
     { "type": "text", "id": "hours", "label": "שעות פעילות", "default": "ימים א׳ עד ה׳, 8:00 עד 16:00" },
     { "type": "header", "content": "עיצוב" },
-    { "type": "color", "id": "bg_color", "label": "צבע רקע", "default": "#000000" },
+    { "type": "select", "id": "style", "label": "סגנון רקע", "default": "gradient", "options": [
+      { "value": "gradient", "label": "גרדיאנט: שחור לירוק המותג" },
+      { "value": "solid", "label": "צבע אחיד" },
+      { "value": "light", "label": "לבן עם קו הפרדה" }
+    ] },
+    { "type": "color", "id": "bg_color", "label": "צבע רקע (שחור)", "default": "#000000" },
+    { "type": "color", "id": "gradient_to", "label": "צבע סיום הגרדיאנט", "default": "#1c3027" },
+    { "type": "color", "id": "gold_color", "label": "צבע קו והילה עליונים", "default": "#d4b67a" },
     { "type": "color", "id": "text_color", "label": "צבע טקסט", "default": "#ffffff" },
     { "type": "color", "id": "accent_color", "label": "צבע אייקונים", "default": "#ffffff" },
     { "type": "checkbox", "id": "show_payment_icons", "label": "להציג אמצעי תשלום", "default": true },

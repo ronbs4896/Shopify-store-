@@ -770,10 +770,22 @@
   #cart-drawer-upsell .cart-drawer-upsell-title span {
     color: #ffffff;
   }
-  cart-drawer .goal-description {
-    white-space: nowrap;
+  /* RTL progress bar: fills from the right; goal icons are placed from the right (see
+     cart-progress-bar-custom), the truck faces the way the bar grows, and the label starts at the icon */
+  cart-drawer .cart-progress-bar-container {
+    display: flex;
     direction: rtl;
-    text-align: right;
+    justify-content: flex-start;
+  }
+  cart-drawer .cart-progress-bar-container #cart-progress-bar { flex: 0 0 auto; }
+  cart-drawer .goal-icon { transform: translateX(50%); }
+  cart-drawer .icon-progress { transform: scaleX(-1); }
+  cart-drawer .goal-description {
+    box-sizing: border-box;
+    white-space: nowrap;
+    direction: ltr;
+    text-align: left;
+    padding-left: 24px;
   }
 </style>
 
