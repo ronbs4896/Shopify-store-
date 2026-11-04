@@ -41,7 +41,7 @@
         "image_ratio": "adapt",
         "image_no_crop": true,
         "show_secondary_image": true,
-        "show_vendor": true,
+        "show_vendor": false,
         "show_rating": true,
         "show_scroll_tags": false,
         "enable_quick_desc": false,

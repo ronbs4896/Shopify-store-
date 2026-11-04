@@ -1,0 +1,28 @@
+/* SEORA: RTL fixes for theme rules that use physical left/right.
+   Card text alignment itself comes from layout/theme.liquid, which outputs
+   start/end instead of left/right, so it follows the page direction. */
+
+/* product cards: no vendor line (all products carry the default "My Store") */
+.product-card-wrapper .card__information > .caption-with-letter-spacing,
+.product-card-wrapper .card__information > .visually-hidden:has(+ .caption-with-letter-spacing) {
+  display: none;
+}
+
+[dir='rtl'] .card.card--horizontal {
+  --text-alignment: start;
+}
+
+/* quick-add button icon sits on the inner side of the label */
+[dir='rtl'] .card .icon-wrap {
+  margin-left: 0;
+  margin-right: 0.8rem;
+}
+
+/* gap between the compare-at price and the sale price */
+[dir='rtl'] .price .price-item {
+  margin: 0 0 0 1rem;
+}
+
+[dir='rtl'] .price__regular .price-item--regular {
+  margin-left: 0;
+}
