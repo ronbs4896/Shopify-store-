@@ -57,6 +57,15 @@
             data-variant-id="{{ cv.id }}"
             data-stock-in="{{ s.stock_in_text | escape }}"
             data-stock-out="{{ s.stock_out_text | escape }}"
+            data-stock-low="{{ s.stock_low_text | escape }}"
+            data-stock-one="{{ s.stock_one_text | escape }}"
+            data-stock-limit="{{ s.stock_low_limit }}"
+            data-stock-map='{
+              {%- for v in product.variants -%}
+                {%- if v.inventory_management == 'shopify' and v.inventory_policy == 'deny' -%}"{{ v.id }}":{{ v.inventory_quantity | at_least: 0 }}{%- else -%}"{{ v.id }}":-1{%- endif -%}
+                {%- unless forloop.last -%},{%- endunless -%}
+              {%- endfor -%}
+            }'
           >
             {% render 'spi-blocks', section: section, product: product, cv: cv, sid: sid, sym: sym, on_sale: on_sale, product_form_id: product_form_id %}
           </seora-product-info>
@@ -115,6 +124,9 @@
     { "type": "header", "content": "טקסטים כלליים" },
     { "type": "text", "id": "stock_in_text", "label": "טקסט כשיש מלאי", "default": "במלאי - משלוח מיידי" },
     { "type": "text", "id": "stock_out_text", "label": "טקסט כשאזל", "default": "אזל מהמלאי" },
+    { "type": "range", "id": "stock_low_limit", "label": "מאיזו כמות להציג את מספר היחידות שנשארו", "min": 1, "max": 20, "step": 1, "default": 10 },
+    { "type": "text", "id": "stock_low_text", "label": "טקסט כשנשארו מעט יחידות ({n} הוא המספר)", "default": "נשארו רק {n} יחידות במלאי" },
+    { "type": "text", "id": "stock_one_text", "label": "טקסט כשנשארה יחידה אחת", "default": "נשארה יחידה אחת במלאי" },
     { "type": "text", "id": "currency_symbol", "label": "סימן מטבע", "default": "₪" },
 
     { "type": "header", "content": "צבעים" },

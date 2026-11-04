@@ -26,7 +26,26 @@
         this.addEventListener('click', (e) => {
           const btn = e.target.closest('.spi-bundle__add');
           if (btn) this.addBundleOnly(btn);
+          const rm = e.target.closest('.spi-bundle__remove');
+          if (rm) this.removeBundleOnly(rm);
         });
+
+        // if the added item is removed from the cart drawer, the card button goes back to "add"
+        if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+          subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
+            if (!event || event.source === 'spi-bundle' || !event.cartData || !event.cartData.items) return;
+            const addBtn = this.querySelector('.spi-bundle__add.is-added');
+            if (!addBtn || !addBtn.dataset.lineKey) return;
+            const still = event.cartData.items.some((i) => i.key === addBtn.dataset.lineKey);
+            if (still) return;
+            addBtn.querySelector('span').textContent = addBtn.dataset.label;
+            addBtn.classList.remove('is-added');
+            addBtn.removeAttribute('aria-disabled');
+            addBtn.dataset.lineKey = '';
+            const rmBtn = this.querySelector('.spi-bundle__remove');
+            if (rmBtn) rmBtn.hidden = true;
+          });
+        }
 
         this.productForm = this.querySelector('product-form');
         if (this.productForm) {
@@ -118,10 +137,21 @@
           badge.classList.add('spi-badge--in');
           badge.classList.remove('spi-badge--out');
           if (dot) dot.hidden = false;
-          badge.lastChild.textContent = inText;
+          // real units left, only when the variant tracks stock and is at or under the limit
+          let map = {};
+          try { map = JSON.parse(this.dataset.stockMap || '{}'); } catch (e) {}
+          const qty = map[String(v.id)];
+          const limit = parseInt(this.dataset.stockLimit, 10) || 10;
+          const low = typeof qty === 'number' && qty > 0 && qty <= limit;
+          badge.classList.toggle('spi-badge--low', low);
+          let text = inText;
+          if (low && qty === 1 && this.dataset.stockOne) text = this.dataset.stockOne;
+          else if (low && this.dataset.stockLow) text = this.dataset.stockLow.replace('{n}', qty);
+          badge.lastChild.textContent = text;
         } else {
           badge.classList.remove('spi-badge--in');
           badge.classList.add('spi-badge--out');
+          badge.classList.remove('spi-badge--low');
           if (dot) dot.hidden = true;
           badge.lastChild.textContent = outText;
         }
@@ -174,23 +204,19 @@
       }
 
       // Adds only the complementary item (the variant chosen in its card) and opens the cart drawer.
+      // The button then stays on "added" and a remove button appears next to it.
       addBundleOnly(btn) {
         const wrap = this.querySelector('.spi-bundle');
         const addonEl = wrap && wrap.querySelector('.spi-bundle__variant');
-        if (!addonEl || !addonEl.value || btn.disabled) return;
+        if (!addonEl || !addonEl.value || btn.disabled || btn.classList.contains('is-added')) return;
         const label = btn.querySelector('span');
+        const removeBtn = wrap.querySelector('.spi-bundle__remove');
         const drawer = document.querySelector('cart-drawer');
         const body = { items: [{ id: parseInt(addonEl.value, 10), quantity: 1 }] };
         if (drawer && typeof drawer.getSectionsToRender === 'function') {
           body.sections = drawer.getSectionsToRender().map((s) => s.id);
           body.sections_url = window.location.pathname;
         }
-        const reset = () => {
-          setTimeout(() => {
-            label.textContent = btn.dataset.label;
-            btn.classList.remove('is-added', 'is-error');
-          }, 2500);
-        };
         btn.disabled = true;
         btn.classList.add('is-loading');
         fetch((window.routes && window.routes.cart_add_url ? window.routes.cart_add_url : '/cart/add') + '.js', {
@@ -201,8 +227,12 @@
           .then((r) => r.json())
           .then((state) => {
             if (state.status) throw state;
+            const line = state.items && state.items[0];
+            btn.dataset.lineKey = line ? line.key : '';
             label.textContent = btn.dataset.added;
             btn.classList.add('is-added');
+            btn.setAttribute('aria-disabled', 'true');
+            if (removeBtn) removeBtn.hidden = false;
             if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
               publish(PUB_SUB_EVENTS.cartUpdate, { source: 'spi-bundle', productVariantId: addonEl.value, cartData: state });
             }
@@ -217,11 +247,59 @@
             console.error('bundle add failed', e);
             label.textContent = btn.dataset.error;
             btn.classList.add('is-error');
+            setTimeout(() => {
+              label.textContent = btn.dataset.label;
+              btn.classList.remove('is-error');
+            }, 2500);
           })
           .finally(() => {
             btn.disabled = false;
             btn.classList.remove('is-loading');
-            reset();
+          });
+      }
+
+      // Removes the complementary item added from the card and refreshes the cart without opening it.
+      removeBundleOnly(rm) {
+        const wrap = this.querySelector('.spi-bundle');
+        const btn = wrap && wrap.querySelector('.spi-bundle__add');
+        const addonEl = wrap && wrap.querySelector('.spi-bundle__variant');
+        if (!btn || rm.disabled) return;
+        const drawer = document.querySelector('cart-drawer');
+        const body = { id: btn.dataset.lineKey || String(addonEl ? addonEl.value : ''), quantity: 0 };
+        if (drawer && typeof drawer.getSectionsToRender === 'function') {
+          body.sections = drawer.getSectionsToRender().map((s) => s.id);
+          body.sections_url = window.location.pathname;
+        }
+        rm.disabled = true;
+        fetch((window.routes && window.routes.cart_change_url ? window.routes.cart_change_url : '/cart/change') + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          body: JSON.stringify(body),
+        })
+          .then((r) => r.json())
+          .then((state) => {
+            if (state.status) throw state;
+            if (drawer && state.sections) {
+              drawer.getSectionsToRender().forEach((section) => {
+                const el = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
+                if (el && state.sections[section.id]) {
+                  el.innerHTML = drawer.getSectionInnerHTML(state.sections[section.id], section.selector);
+                }
+              });
+              if (state.item_count === 0) drawer.classList.add('is-empty');
+            }
+            if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+              publish(PUB_SUB_EVENTS.cartUpdate, { source: 'spi-bundle', cartData: state });
+            }
+            btn.querySelector('span').textContent = btn.dataset.label;
+            btn.classList.remove('is-added');
+            btn.removeAttribute('aria-disabled');
+            btn.dataset.lineKey = '';
+            rm.hidden = true;
+          })
+          .catch((e) => console.error('bundle remove failed', e))
+          .finally(() => {
+            rm.disabled = false;
           });
       }
 

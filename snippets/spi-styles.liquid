@@ -160,6 +160,9 @@
   #spi-{{ sid }} .spi-bundle__prices { display: flex; align-items: baseline; gap: .8rem; }
   #spi-{{ sid }} .spi-bundle__sale { font-family: var(--font-heading-family); font-size: 1.8rem; font-weight: 800; color: var(--spi-sale); direction: ltr; unicode-bidi: isolate; }
   #spi-{{ sid }} .spi-bundle__compare { font-size: 1.35rem; color: var(--spi-muted); direction: ltr; unicode-bidi: isolate; }
+  #spi-{{ sid }} .spi-badge--low .spi-badge__dot { background: #d08a1e !important; box-shadow: 0 0 0 .3rem rgba(208, 138, 30, .25) !important; animation: spi-low-pulse 1.6s ease-in-out infinite; }
+  @keyframes spi-low-pulse { 50% { box-shadow: 0 0 0 .55rem rgba(208, 138, 30, .08); } }
+  @media (prefers-reduced-motion: reduce) { #spi-{{ sid }} .spi-badge--low .spi-badge__dot { animation: none; } }
   #spi-{{ sid }} .spi-bundle__add {
     display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
     padding: .7rem 1.3rem; min-height: 3.6rem; border-radius: 99rem;
@@ -174,6 +177,15 @@
   #spi-{{ sid }} .spi-bundle__add.is-added { background: var(--spi-green); border-color: var(--spi-green); color: #fff; }
   #spi-{{ sid }} .spi-bundle__add.is-added svg, #spi-{{ sid }} .spi-bundle__add.is-error svg { display: none; }
   #spi-{{ sid }} .spi-bundle__add.is-error { border-color: var(--spi-sale); color: var(--spi-sale); }
+  #spi-{{ sid }} .spi-bundle__add.is-added { cursor: default; transform: none; box-shadow: none; }
+  #spi-{{ sid }} .spi-bundle__add.is-added::before { content: '\2713'; font-size: 1.3rem; line-height: 1; }
+  #spi-{{ sid }} .spi-bundle__remove {
+    padding: .4rem .2rem; border: 0; background: none; cursor: pointer;
+    font-family: inherit; font-size: 1.25rem; color: var(--spi-muted);
+    text-decoration: underline; text-underline-offset: .3rem;
+  }
+  #spi-{{ sid }} .spi-bundle__remove:hover { color: var(--spi-sale); }
+  #spi-{{ sid }} .spi-bundle__remove[hidden] { display: none; }
   #spi-{{ sid }} .spi-bundle__link { font-size: 1.25rem; font-weight: 700; color: var(--spi-gold); text-decoration: underline; text-underline-offset: .3rem; }
   #spi-{{ sid }} .spi-bundle__img { grid-area: img; width: 8.4rem; height: 8.4rem; border-radius: 1rem; overflow: hidden; background: #fff; border: 1px solid var(--spi-border); display: grid; place-items: center; cursor: pointer; }
   #spi-{{ sid }} .spi-bundle__img img { width: 100%; height: 100%; object-fit: cover; display: block; }

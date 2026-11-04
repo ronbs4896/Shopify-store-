@@ -29,8 +29,23 @@
         {%- endif -%}
         {%- if block.settings.show_stock -%}
           <div id="Inventory-{{ sid }}" class="spi-stock" role="status" data-bg="{{ block.settings.stock_bg }}" data-color="{{ block.settings.stock_color }}">
+            {%- liquid
+              # real units left, shown only when the variant tracks stock and is at or under the limit
+              assign stock_text = s.stock_in_text
+              assign stock_low = false
+              assign stock_limit = s.stock_low_limit | default: 10
+              if cv.inventory_management == 'shopify' and cv.inventory_policy == 'deny' and cv.inventory_quantity > 0 and cv.inventory_quantity <= stock_limit
+                assign stock_low = true
+                if cv.inventory_quantity == 1
+                  assign stock_text = s.stock_one_text | default: s.stock_in_text
+                else
+                  assign qty_text = cv.inventory_quantity | append: ''
+                  assign stock_text = s.stock_low_text | default: s.stock_in_text | replace: '{n}', qty_text
+                endif
+              endif
+            -%}
             {%- if cv.available -%}
-              <span class="spi-badge spi-badge--in" style="background: {{ block.settings.stock_bg }}; color: {{ block.settings.stock_color }};">{%- if block.settings.stock_icon != 'none' -%}<i class="spi-badge__icon">{% render 'seora-icon', icon: block.settings.stock_icon %}</i>{%- else -%}<i class="spi-badge__dot" style="background: {{ block.settings.dot_color }}; box-shadow: 0 0 0 0.3rem {{ block.settings.dot_color | color_modify: 'alpha', 0.25 }};"></i>{%- endif -%}{{ s.stock_in_text | escape }}</span>
+              <span class="spi-badge spi-badge--in{% if stock_low %} spi-badge--low{% endif %}" style="background: {{ block.settings.stock_bg }}; color: {{ block.settings.stock_color }};">{%- if block.settings.stock_icon != 'none' -%}<i class="spi-badge__icon">{% render 'seora-icon', icon: block.settings.stock_icon %}</i>{%- else -%}<i class="spi-badge__dot" style="background: {{ block.settings.dot_color }}; box-shadow: 0 0 0 0.3rem {{ block.settings.dot_color | color_modify: 'alpha', 0.25 }};"></i>{%- endif -%}{{ stock_text | escape }}</span>
             {%- else -%}
               <span class="spi-badge spi-badge--out" style="background: {{ block.settings.stock_bg }}; color: {{ block.settings.stock_color }};">{{ s.stock_out_text | escape }}</span>
             {%- endif -%}
@@ -349,6 +364,7 @@
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
                   <span>הוספה לעגלה</span>
                 </button>
+                <button type="button" class="spi-bundle__remove" hidden>הסרה</button>
               {%- endunless -%}
               {%- if block.settings.link_text != blank -%}
                 <a class="spi-bundle__link" href="{{ addon.url }}" target="_blank" rel="noopener">{{ block.settings.link_text | escape }}</a>
