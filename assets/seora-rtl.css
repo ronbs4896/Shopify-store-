@@ -33,3 +33,131 @@
   margin: 0 0 10px;
   margin-inline: 20px auto;
 }
+
+/* cart drawer upsell ("מוצרים שאחרים הוסיפו"): title and price/button start on the right.
+   The theme sets these inline from settings.product_text_align ("left"). */
+[dir='rtl'] #cart-drawer-upsell .cart-item__name {
+  text-align: start !important;
+}
+
+[dir='rtl'] #cart-drawer-upsell .lumin-wrapper {
+  justify-items: start !important;
+}
+
+[dir='rtl'] #cart-drawer-upsell[style*='padding: 1rem 0 1rem 2rem'] {
+  padding: 1rem 2rem 1rem 0 !important;
+}
+
+/* theme utility class: section settings set to "left" mean the start of the line */
+[dir='rtl'] .left {
+  text-align: start;
+}
+
+@media screen and (min-width: 750px) {
+  [dir='rtl'] .slideshow__text.slideshow__text--left {
+    text-align: start;
+  }
+}
+
+/* contact page heading (desktop) and sub-heading are set to "left" */
+@media screen and (min-width: 750px) {
+  [dir='rtl'] [class*='contact-heading-'] {
+    text-align: start;
+  }
+}
+
+[dir='rtl'] [class*='contact-sub-heading-'] {
+  text-align: start;
+}
+
+/* form fields: text and floating labels on the right, search buttons on the left */
+[dir='rtl'] .field__input,
+[dir='rtl'] .customer .field input {
+  text-align: start;
+}
+
+[dir='rtl'] .field__label,
+[dir='rtl'] .customer .field label {
+  left: auto;
+  right: calc(var(--inputs-border-width) + 1.5rem);
+}
+
+[dir='rtl'] .field__input:focus ~ .field__label,
+[dir='rtl'] .field__input:not(:placeholder-shown) ~ .field__label,
+[dir='rtl'] .field__input:-webkit-autofill ~ .field__label,
+[dir='rtl'] .customer .field input:focus ~ label,
+[dir='rtl'] .customer .field input:not(:placeholder-shown) ~ label,
+[dir='rtl'] .customer .field input:-webkit-autofill ~ label {
+  left: auto;
+  right: calc(var(--inputs-border-width) + 2rem);
+}
+
+[dir='rtl'] .field__input:focus,
+[dir='rtl'] .field__input:not(:placeholder-shown),
+[dir='rtl'] .field__input:-webkit-autofill,
+[dir='rtl'] .customer .field input:focus,
+[dir='rtl'] .customer .field input:not(:placeholder-shown),
+[dir='rtl'] .customer .field input:-webkit-autofill {
+  padding: 2.2rem 2rem 0.8rem 1.5rem;
+}
+
+[dir='rtl'] .field__button {
+  right: auto;
+  left: 0;
+}
+
+[dir='rtl'] .search__input.field__input {
+  padding-right: 1.5rem;
+  padding-left: 9.8rem;
+}
+
+[dir='rtl'] .search__input.field__input:focus,
+[dir='rtl'] .search__input.field__input:not(:placeholder-shown) {
+  padding-right: 2rem;
+}
+
+[dir='rtl'] .search__button {
+  right: auto;
+  left: var(--inputs-border-width);
+}
+
+[dir='rtl'] .reset__button {
+  right: auto;
+  left: calc(var(--inputs-border-width) + 4.4rem);
+}
+
+/* search suggestions */
+[dir='rtl'] .predictive-search__item {
+  text-align: start;
+}
+
+/* cart page */
+[dir='rtl'] .cart-items th {
+  text-align: start;
+}
+
+@media screen and (min-width: 750px) {
+  [dir='rtl'] .tax-note {
+    text-align: end;
+  }
+
+  [dir='rtl'] .cart__update-button {
+    margin-right: 0;
+    margin-left: 0.8rem;
+  }
+}
+
+/* mobile menu "back" row and the collection filter button */
+[dir='rtl'] .menu-drawer__close-button {
+  text-align: start;
+  padding: 1.2rem 3rem 1.2rem 2.6rem;
+}
+
+[dir='rtl'] .mobile-facets__open {
+  text-align: start;
+}
+
+[dir='rtl'] .newsletter-form__field-wrapper .field__input {
+  padding-right: 1.5rem;
+  padding-left: 5rem;
+}
