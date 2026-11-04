@@ -1,5 +1,5 @@
 {%- comment -%}
-  Floating WhatsApp button (bottom left), opens a chat with the business number and a ready message.
+  Floating WhatsApp button (bottom right; bottom left belongs to the accessibility widget), opens a chat with the business number and a ready message.
   Rendered once from layout/theme.liquid. On product pages it sits higher on mobile, above the sticky add-to-cart bar.
 {%- endcomment -%}
 {%- liquid
@@ -20,7 +20,7 @@
 <style>
   .seora-wa {
     position: fixed;
-    left: 16px;
+    right: 16px;
     bottom: 20px;
     z-index: 98;
     width: 56px;
@@ -38,12 +38,12 @@
   .seora-wa:hover { transform: scale(1.06); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28); }
   .seora-wa:focus-visible { outline: 3px solid #128c7e; outline-offset: 3px; }
   @media screen and (max-width: 749px) {
-    .seora-wa { width: 52px; height: 52px; left: 14px; bottom: 16px; }
+    .seora-wa { width: 52px; height: 52px; right: 14px; bottom: 16px; }
     .seora-wa svg { width: 30px; height: 30px; }
     .seora-wa--product { bottom: 92px; }
   }
   @media screen and (min-width: 750px) {
-    .seora-wa { left: 24px; bottom: 24px; }
+    .seora-wa { right: 24px; bottom: 24px; }
   }
   @media print { .seora-wa { display: none; } }
 </style>

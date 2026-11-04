@@ -1,26 +1,58 @@
 {%- comment -%}
-  SEORA: category chips for collection pages. They replace the sort dropdown and the product count
-  in the filter bar: the script moves the row next to the filter button, and without JS it stays
+  SEORA: category dropdown for collection pages. It replaces the sort dropdown and the product count
+  in the filter bar: the script moves it next to the filter button, and without JS it stays
   between the banner and the grid.
 {%- endcomment -%}
 {{ 'seora-collection-bar.css' | asset_url | stylesheet_tag }}
 
-{%- assign seora_cats = section.settings.categories | newline_to_br | strip_newlines | split: '<br />' -%}
-<nav class="seora-cats page-width" id="SeoraCategoryChips" aria-label="{{ section.settings.label | escape }}">
-  <span class="seora-cats__label">{{ section.settings.label }}</span>
-  {%- for item in seora_cats -%}
-    {%- assign parts = item | split: '|' -%}
-    {%- assign handle = parts[0] | strip -%}
-    {%- assign cat = collections[handle] -%}
-    {%- if cat != blank -%}
-      <a
-        class="seora-cats__chip"
-        href="{{ cat.url }}"
-        {% if collection.handle == cat.handle %}aria-current="page"{% endif %}
-      >{{ parts[1] | strip }}</a>
-    {%- endif -%}
-  {%- endfor -%}
-</nav>
+{%- liquid
+  assign seora_cats = section.settings.categories | newline_to_br | strip_newlines | split: '<br />'
+  assign current_label = ''
+  for item in seora_cats
+    assign parts = item | split: '|'
+    assign handle = parts[0] | strip
+    if collection.handle == handle
+      assign current_label = parts[1] | strip
+    endif
+  endfor
+  if current_label == blank
+    if collection.handle == 'all' or collection == blank
+      assign current_label = section.settings.all_label
+    else
+      assign current_label = collection.title
+    endif
+  endif
+-%}
+<div class="seora-cats page-width" id="SeoraCategoryChips">
+  <details class="seora-dd">
+    <summary class="seora-dd__btn" aria-label="{{ section.settings.label | escape }}: {{ current_label | escape }}">
+      <span class="seora-dd__label">{{ section.settings.label }}</span>
+      <span class="seora-dd__value">{{ current_label }}</span>
+      <svg class="seora-dd__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </summary>
+    <ul class="seora-dd__menu" role="list">
+      <li>
+        <a class="seora-dd__item" href="{{ routes.all_products_collection_url }}"{% if collection.handle == 'all' %} aria-current="page"{% endif %}>
+          <span>{{ section.settings.all_label }}</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        </a>
+      </li>
+      {%- for item in seora_cats -%}
+        {%- assign parts = item | split: '|' -%}
+        {%- assign handle = parts[0] | strip -%}
+        {%- assign cat = collections[handle] -%}
+        {%- if cat != blank -%}
+          <li>
+            <a class="seora-dd__item" href="{{ cat.url }}"{% if collection.handle == cat.handle %} aria-current="page"{% endif %}>
+              <span>{{ parts[1] | strip }}</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </details>
+</div>
 
 <script>
   (function () {
@@ -34,19 +66,37 @@
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', place);
     else place();
+    document.addEventListener('click', function (e) {
+      document.querySelectorAll('.seora-dd[open]').forEach(function (dd) {
+        if (!dd.contains(e.target)) dd.removeAttribute('open');
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll('.seora-dd[open]').forEach(function (dd) {
+        dd.removeAttribute('open');
+        dd.querySelector('summary').focus();
+      });
+    });
   })();
 </script>
 
 {% schema %}
 {
-  "name": "סינון לפי קטגוריה",
+  "name": "SEORA קטגוריות (תפריט נפתח)",
   "class": "section",
   "settings": [
     {
       "type": "text",
       "id": "label",
       "label": "כותרת",
-      "default": "סינון לפי קטגוריה"
+      "default": "קטגוריה"
+    },
+    {
+      "type": "text",
+      "id": "all_label",
+      "label": "שם האפשרות של כל התכשיטים",
+      "default": "כל התכשיטים"
     },
     {
       "type": "textarea",

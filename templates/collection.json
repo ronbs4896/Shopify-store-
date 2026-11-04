@@ -43,7 +43,7 @@
         "show_secondary_image": true,
         "show_vendor": true,
         "show_rating": true,
-        "show_scroll_tags": true,
+        "show_scroll_tags": false,
         "enable_quick_desc": false,
         "quick_desc_legth": 80,
         "quick_desc_size": 12,

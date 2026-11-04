@@ -1,51 +1,142 @@
-/* SEORA collection filter bar: category chips instead of sort dropdown and product count */
+/* SEORA collection filter bar: a category dropdown next to the filter button
+   (it replaces the sort dropdown and the product count) */
 
 .seora-cats {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
   min-width: 0;
-  max-width: 100%;
   padding: 0.4rem 0;
-  overflow-x: auto;
-  scrollbar-width: none;
 }
 
-.seora-cats::-webkit-scrollbar {
+.seora-dd {
+  position: relative;
+}
+
+.seora-dd__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 4.4rem;
+  padding: 0 1.6rem 0 1.4rem;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.18);
+  border-radius: 999px;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  font-size: 1.4rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seora-dd__btn::-webkit-details-marker {
   display: none;
 }
 
-.seora-cats__label {
-  flex: none;
-  margin-inline-end: 0.4rem;
-  font-size: 1.3rem;
-  color: rgba(var(--color-foreground), 0.7);
-  white-space: nowrap;
+.seora-dd__btn::marker {
+  content: '';
 }
 
-.seora-cats__chip {
-  flex: none;
-  display: inline-flex;
+.seora-dd__btn:hover,
+.seora-dd[open] .seora-dd__btn {
+  border-color: rgb(var(--color-foreground));
+}
+
+.seora-dd__btn:focus-visible {
+  outline: 0.2rem solid rgb(var(--color-foreground));
+  outline-offset: 0.2rem;
+}
+
+.seora-dd__label {
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.seora-dd__value {
+  font-weight: 600;
+}
+
+.seora-dd__chev {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.25s ease;
+}
+
+.seora-dd[open] .seora-dd__chev {
+  transform: rotate(180deg);
+}
+
+.seora-dd__menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 0.8rem);
+  inset-inline-start: 0;
+  min-width: 22rem;
+  margin: 0;
+  padding: 0.6rem;
+  list-style: none;
+  background: rgb(var(--color-background));
+  border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  border-radius: 1.4rem;
+  box-shadow: 0 1.6rem 4rem rgba(0, 0, 0, 0.12);
+  animation: seora-dd-in 0.18s ease-out;
+}
+
+@keyframes seora-dd-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.6rem);
+  }
+}
+
+.seora-dd__item {
+  display: flex;
   align-items: center;
-  min-height: 3.6rem;
-  padding: 0 1.6rem;
-  border: 0.1rem solid rgba(var(--color-foreground), 0.25);
-  border-radius: 999px;
-  font-size: 1.4rem;
+  justify-content: space-between;
+  gap: 1.2rem;
+  min-height: 4.4rem;
+  padding: 0 1.4rem;
+  border-radius: 0.9rem;
+  font-size: 1.45rem;
   color: rgb(var(--color-foreground));
   text-decoration: none;
-  white-space: nowrap;
-  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.15s ease;
 }
 
-.seora-cats__chip:hover {
-  border-color: rgb(var(--color-foreground));
+.seora-dd__item:hover,
+.seora-dd__item:focus-visible {
+  background: rgba(var(--color-foreground), 0.05);
+  outline: none;
 }
 
-.seora-cats__chip[aria-current='page'] {
-  background-color: rgb(var(--color-foreground));
-  border-color: rgb(var(--color-foreground));
-  color: rgb(var(--color-background));
+.seora-dd__item svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  visibility: hidden;
+}
+
+.seora-dd__item[aria-current='page'] {
+  font-weight: 600;
+}
+
+.seora-dd__item[aria-current='page'] svg {
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seora-dd__menu {
+    animation: none;
+  }
 }
 
 /* the sort dropdown and the product count leave the bar */
@@ -54,14 +145,17 @@
   display: none;
 }
 
+.facets-container-drawer .seora-cats {
+  margin-inline-start: 1.2rem;
+}
+
 @media screen and (min-width: 750px) {
   .facets-container-drawer .mobile-facets__wrapper {
     flex-grow: 0;
   }
 
   .facets-container-drawer .seora-cats {
-    flex: 1 1 0;
-    margin-inline-end: 2rem;
+    flex: 0 0 auto;
   }
 }
 
@@ -70,5 +164,13 @@
     grid-column: 1 / -1;
     grid-row: 2;
     margin-top: 0.8rem;
+    margin-inline-start: 0;
   }
+
+  .seora-dd__btn {
+    min-height: 4rem;
+    padding: 0 1.2rem;
+    font-size: 1.35rem;
+  }
+
 }

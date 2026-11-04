@@ -18,7 +18,9 @@ The short version: no full stop at the end of headings, buttons or labels; no ch
 
 ## Store rules
 
-- WhatsApp: floating button snippets/seora-whatsapp.liquid (rendered in layout/theme.liquid), number 972523199277 with a prefilled message.
+- RTL: layout/theme.liquid sets dir="rtl" on <html> for Hebrew; assets/global.js SliderComponent and SlideshowComponent are patched for RTL scrolling (negative scrollLeft). Check carousels after theme updates.
+- Collection pages: category dropdown (sections/seora-collection-chips.liquid, assets/seora-collection-bar.css) next to the filter button; product-card scrolling tags are off.
+- WhatsApp: floating button bottom right (bottom left is the accessibility widget), snippets/seora-whatsapp.liquid (rendered in layout/theme.liquid), number 972523199277 with a prefilled message.
 - Newsletter: sections/seora-newsletter.liquid ("SEORA מועדון לקוחות"), last section on the home page under the blog; the old newsletter section is disabled. Shopify customer form, tag newsletter.
 - Footer: sections/seora-footer.liquid (section "SEORA פוטר" in the footer group; the old Lumin footer is disabled, not deleted). Social links are section settings; Instagram, Facebook and TikTok stay hidden until the owner fills them in.
 
