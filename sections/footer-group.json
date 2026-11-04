@@ -82,11 +82,17 @@
         "margin_top": 0,
         "padding_top": 40,
         "padding_bottom": 20
-      }
+      },
+      "disabled": true
+    },
+    "seora_footer": {
+      "type": "seora-footer",
+      "settings": {}
     }
   },
   "order": [
     "back_to_top_Ca7nbV",
+    "seora_footer",
     "footer"
   ]
 }

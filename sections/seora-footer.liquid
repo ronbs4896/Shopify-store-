@@ -1,0 +1,281 @@
+{%- comment -%}
+  SEORA footer: brand column (logo, short description, social icons) and four link columns
+  (jewelry, info, help, contact), then copyright and payment icons. RTL, brand green background.
+  Ported from the "Footer4Col" React component; icons are Lucide paths inlined as SVG.
+{%- endcomment -%}
+{%- liquid
+  assign ss = section.settings
+  assign c_bracelets = collections['צמידי-יהלומי-מוסאנייט']
+  assign c_necklaces = collections['שרשראות-יהלומי-מואסנייט']
+  assign c_earrings = collections['עגילי-יהלומי-מואסנייט']
+  assign c_rings = collections['טבעות-יהלומי-מוסאנייט']
+  assign c_sets = collections['סט-תכשיטי-מוסאנייט']
+  assign phone_digits = ss.phone | remove: '-' | remove: ' '
+  assign phone_intl = phone_digits | remove_first: '0' | prepend: '+972'
+-%}
+{%- style -%}
+  #sf-{{ section.id }} {
+    --sf-bg: {{ ss.bg_color }};
+    --sf-text: {{ ss.text_color }};
+    --sf-muted: {{ ss.text_color | color_modify: 'alpha', 0.72 }};
+    --sf-line: {{ ss.text_color | color_modify: 'alpha', 0.14 }};
+    --sf-accent: {{ ss.accent_color }};
+    margin-top: {{ ss.margin_top }}px;
+  }
+{%- endstyle -%}
+
+<footer id="sf-{{ section.id }}" class="sf" dir="rtl">
+  <div class="sf__inner">
+    <div class="sf__grid">
+      <div class="sf__brand">
+        <a class="sf__logo" href="{{ routes.root_url }}">
+          <img
+            src="{{ 'seora-favicon-192.png' | asset_url }}"
+            alt=""
+            width="40"
+            height="40"
+            loading="lazy"
+          >
+          <span>{{ shop.name }}</span>
+        </a>
+        {%- if ss.description != blank -%}
+          <p class="sf__desc">{{ ss.description }}</p>
+        {%- endif -%}
+
+        <ul class="sf__social" role="list">
+          {%- if ss.instagram_url != blank -%}
+            <li>
+              <a href="{{ ss.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if ss.facebook_url != blank -%}
+            <li>
+              <a href="{{ ss.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if ss.tiktok_url != blank -%}
+            <li>
+              <a href="{{ ss.tiktok_url }}" target="_blank" rel="noopener" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if ss.whatsapp_url != blank -%}
+            <li>
+              <a href="{{ ss.whatsapp_url }}" target="_blank" rel="noopener" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+              </a>
+            </li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <div class="sf__cols">
+        <nav class="sf__col" aria-label="תכשיטים">
+          <p class="sf__heading">תכשיטים</p>
+          <ul role="list">
+            {%- if c_bracelets -%}<li><a href="{{ c_bracelets.url }}">צמידים</a></li>{%- endif -%}
+            {%- if c_necklaces -%}<li><a href="{{ c_necklaces.url }}">שרשראות</a></li>{%- endif -%}
+            {%- if c_earrings -%}<li><a href="{{ c_earrings.url }}">עגילים</a></li>{%- endif -%}
+            {%- if c_rings -%}<li><a href="{{ c_rings.url }}">טבעות</a></li>{%- endif -%}
+            {%- if c_sets -%}<li><a href="{{ c_sets.url }}">סטים</a></li>{%- endif -%}
+            <li><a href="{{ routes.all_products_collection_url }}">כל התכשיטים</a></li>
+          </ul>
+        </nav>
+
+        <nav class="sf__col" aria-label="מידע">
+          <p class="sf__heading">מידע</p>
+          <ul role="list">
+            <li><a href="{{ blogs['magazine'].url | default: '/blogs/magazine' }}">המגזין</a></li>
+            <li><a href="{{ pages['מחשבון-זהב'].url | default: '/pages/מחשבון-זהב' }}">מחשבון זהב</a></li>
+            <li><a href="{{ pages['מחשבון-כסף'].url | default: '/pages/מחשבון-כסף' }}">מחשבון כסף</a></li>
+            {%- if shop.terms_of_service -%}<li><a href="{{ shop.terms_of_service.url }}">תקנון האתר</a></li>{%- endif -%}
+            {%- if shop.privacy_policy -%}<li><a href="{{ shop.privacy_policy.url }}">מדיניות פרטיות</a></li>{%- endif -%}
+          </ul>
+        </nav>
+
+        <nav class="sf__col" aria-label="עזרה">
+          <p class="sf__heading">עזרה</p>
+          <ul role="list">
+            <li><a href="{{ pages['contact'].url | default: '/pages/contact' }}">צור קשר</a></li>
+            <li><a href="{{ pages['מדיניות-החזרות'].url | default: '/pages/מדיניות-החזרות' }}">מדיניות החזרות</a></li>
+            {%- if ss.whatsapp_url != blank -%}
+              <li>
+                <a class="sf__live" href="{{ ss.whatsapp_url }}" target="_blank" rel="noopener">
+                  <span>צ׳אט בוואטסאפ</span>
+                  <span class="sf__dot" aria-hidden="true"><span></span><span></span></span>
+                </a>
+              </li>
+            {%- endif -%}
+          </ul>
+        </nav>
+
+        <div class="sf__col">
+          <p class="sf__heading">יצירת קשר</p>
+          <ul role="list" class="sf__contact">
+            {%- if ss.email != blank -%}
+              <li>
+                <a href="mailto:{{ ss.email }}">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  <span dir="ltr">{{ ss.email }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if ss.phone != blank -%}
+              <li>
+                <a href="tel:{{ phone_intl }}">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span dir="ltr">{{ ss.phone }}</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if ss.hours != blank -%}
+              <li>
+                <span class="sf__row">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span>{{ ss.hours }}</span>
+                </span>
+              </li>
+            {%- endif -%}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sf__bottom">
+      <p class="sf__copy">
+        <span dir="ltr">© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+        <span class="sf__sep" aria-hidden="true">|</span>
+        <span>כל הזכויות שמורות</span>
+      </p>
+      {%- if ss.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+        <ul class="sf__pay" role="list" aria-label="אמצעי תשלום">
+          {%- for type in shop.enabled_payment_types -%}
+            <li>{{ type | payment_type_svg_tag: class: 'sf__pay-icon' }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .sf {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    border-radius: 14px 14px 0 0;
+    width: 100%;
+  }
+  .sf a { color: inherit; text-decoration: none; }
+  .sf ul { list-style: none; margin: 0; padding: 0; }
+  .sf svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .sf__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 56px 16px 24px;
+  }
+  .sf__grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+
+  .sf__brand { text-align: center; }
+  .sf__logo { display: inline-flex; align-items: center; gap: 10px; }
+  .sf__logo img { width: 40px; height: 40px; border-radius: 10px; display: block; }
+  .sf__logo span { font-size: 2.4rem; font-weight: 700; letter-spacing: 0.04em; color: var(--sf-text); }
+  .sf__desc {
+    margin: 20px auto 0;
+    max-width: 34rem;
+    font-size: 1.5rem;
+    line-height: 1.75;
+    color: var(--sf-muted);
+  }
+  .sf .sf__social { display: flex; justify-content: center; gap: 22px; margin-top: 24px; }
+  .sf__social a { display: inline-flex; color: var(--sf-accent); transition: opacity 0.2s ease; }
+  .sf__social a:hover { opacity: 0.75; }
+  .sf__social svg { width: 24px; height: 24px; }
+
+  .sf__cols { display: grid; grid-template-columns: 1fr; gap: 32px; }
+  .sf__col { text-align: center; }
+  .sf__heading { margin: 0; font-size: 1.7rem; font-weight: 600; color: var(--sf-text); }
+  .sf .sf__col ul { margin-top: 18px; display: grid; gap: 12px; font-size: 1.45rem; }
+  .sf__col a, .sf__row { color: var(--sf-muted); transition: color 0.2s ease; }
+  .sf__col a:hover { color: var(--sf-text); }
+
+  .sf__live { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .sf__dot { position: relative; display: inline-flex; width: 8px; height: 8px; }
+  .sf__dot span { position: absolute; inset: 0; border-radius: 50%; background: var(--sf-accent); }
+  .sf__dot span:first-child { opacity: 0.75; animation: sf-ping 1.2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+  @keyframes sf-ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .sf__dot span:first-child { animation: none; } }
+
+  .sf__contact a, .sf__row { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .sf__contact svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--sf-accent); }
+
+  .sf__bottom {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--sf-line);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+  .sf__copy { margin: 0; font-size: 1.3rem; color: var(--sf-muted); }
+  .sf__sep { margin: 0 8px; opacity: 0.5; }
+  .sf__pay { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .sf__pay-icon { width: 38px; height: 24px; display: block; }
+
+  @media screen and (min-width: 576px) {
+    .sf__cols { grid-template-columns: repeat(2, 1fr); }
+    .sf__brand, .sf__col { text-align: right; }
+    .sf__desc { margin-inline: 0; }
+    .sf .sf__social, .sf__live, .sf__contact a, .sf__row { justify-content: flex-start; }
+  }
+  @media screen and (min-width: 750px) {
+    .sf__inner { padding: 72px 32px 24px; }
+    .sf__cols { grid-template-columns: 1fr 1fr 1fr 1.35fr; }
+    .sf__row { white-space: nowrap; }
+    .sf__bottom { flex-direction: row; justify-content: space-between; }
+  }
+  @media screen and (min-width: 990px) {
+    .sf__inner { padding-top: 80px; }
+    .sf__grid { grid-template-columns: 1fr 2fr; gap: 48px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "SEORA פוטר",
+  "tag": "section",
+  "class": "section-seora-footer",
+  "enabled_on": { "groups": ["footer"] },
+  "settings": [
+    { "type": "textarea", "id": "description", "label": "תיאור קצר", "default": "ב-SEORA תמצאי תכשיטי מואסנייט בכסף 925 ובציפוי זהב 18K, עם תעודה גמולוגית של GRA ואחריות לשנה לכל תכשיט." },
+    { "type": "header", "content": "רשתות חברתיות (שדה ריק מסתיר את האייקון)" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram" },
+    { "type": "url", "id": "facebook_url", "label": "Facebook" },
+    { "type": "url", "id": "tiktok_url", "label": "TikTok" },
+    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp", "default": "https://wa.me/972523199277" },
+    { "type": "header", "content": "יצירת קשר" },
+    { "type": "text", "id": "email", "label": "אימייל", "default": "hello@seora.co.il" },
+    { "type": "text", "id": "phone", "label": "טלפון", "default": "052-319-9277" },
+    { "type": "text", "id": "hours", "label": "שעות פעילות", "default": "ימים א׳ עד ה׳, 8:00 עד 16:00" },
+    { "type": "header", "content": "עיצוב" },
+    { "type": "color", "id": "bg_color", "label": "צבע רקע", "default": "#1c3027" },
+    { "type": "color", "id": "text_color", "label": "צבע טקסט", "default": "#ffffff" },
+    { "type": "color", "id": "accent_color", "label": "צבע אייקונים", "default": "#d4b67a" },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "להציג אמצעי תשלום", "default": true },
+    { "type": "range", "id": "margin_top", "label": "מרווח מעל הפוטר", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 }
+  ],
+  "presets": [{ "name": "SEORA פוטר" }]
+}
+{% endschema %}
