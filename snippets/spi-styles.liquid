@@ -160,6 +160,20 @@
   #spi-{{ sid }} .spi-bundle__prices { display: flex; align-items: baseline; gap: .8rem; }
   #spi-{{ sid }} .spi-bundle__sale { font-family: var(--font-heading-family); font-size: 1.8rem; font-weight: 800; color: var(--spi-sale); direction: ltr; unicode-bidi: isolate; }
   #spi-{{ sid }} .spi-bundle__compare { font-size: 1.35rem; color: var(--spi-muted); direction: ltr; unicode-bidi: isolate; }
+  #spi-{{ sid }} .spi-bundle__add {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    padding: .7rem 1.3rem; min-height: 3.6rem; border-radius: 99rem;
+    border: 1.5px solid var(--spi-gold); background: #fff; color: var(--spi-gold);
+    font-family: inherit; font-size: 1.3rem; font-weight: 700; line-height: 1; white-space: nowrap;
+    cursor: pointer; transition: background .15s, color .15s, opacity .15s;
+  }
+  #spi-{{ sid }} .spi-bundle__add svg { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+  #spi-{{ sid }} .spi-bundle__add:hover { background: var(--spi-gold); color: #fff; }
+  #spi-{{ sid }} .spi-bundle__add:focus-visible { outline: 2px solid var(--spi-gold); outline-offset: 2px; }
+  #spi-{{ sid }} .spi-bundle__add.is-loading { opacity: .6; cursor: progress; }
+  #spi-{{ sid }} .spi-bundle__add.is-added { background: var(--spi-green); border-color: var(--spi-green); color: #fff; }
+  #spi-{{ sid }} .spi-bundle__add.is-added svg, #spi-{{ sid }} .spi-bundle__add.is-error svg { display: none; }
+  #spi-{{ sid }} .spi-bundle__add.is-error { border-color: var(--spi-sale); color: var(--spi-sale); }
   #spi-{{ sid }} .spi-bundle__link { font-size: 1.25rem; font-weight: 700; color: var(--spi-gold); text-decoration: underline; text-underline-offset: .3rem; }
   #spi-{{ sid }} .spi-bundle__img { grid-area: img; width: 8.4rem; height: 8.4rem; border-radius: 1rem; overflow: hidden; background: #fff; border: 1px solid var(--spi-border); display: grid; place-items: center; cursor: pointer; }
   #spi-{{ sid }} .spi-bundle__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -333,6 +347,8 @@
     #spi-{{ sid }} .spi-bundle__card { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'main img' 'deal deal'; gap: 1.2rem; padding: 1.4rem; }
     #spi-{{ sid }} .spi-bundle__deal { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; padding: 1.2rem 0 0; border-inline-start: 0; border-top: 1px solid var(--spi-border); }
     #spi-{{ sid }} .spi-bundle__link { margin-inline-start: auto; }
+    #spi-{{ sid }} .spi-bundle__add { margin-inline-start: auto; }
+    #spi-{{ sid }} .spi-bundle__add + .spi-bundle__link { margin-inline-start: 0; }
     #spi-{{ sid }} .spi-bundle__img { width: 6.8rem; height: 6.8rem; }
     #spi-{{ sid }} .spi-bundle__name { font-size: 1.4rem; }
     #spi-{{ sid }} .spi-bundle__sale { font-size: 1.7rem; }

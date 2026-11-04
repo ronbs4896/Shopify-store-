@@ -23,6 +23,11 @@
           }
         });
 
+        this.addEventListener('click', (e) => {
+          const btn = e.target.closest('.spi-bundle__add');
+          if (btn) this.addBundleOnly(btn);
+        });
+
         this.productForm = this.querySelector('product-form');
         if (this.productForm) {
           this.productForm.addEventListener('submit', (e) => this.onSubmit(e), true);
@@ -166,6 +171,58 @@
           compare.textContent = this.money(cmp);
           compare.hidden = cmp <= price;
         }
+      }
+
+      // Adds only the complementary item (the variant chosen in its card) and opens the cart drawer.
+      addBundleOnly(btn) {
+        const wrap = this.querySelector('.spi-bundle');
+        const addonEl = wrap && wrap.querySelector('.spi-bundle__variant');
+        if (!addonEl || !addonEl.value || btn.disabled) return;
+        const label = btn.querySelector('span');
+        const drawer = document.querySelector('cart-drawer');
+        const body = { items: [{ id: parseInt(addonEl.value, 10), quantity: 1 }] };
+        if (drawer && typeof drawer.getSectionsToRender === 'function') {
+          body.sections = drawer.getSectionsToRender().map((s) => s.id);
+          body.sections_url = window.location.pathname;
+        }
+        const reset = () => {
+          setTimeout(() => {
+            label.textContent = btn.dataset.label;
+            btn.classList.remove('is-added', 'is-error');
+          }, 2500);
+        };
+        btn.disabled = true;
+        btn.classList.add('is-loading');
+        fetch((window.routes && window.routes.cart_add_url ? window.routes.cart_add_url : '/cart/add') + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          body: JSON.stringify(body),
+        })
+          .then((r) => r.json())
+          .then((state) => {
+            if (state.status) throw state;
+            label.textContent = btn.dataset.added;
+            btn.classList.add('is-added');
+            if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+              publish(PUB_SUB_EVENTS.cartUpdate, { source: 'spi-bundle', productVariantId: addonEl.value, cartData: state });
+            }
+            if (drawer && state.sections) {
+              drawer.classList.remove('is-empty');
+              drawer.renderContents(state);
+            } else {
+              window.location.href = (window.routes && window.routes.cart_url) || '/cart';
+            }
+          })
+          .catch((e) => {
+            console.error('bundle add failed', e);
+            label.textContent = btn.dataset.error;
+            btn.classList.add('is-error');
+          })
+          .finally(() => {
+            btn.disabled = false;
+            btn.classList.remove('is-loading');
+            reset();
+          });
       }
 
       onSubmit(evt) {

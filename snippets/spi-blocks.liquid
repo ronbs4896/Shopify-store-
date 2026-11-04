@@ -344,6 +344,12 @@
                 <span class="spi-bundle__sale">{%- if mode == 'gift' -%}{{ free_text | escape }}{%- else -%}{% render 'seora-money', amount: deal_price, symbol: sym %}{%- endif -%}</span>
                 <s class="spi-bundle__compare"{% if deal_compare <= deal_price %} hidden{% endif %}>{% render 'seora-money', amount: deal_compare, symbol: sym %}</s>
               </div>
+              {%- unless mode == 'gift' -%}
+                <button type="button" class="spi-bundle__add" data-label="הוספה לעגלה" data-added="נוסף לעגלה" data-error="לא ניתן להוסיף">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                  <span>הוספה לעגלה</span>
+                </button>
+              {%- endunless -%}
               {%- if block.settings.link_text != blank -%}
                 <a class="spi-bundle__link" href="{{ addon.url }}" target="_blank" rel="noopener">{{ block.settings.link_text | escape }}</a>
               {%- endif -%}
