@@ -1,5 +1,5 @@
 {%- comment -%}
-  SEORA footer: brand column (logo, short description, social icons) and four link columns
+  SEORA footer: brand column (store name, short description, social icons) and four link columns
   (jewelry, info, help, contact), then copyright and payment icons. RTL, black background, regular-weight text.
   Ported from the "Footer4Col" React component; icons are Lucide paths inlined as SVG.
 {%- endcomment -%}
@@ -29,13 +29,6 @@
     <div class="sf__grid">
       <div class="sf__brand">
         <a class="sf__logo" href="{{ routes.root_url }}">
-          <img
-            src="{{ 'seora-favicon-192.png' | asset_url }}"
-            alt=""
-            width="40"
-            height="40"
-            loading="lazy"
-          >
           <span>{{ shop.name }}</span>
         </a>
         {%- if ss.description != blank -%}
@@ -190,7 +183,6 @@
 
   .sf__brand { text-align: center; }
   .sf__logo { display: inline-flex; align-items: center; gap: 10px; }
-  .sf__logo img { width: 40px; height: 40px; border-radius: 10px; display: block; }
   .sf__logo span { font-size: 2.4rem; font-weight: 400; letter-spacing: 0.04em; color: var(--sf-text); }
   .sf__desc {
     margin: 20px auto 0;
@@ -274,7 +266,7 @@
     { "type": "header", "content": "עיצוב" },
     { "type": "color", "id": "bg_color", "label": "צבע רקע", "default": "#000000" },
     { "type": "color", "id": "text_color", "label": "צבע טקסט", "default": "#ffffff" },
-    { "type": "color", "id": "accent_color", "label": "צבע אייקונים", "default": "#d4b67a" },
+    { "type": "color", "id": "accent_color", "label": "צבע אייקונים", "default": "#ffffff" },
     { "type": "checkbox", "id": "show_payment_icons", "label": "להציג אמצעי תשלום", "default": true },
     { "type": "range", "id": "margin_top", "label": "מרווח מעל הפוטר", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 }
   ],
