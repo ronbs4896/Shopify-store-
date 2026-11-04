@@ -18,6 +18,7 @@ The short version: no full stop at the end of headings, buttons or labels; no ch
 
 ## Store rules
 
+- WhatsApp: floating button snippets/seora-whatsapp.liquid (rendered in layout/theme.liquid), number 972523199277 with a prefilled message.
 - Footer: sections/seora-footer.liquid (section "SEORA פוטר" in the footer group; the old Lumin footer is disabled, not deleted). Social links are section settings; Instagram, Facebook and TikTok stay hidden until the owner fills them in.
 
 - Theme files are written only to an unpublished theme; the owner publishes.
@@ -31,4 +32,4 @@ The short version: no full stop at the end of headings, buttons or labels; no ch
 - Article tables must be 100% width with no horizontal scroll on mobile (theme CSS in `assets/seora-blog.css` enforces it; keep table markup plain).
 - Publishing a theme (themePublish) is blocked for Claude by the Shopify MCP safety policy even when the owner approves; the owner clicks Publish in the Shopify admin. Before they do, re-diff staging against live (live changes between syncs, e.g. templates/index.json and config/settings_data.json).
 - Author photos: the theme reads assets/author-ron-ben-shushan.jpg and assets/author-matan-kalfon.jpg (square, at least 400 px). Until they exist the initial letter shows.
-- Favicon: gold Ś monogram on ink (assets/seora-favicon-*.png, linked in layout/theme.liquid). Replace the PNGs if the owner supplies a different mark.
+- Favicon: white serif S on a black rounded square (owner's choice, 2026-11-04; replaced the gold Ś). Files assets/seora-favicon-*.png, linked in layout/theme.liquid; source SVG and renderer in docs/favicon/ (option A).
