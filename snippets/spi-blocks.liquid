@@ -437,8 +437,9 @@
                 assign save_pct = saved | times: 100.0 | divided_by: cv.compare_at_price | round
               endif
               assign save_pct_text = save_pct | append: ''
+              assign save_label = block.settings.save_text | escape | replace: '{pct}', save_pct_text
             -%}
-            <span class="spi-price__save spi-price__save--pct"{% unless on_sale %} hidden{% endunless %}>{{ block.settings.save_text | escape | replace: '{pct}', save_pct_text }}</span>
+            <span class="spi-price__save spi-price__save--pct"{% unless on_sale %} hidden{% endunless %}>{{ save_label }}</span>
           {%- elsif block.settings.save_text != blank -%}
             <span class="spi-price__save"{% unless on_sale %} hidden{% endunless %}>{{ block.settings.save_text | escape }}<span>{% render 'seora-money', amount: saved, symbol: sym %}</span></span>
           {%- endif -%}
