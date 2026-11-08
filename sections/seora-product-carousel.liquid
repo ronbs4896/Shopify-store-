@@ -1,0 +1,493 @@
+{%- comment -%}
+  SEORA: product carousel. Cards with the product image in a rounded frame, a round sale badge
+  with rotating text on the corner, the title, a thin divider, an optional reviews row, a short
+  description line and a pill button. Arrows on both sides on desktop, swipe on mobile.
+
+  Products: the chosen products, else the chosen collection, else the "הנמכרים ביותר" collection.
+  Badge: only on products that are really on sale (compare-at price above the price); {n} in the
+  badge text is the real discount percent.
+  Short description: the product metafield custom.text-v1 ("תיאור המוצר"); hidden when empty.
+  Reviews: only when the setting is on and the product has real review data
+  (metafields reviews.rating / reviews.rating_count, written by a reviews app).
+{%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+  assign s = section.settings
+  assign limit = s.products_to_show
+  if s.product_list != blank
+    assign items = s.product_list
+  elsif s.collection != blank
+    assign items = s.collection.products
+  else
+    assign items = collections['הנמכרים-ביותר'].products
+  endif
+  assign ring = s.badge_ring_text | default: ' '
+-%}
+<section
+  id="SeoraProductCarousel-{{ sid }}"
+  class="spc"
+  style="--spc-bg: {{ s.bg_color | default: 'transparent' }}; --spc-text: {{ s.text_color }}; --spc-line: {{ s.line_color }}; --spc-btn-bg: {{ s.button_bg }}; --spc-btn-text: {{ s.button_text_color }}; --spc-btn-hover: {{ s.button_hover_bg }}; --spc-badge-bg: {{ s.badge_bg }}; --spc-badge-text: {{ s.badge_text_color }}; --spc-star: {{ s.star_color }}; --spc-radius: {{ s.image_radius }}px; --spc-pt: {{ s.padding_top }}px; --spc-pb: {{ s.padding_bottom }}px;"
+>
+  {%- if s.heading != blank -%}
+    <h2 class="spc__title">{{ s.heading | escape }}</h2>
+  {%- endif -%}
+
+  <div class="spc__wrap">
+    <button type="button" class="spc__arrow spc__arrow--prev" aria-label="המוצרים הקודמים">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+    </button>
+
+    <div class="spc__viewport">
+      <ul class="spc__track" role="list">
+        {%- for product in items limit: limit -%}
+          {%- liquid
+            assign v = product.selected_or_first_available_variant
+            assign pct = 0
+            if v.compare_at_price > v.price
+              assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round
+            endif
+            assign short = product.metafields.custom['text-v1'].value
+            assign rating = product.metafields.reviews.rating.value.rating
+            assign rating_count = product.metafields.reviews.rating_count.value | default: 0
+          -%}
+          <li class="spc__card">
+            <a class="spc__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+              {%- if product.featured_media -%}
+                {{
+                  product.featured_media
+                  | image_url: width: 800
+                  | image_tag:
+                    widths: '300, 400, 500, 600, 800',
+                    sizes: '(min-width: 750px) 340px, 72vw',
+                    loading: 'lazy',
+                    alt: product.featured_media.alt | default: product.title,
+                    class: 'spc__img'
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'spc__img spc__img--ph' }}
+              {%- endif -%}
+            </a>
+
+            {%- if s.show_badge and pct > 0 -%}
+              {%- liquid
+                assign badge = s.badge_text | default: '{n}% OFF' | replace: '{n}', pct
+                assign badge_words = badge | split: ' '
+                assign badge_top = badge_words | first
+                assign badge_rest = badge | remove_first: badge_top | strip
+              -%}
+              <span class="spc__badge" aria-label="{{ badge | escape }}">
+                <svg class="spc__ring" viewBox="0 0 100 100" aria-hidden="true">
+                  <defs>
+                    <path id="SpcRing-{{ sid }}-{{ forloop.index }}" d="M50,50 m-39,0 a39,39 0 1,1 78,0 a39,39 0 1,1 -78,0"/>
+                  </defs>
+                  <text>
+                    <textPath href="#SpcRing-{{ sid }}-{{ forloop.index }}" textLength="242" lengthAdjust="spacingAndGlyphs">{{ ring | escape }}</textPath>
+                  </text>
+                </svg>
+                <span class="spc__badge-main" aria-hidden="true">
+                  <span>{{ badge_top | escape }}</span>
+                  {%- if badge_rest != blank -%}<span>{{ badge_rest | escape }}</span>{%- endif -%}
+                </span>
+              </span>
+            {%- endif -%}
+
+            <h3 class="spc__name">
+              <a href="{{ product.url }}">{{ product.title | escape }}</a>
+            </h3>
+
+            {%- if s.show_reviews and rating_count > 0 -%}
+              {%- assign rating_pct = rating | times: 20 -%}
+              <p class="spc__reviews">
+                <span class="spc__stars" style="--spc-fill: {{ rating_pct }}%;" aria-hidden="true">★★★★★</span>
+                <span class="spc__rating">{{ rating | round: 1 }}</span>
+                <span class="spc__count">({{ rating_count }})</span>
+                <span class="visually-hidden">ציון {{ rating | round: 1 }} מתוך 5, {{ rating_count }} ביקורות</span>
+              </p>
+            {%- endif -%}
+
+            {%- if s.show_price -%}
+              <p class="spc__price">
+                <span>{% render 'seora-money', amount: v.price %}</span>
+                {%- if v.compare_at_price > v.price -%}
+                  <s>{% render 'seora-money', amount: v.compare_at_price %}</s>
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+
+            {%- if short != blank -%}
+              <p class="spc__short">{{ short | escape }}</p>
+            {%- endif -%}
+
+            <div class="spc__cta"><a class="spc__btn" href="{{ product.url }}">{{ s.button_label | escape }}</a></div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <button type="button" class="spc__arrow spc__arrow--next" aria-label="המוצרים הבאים">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
+    </button>
+  </div>
+</section>
+
+<style>
+  #SeoraProductCarousel-{{ sid }} {
+    background: var(--spc-bg);
+    color: var(--spc-text);
+    padding: var(--spc-pt) 0 var(--spc-pb);
+    overflow: hidden;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__title {
+    margin: 0 1.6rem 2.4rem;
+    text-align: center;
+    color: var(--spc-text);
+    font-size: clamp(2.4rem, 2.6vw, 3.2rem);
+    line-height: 1.2;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__wrap {
+    position: relative;
+    max-width: 150rem;
+    margin: 0 auto;
+    padding: 0 6.4rem;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__viewport {
+    overflow: hidden;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__track {
+    display: flex;
+    gap: clamp(2rem, 4.6vw, 6.8rem);
+    margin: 0;
+    padding: 2.4rem 1.2rem 0.4rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1.2rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__track::-webkit-scrollbar {
+    display: none;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__card {
+    position: relative;
+    flex: 0 0 clamp(26rem, 22.5vw, 33.2rem);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    scroll-snap-align: start;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__media {
+    display: block;
+    aspect-ratio: 332 / 450;
+    border: 0.1rem solid var(--spc-line);
+    border-radius: var(--spc-radius);
+    background: #fff;
+    overflow: hidden;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8%;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__card:hover .spc__img {
+    transform: scale(1.04);
+  }
+
+  /* round sale badge on the corner, with rotating text */
+  #SeoraProductCarousel-{{ sid }} .spc__badge {
+    position: absolute;
+    top: -2.2rem;
+    right: -0.6rem;
+    z-index: 2;
+    width: 9.6rem;
+    height: 9.6rem;
+    border-radius: 50%;
+    background: var(--spc-badge-bg);
+    color: var(--spc-badge-text);
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    animation: spc-spin 14s linear infinite;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__ring text {
+    fill: currentColor;
+    font-size: 8.4px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    direction: ltr;
+    unicode-bidi: plaintext;
+  }
+  @keyframes spc-spin {
+    to { transform: rotate(360deg); }
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__badge-main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.9rem;
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    direction: ltr;
+  }
+
+  #SeoraProductCarousel-{{ sid }} .spc__name {
+    margin: 1.8rem 0 0;
+    padding-bottom: 1.2rem;
+    border-bottom: 0.1rem solid var(--spc-line);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    min-height: calc(1.5rem * 1.4 * 2 + 1.2rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__name a {
+    color: inherit;
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__reviews {
+    margin: 1rem 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-size: 1.3rem;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__stars {
+    position: relative;
+    letter-spacing: 0.1em;
+    color: rgba(0, 0, 0, 0.15);
+    direction: ltr;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__stars::before {
+    content: '★★★★★';
+    position: absolute;
+    inset: 0;
+    width: var(--spc-fill);
+    overflow: hidden;
+    color: var(--spc-star);
+    white-space: nowrap;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__rating {
+    font-weight: 700;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__count {
+    opacity: 0.6;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__price {
+    margin: 1rem 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    direction: ltr;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__price s {
+    font-weight: 400;
+    opacity: 0.55;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__short {
+    margin: 1.2rem 0 0;
+    font-size: 1.35rem;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__cta {
+    margin-top: auto;
+    padding-top: 1.8rem;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 5.2rem;
+    padding: 0 2rem;
+    border: 0.1rem solid var(--spc-line);
+    border-radius: 99rem;
+    background: var(--spc-btn-bg);
+    color: var(--spc-btn-text);
+    font-size: 2rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__btn:hover {
+    background: var(--spc-btn-hover);
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__btn:focus-visible,
+  #SeoraProductCarousel-{{ sid }} .spc__arrow:focus-visible {
+    outline: 0.2rem solid var(--spc-line);
+    outline-offset: 0.3rem;
+  }
+
+  #SeoraProductCarousel-{{ sid }} .spc__arrow {
+    position: absolute;
+    top: calc(2.4rem + clamp(26rem, 22.5vw, 33.2rem) * 450 / 332 / 2);
+    z-index: 3;
+    width: 4.8rem;
+    height: 4.8rem;
+    margin-top: -2.4rem;
+    padding: 0;
+    border: 0.1rem solid var(--spc-line);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--spc-line);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__arrow:hover {
+    transform: scale(1.05);
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__arrow[disabled] {
+    opacity: 0.35;
+    cursor: default;
+    transform: none;
+  }
+  #SeoraProductCarousel-{{ sid }} .spc__arrow svg {
+    width: 2rem;
+    height: 2rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  /* RTL: "next" is on the left, where the row continues */
+  #SeoraProductCarousel-{{ sid }} .spc__arrow--next { left: 0.4rem; }
+  #SeoraProductCarousel-{{ sid }} .spc__arrow--prev { right: 0.4rem; }
+  [dir='ltr'] #SeoraProductCarousel-{{ sid }} .spc__arrow--next { left: auto; right: 0.4rem; }
+  [dir='ltr'] #SeoraProductCarousel-{{ sid }} .spc__arrow--prev { right: auto; left: 0.4rem; }
+  [dir='ltr'] #SeoraProductCarousel-{{ sid }} .spc__arrow svg { transform: scaleX(-1); }
+
+  @media screen and (max-width: 749px) {
+    #SeoraProductCarousel-{{ sid }} .spc__wrap {
+      padding: 0;
+    }
+    #SeoraProductCarousel-{{ sid }} .spc__track {
+      gap: 1.6rem;
+      padding-inline: 1.6rem;
+      scroll-padding-inline: 1.6rem;
+    }
+    #SeoraProductCarousel-{{ sid }} .spc__card {
+      flex-basis: 68vw;
+    }
+    #SeoraProductCarousel-{{ sid }} .spc__arrow {
+      display: none;
+    }
+    #SeoraProductCarousel-{{ sid }} .spc__badge {
+      width: 8.4rem;
+      height: 8.4rem;
+      top: -1.8rem;
+    }
+    #SeoraProductCarousel-{{ sid }} .spc__badge-main {
+      font-size: 1.7rem;
+    }
+    #SeoraProductCarousel-{{ sid }} .spc__btn {
+      min-height: 4.6rem;
+      font-size: 1.7rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #SeoraProductCarousel-{{ sid }} .spc__ring { animation: none; }
+    #SeoraProductCarousel-{{ sid }} .spc__img { transition: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.getElementById('SeoraProductCarousel-{{ sid }}');
+    if (!root || root.dataset.ready) return;
+    root.dataset.ready = '1';
+    var track = root.querySelector('.spc__track');
+    var prev = root.querySelector('.spc__arrow--prev');
+    var next = root.querySelector('.spc__arrow--next');
+    if (!track || !prev || !next) return;
+
+    function isRtl() { return getComputedStyle(track).direction === 'rtl'; }
+
+    function step() {
+      var card = track.querySelector('.spc__card');
+      if (!card) return 0;
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      var perView = Math.max(1, Math.floor((track.clientWidth + gap) / (card.offsetWidth + gap)));
+      return perView * (card.offsetWidth + gap);
+    }
+
+    function update() {
+      var max = track.scrollWidth - track.clientWidth;
+      var pos = Math.abs(track.scrollLeft);
+      prev.disabled = pos < 4;
+      next.disabled = max <= 0 || pos > max - 4;
+    }
+
+    function move(dir) {
+      var amount = step() * (dir === 'next' ? 1 : -1);
+      track.scrollBy({ left: isRtl() ? -amount : amount, behavior: 'smooth' });
+    }
+
+    prev.addEventListener('click', function () { move('prev'); });
+    next.addEventListener('click', function () { move('next'); });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "SEORA קרוסלת מוצרים",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "כותרת", "default": "הנמכרים ביותר" },
+    { "type": "header", "content": "מוצרים" },
+    { "type": "collection", "id": "collection", "label": "קטגוריה", "info": "בלי בחירה מוצגת הקטגוריה הנמכרים ביותר" },
+    { "type": "product_list", "id": "product_list", "label": "או מוצרים לבחירה", "info": "אם בוחרים מוצרים כאן, הם מוצגים במקום הקטגוריה", "limit": 16 },
+    { "type": "range", "id": "products_to_show", "label": "כמה מוצרים להציג", "min": 4, "max": 16, "step": 1, "default": 10 },
+    { "type": "header", "content": "כרטיס" },
+    { "type": "text", "id": "button_label", "label": "טקסט הכפתור", "default": "לצפייה במוצר" },
+    { "type": "checkbox", "id": "show_price", "label": "הצגת מחיר", "default": false },
+    { "type": "checkbox", "id": "show_reviews", "label": "הצגת ביקורות", "info": "מוצג רק במוצרים שיש להם ביקורות אמיתיות מאפליקציית ביקורות", "default": false },
+    { "type": "range", "id": "image_radius", "label": "עיגול פינות התמונה", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 40 },
+    { "type": "header", "content": "תגית מבצע" },
+    { "type": "checkbox", "id": "show_badge", "label": "הצגת תגית", "info": "התגית מופיעה רק על מוצר במבצע (מחיר השוואה גבוה מהמחיר)", "default": true },
+    { "type": "text", "id": "badge_text", "label": "טקסט במרכז", "info": "{n} מוחלף באחוז ההנחה של המוצר. המילה הראשונה בשורה העליונה, השאר בשורה מתחת", "default": "{n}% OFF" },
+    { "type": "text", "id": "badge_ring_text", "label": "טקסט שמסתובב סביב", "default": "SALE IS HERE! • SEORA • SALE IS HERE! • SEORA •" },
+    { "type": "color", "id": "badge_bg", "label": "רקע התגית", "default": "#12306b" },
+    { "type": "color", "id": "badge_text_color", "label": "טקסט התגית", "default": "#ffffff" },
+    { "type": "header", "content": "צבעים" },
+    { "type": "color", "id": "bg_color", "label": "רקע הסקשן" },
+    { "type": "color", "id": "text_color", "label": "טקסט", "default": "#111111" },
+    { "type": "color", "id": "line_color", "label": "מסגרות, קווים וחצים", "default": "#1c3027" },
+    { "type": "color", "id": "button_bg", "label": "רקע הכפתור", "default": "#d4b67a" },
+    { "type": "color", "id": "button_hover_bg", "label": "רקע הכפתור במעבר עכבר", "default": "#e3cc9c" },
+    { "type": "color", "id": "button_text_color", "label": "טקסט הכפתור", "default": "#1c3027" },
+    { "type": "color", "id": "star_color", "label": "כוכבים", "default": "#d4b67a" },
+    { "type": "header", "content": "ריווח" },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [
+    { "name": "SEORA קרוסלת מוצרים" }
+  ]
+}
+{% endschema %}
