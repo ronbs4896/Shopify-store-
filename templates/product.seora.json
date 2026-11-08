@@ -27,17 +27,17 @@
           "type": "badges",
           "settings": {
             "badge_text": "יבואן רשמי ובלעדי",
-            "badge_bg": "#a8894f",
-            "badge_color": "#ffffff",
-            "badge_icon": "diamond",
+            "badge_bg": "#ffffff",
+            "badge_color": "#1c3027",
+            "badge_icon": "shield",
             "badge2_text": "",
             "badge2_bg": "#f5ead6",
             "badge2_color": "#111111",
             "show_stock": true,
-            "stock_bg": "#111111",
-            "stock_color": "#ffffff",
-            "stock_icon": "truck",
-            "dot_color": "#2ecc5b"
+            "stock_bg": "#eef4ef",
+            "stock_color": "#1c3027",
+            "stock_icon": "none",
+            "dot_color": "#2e9e4f"
           }
         },
         "title": {
@@ -47,7 +47,7 @@
         "price": {
           "type": "price",
           "settings": {
-            "save_text": "חסכת",
+            "save_text": "{pct}% הנחה",
             "show_installments": true,
             "installments": 5,
             "installments_text": "או ב{count} תשלומים של {amount} ללא ריבית"
@@ -65,7 +65,7 @@
           "settings": {
             "icon": "diamond",
             "text": "מואסנייט D VVS1 בחיתוך Excellent",
-            "icon_color": "#a8894f"
+            "icon_color": "#111111"
           }
         },
         "feature_2": {
@@ -73,15 +73,15 @@
           "settings": {
             "icon": "certificate",
             "text": "תעודה גמולוגית וכרטיס מקוריות GRA",
-            "icon_color": "#a8894f"
+            "icon_color": "#111111"
           }
         },
         "feature_3": {
           "type": "feature",
           "settings": {
-            "icon": "shield",
+            "icon": "silver",
             "text": "כסף סטרלינג S925, עמיד במים",
-            "icon_color": "#a8894f"
+            "icon_color": "#111111"
           }
         },
         "feature_4": {
@@ -89,7 +89,7 @@
           "settings": {
             "icon": "gift",
             "text": "אריזת מתנה ואחריות יבואן לשנה",
-            "icon_color": "#a8894f"
+            "icon_color": "#111111"
           }
         },
         "variant_picker": {
@@ -144,7 +144,7 @@
           "type": "trust_bar",
           "settings": {
             "bg_color": "#f6f2ea",
-            "icon_color": "#a8894f",
+            "icon_color": "#1c3027",
             "item1_icon": "truck",
             "item1_title": "משלוח חינם מעל 299 ₪",
             "item1_text": "עד 5 ימי עסקים",
@@ -157,6 +157,36 @@
             "item4_icon": "lock",
             "item4_title": "תשלום מאובטח",
             "item4_text": "באישור תקן PCI"
+          }
+        },
+        "shipping_tab": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "משלוחים",
+            "show_description": false,
+            "content": "<p>ההזמנה מגיעה תוך 5 ימי עסקים לכל היותר (ראשון עד חמישי, לא כולל חגים). המשלוח חינם בהזמנה מעל 299 ₪, ומתחת לסכום הזה הוא עולה 35 ₪. כשההזמנה יוצאת, נשלח מספר מעקב.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "returns_tab": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "החלפות והחזרות",
+            "show_description": false,
+            "content": "<p>אפשר להחליף מוצר תוך 14 ימי עסקים מקבלת המשלוח, כל עוד לא נעשה בו שימוש והוא באריזה המקורית עם כל מה שהגיע איתו. ביטול עסקה והחזר כספי מתבצעים לפי <a href=\"/pages/מדיניות-החזרות\">מדיניות ההחזרות</a>, בכפוף לדמי ביטול.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "warranty_tab": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "אחריות",
+            "show_description": false,
+            "content": "<p>על כל מוצר יש אחריות יבואן: שנה על תכשיטים ושנתיים על שעונים. האחריות לא מכסה נזק משימוש לא נכון, מכה, שבר, שריטה או אובדן.</p>",
+            "page": "",
+            "open": false
           }
         }
       },
@@ -174,6 +204,9 @@
         "buy_buttons",
         "bundle",
         "product_details",
+        "shipping_tab",
+        "returns_tab",
+        "warranty_tab",
         "trust_bar"
       ],
       "settings": {
@@ -186,13 +219,13 @@
         "accent_color": "#a8894f",
         "dark_color": "#111111",
         "text_color": "#111111",
-        "sale_color": "#c8242b",
+        "sale_color": "#111111",
         "success_color": "#2e9e4f",
-        "button_bg": "#111111",
+        "button_bg": "#1c3027",
         "button_text_color": "#ffffff",
-        "button_radius": 10,
-        "title_size": 32,
-        "price_size": 28,
+        "button_radius": 12,
+        "title_size": 28,
+        "price_size": 34,
         "swatch_size": 56,
         "pill_height": 64,
         "pill_min_width": 160,
@@ -214,7 +247,9 @@
         "bg_color": "#faf8f5",
         "features_style": "list",
         "padding_top": 28,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "design": "premium",
+        "media_badge_collection": "הנמכרים-ביותר"
       }
     },
     "seora_logos": {

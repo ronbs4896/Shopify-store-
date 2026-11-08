@@ -35,7 +35,7 @@
 
 {% render 'spi-styles', section: section %}
 
-<div id="spi-{{ sid }}" class="section-{{ sid }}-padding gradient color-{{ s.color_scheme }}">
+<div id="spi-{{ sid }}" class="section-{{ sid }}-padding gradient color-{{ s.color_scheme }}{% if s.design == 'premium' %} spi--premium{% endif %}">
   <div class="page-width">
     <div class="product product--{{ s.media_size }} product--{{ s.media_position }} product--{{ s.gallery_layout }} product--mobile-{{ s.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper{% if s.media_position == 'right' %} medium-hide large-up-hide{% endif %}">
@@ -159,10 +159,12 @@
     { "type": "checkbox", "id": "enable_video_looping", "label": "וידאו בלופ", "default": true },
     { "type": "checkbox", "id": "enable_sticky_info", "label": "מידע מוצר דביק בדסקטופ", "default": true },
     { "type": "text", "id": "media_badge_text", "label": "תגית על התמונה הראשית (ריק = בלי)", "default": "נמכר ביותר" },
+    { "type": "collection", "id": "media_badge_collection", "label": "להציג את התגית רק על מוצרים מהקולקציה (ריק = על כל המוצרים)" },
     { "type": "select", "id": "media_badge_icon", "label": "אייקון התגית", "options": [ { "value": "none", "label": "ללא" }, { "value": "diamond", "label": "יהלום" }, { "value": "truck", "label": "משלוח" }, { "value": "certificate", "label": "תעודה" }, { "value": "shield", "label": "מגן" }, { "value": "star", "label": "כוכב" }, { "value": "sparkles", "label": "נצנוץ" }, { "value": "fire", "label": "אש" }, { "value": "gift", "label": "מתנה" } ], "default": "fire" },
     { "type": "checkbox", "id": "show_media_arrows", "label": "חיצים על התמונה הראשית (דסקטופ)", "default": true },
 
     { "type": "header", "content": "כללי" },
+    { "type": "select", "id": "design", "label": "עיצוב", "options": [ { "value": "classic", "label": "קלאסי" }, { "value": "premium", "label": "פרימיום" } ], "default": "classic", "info": "פרימיום: מחיר כהה, תגיות עם מסגרת, אריחי יתרונות עם אייקונים שחורים, מידות וכפתור בירוק המותג" },
     { "type": "color_scheme", "id": "color_scheme", "label": "ערכת צבעים", "default": "background-1" },
     { "type": "color", "id": "bg_color", "label": "צבע רקע לסקשן (ריק = לפי ערכת הצבעים)" },
     { "type": "select", "id": "features_style", "label": "תצוגת שורות היתרון", "options": [ { "value": "tiles", "label": "אייקונים בשורה (כרטיסים)" }, { "value": "list", "label": "רשימה" } ], "default": "tiles" },
@@ -211,7 +213,7 @@
           { "value": "diamond", "label": "יהלום" }, { "value": "certificate", "label": "תעודה" }, { "value": "shield", "label": "מגן עם וי" }, { "value": "check", "label": "וי בעיגול" },
           { "value": "truck", "label": "משלוח" }, { "value": "gift", "label": "מתנה" }, { "value": "sparkles", "label": "נצנוץ" }, { "value": "ring", "label": "טבעת" },
           { "value": "heart", "label": "לב" }, { "value": "star", "label": "כוכב" }, { "value": "lock", "label": "מנעול" }, { "value": "refresh", "label": "החזרה/החלפה" },
-          { "value": "clock", "label": "שעון" }, { "value": "water", "label": "עמיד במים" } ], "default": "check" },
+          { "value": "clock", "label": "שעון" }, { "value": "water", "label": "עמיד במים" }, { "value": "silver", "label": "כסף 925" } ], "default": "check" },
         { "type": "text", "id": "text", "label": "טקסט", "default": "יתרון של המוצר" },
         { "type": "color", "id": "icon_color", "label": "צבע אייקון", "default": "#a8894f" }
       ]
@@ -259,7 +261,7 @@
       "name": "מחיר",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "save_text", "label": "טקסט חיסכון (ריק = בלי תגית)", "default": "חסכת" },
+        { "type": "text", "id": "save_text", "label": "טקסט חיסכון (ריק = בלי תגית). {pct} = אחוז ההנחה, בלי {pct} מוצג הסכום", "default": "חסכת" },
         { "type": "checkbox", "id": "show_installments", "label": "הצג שורת תשלומים", "default": true },
         { "type": "range", "id": "installments", "label": "מספר תשלומים", "min": 1, "max": 12, "step": 1, "default": 5 },
         { "type": "text", "id": "installments_text", "label": "טקסט תשלומים ({count}, {amount})", "default": "או ב{count} תשלומים של {amount} ללא ריבית" }

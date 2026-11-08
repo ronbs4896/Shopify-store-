@@ -113,6 +113,11 @@
           save.hidden = !onSale;
           const span = save.querySelector('span');
           if (span && onSale) span.textContent = this.money(v.compare_at_price - v.price);
+          const tplSave = box.dataset.saveText || '';
+          if (onSale && save.classList.contains('spi-price__save--pct')) {
+            const pct = Math.round((v.compare_at_price - v.price) * 100 / v.compare_at_price);
+            save.textContent = tplSave.replace('{pct}', pct);
+          }
         }
         const inst = box.querySelector('.spi-installments__text') || box.querySelector('.spi-installments');
         const count = parseInt(box.dataset.installments || '0', 10);

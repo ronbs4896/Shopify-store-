@@ -7,6 +7,19 @@
   assign has_badge = false
   if s.media_badge_text != blank
     assign has_badge = true
+    # optional: only on products in the chosen collection (e.g. best sellers)
+    if s.media_badge_collection != blank
+      assign in_badge_col = false
+      for c in product.collections
+        if c.handle == s.media_badge_collection.handle
+          assign in_badge_col = true
+          break
+        endif
+      endfor
+      unless in_badge_col
+        assign has_badge = false
+      endunless
+    endif
   endif
   assign has_arrows = false
   if s.show_media_arrows and product.media.size > 1
