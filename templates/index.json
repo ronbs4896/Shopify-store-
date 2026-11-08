@@ -801,8 +801,60 @@
     },
     "seora_product_carousel": {
       "type": "seora-product-carousel",
+      "blocks": {
+        "collection_1": {
+          "type": "collection",
+          "settings": {
+            "collection": "טבעות-יהלומי-מוסאנייט",
+            "title": "טבעות"
+          }
+        },
+        "collection_2": {
+          "type": "collection",
+          "settings": {
+            "collection": "עגילי-יהלומי-מואסנייט",
+            "title": "עגילים"
+          }
+        },
+        "collection_3": {
+          "type": "collection",
+          "settings": {
+            "collection": "שרשראות-יהלומי-מואסנייט",
+            "title": "שרשראות"
+          }
+        },
+        "collection_4": {
+          "type": "collection",
+          "settings": {
+            "collection": "צמידי-יהלומי-מוסאנייט",
+            "title": "צמידים"
+          }
+        },
+        "collection_5": {
+          "type": "collection",
+          "settings": {
+            "collection": "סט-תכשיטי-מוסאנייט",
+            "title": "סטים"
+          }
+        },
+        "collection_6": {
+          "type": "collection",
+          "settings": {
+            "collection": "שעונים-לגברים",
+            "title": "שעונים"
+          }
+        }
+      },
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4",
+        "collection_5",
+        "collection_6"
+      ],
       "settings": {
-        "heading": "הנמכרים ביותר",
+        "heading": "הקולקציות שלנו",
         "collection": "הנמכרים-ביותר",
         "products_to_show": 10,
         "columns_desktop": 4,
@@ -824,7 +876,10 @@
         "button_text_color": "#1c3027",
         "star_color": "#d4b67a",
         "padding_top": 40,
-        "padding_bottom": 48
+        "padding_bottom": 48,
+        "source": "collections",
+        "collection_button_label": "לצפייה בקולקציה",
+        "image_fit": "contain"
       }
     }
   },

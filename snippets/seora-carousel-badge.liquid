@@ -1,0 +1,24 @@
+{%- comment -%}
+  Round sale badge with rotating text for sections/seora-product-carousel.liquid.
+  Params: pct (real discount percent), text (centre text, {n} = pct), ring (rotating text), uid (unique id).
+{%- endcomment -%}
+{%- liquid
+  assign badge = text | default: '{n}% OFF' | replace: '{n}', pct
+  assign badge_words = badge | split: ' '
+  assign badge_top = badge_words | first
+  assign badge_rest = badge | remove_first: badge_top | strip
+-%}
+<span class="spc__badge" aria-label="{{ badge | escape }}">
+  <svg class="spc__ring" viewBox="0 0 100 100" aria-hidden="true">
+    <defs>
+      <path id="SpcRing-{{ uid }}" d="M50,50 m-39,0 a39,39 0 1,1 78,0 a39,39 0 1,1 -78,0"/>
+    </defs>
+    <text>
+      <textPath href="#SpcRing-{{ uid }}" textLength="242" lengthAdjust="spacingAndGlyphs">{{ ring | escape }}</textPath>
+    </text>
+  </svg>
+  <span class="spc__badge-main" aria-hidden="true">
+    <span>{{ badge_top | escape }}</span>
+    {%- if badge_rest != blank -%}<span>{{ badge_rest | escape }}</span>{%- endif -%}
+  </span>
+</span>
