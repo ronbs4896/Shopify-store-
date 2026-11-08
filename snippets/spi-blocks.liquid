@@ -332,6 +332,18 @@
         {%- capture value_money -%}{% render 'seora-money', amount: addon_compare, symbol: sym %}{%- endcapture -%}
         {%- liquid
           assign badge_text = up_badge | escape | replace: '-{pct}%', pct_bdi | replace: '{pct}', pct | replace: '{value}', value_money
+          # {sale} = the add-on's real discount from its own prices (compare-at vs price); no discount, no badge
+          assign addon_sale = 0
+          if av.compare_at_price > av.price
+            assign addon_sale = av.compare_at_price | minus: av.price | times: 100.0 | divided_by: av.compare_at_price | round
+          endif
+          if badge_text contains '{sale}'
+            if addon_sale > 0
+              assign badge_text = badge_text | replace: '{sale}', addon_sale
+            else
+              assign badge_text = ''
+            endif
+          endif
         -%}
         <div class="spi-bundle spi-bundle--{{ mode }}" data-pct="{{ pct }}" data-mode="{{ mode }}" data-offer="{{ offer_cents }}" data-free-text="{{ free_text | escape }}" {{ block.shopify_attributes }}>
           {%- if block.settings.heading != blank -%}
