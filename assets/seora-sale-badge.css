@@ -1,0 +1,74 @@
+/* SEORA: round rotating sale badge on product cards (same look as the carousel badge).
+   Markup: snippets/seora-carousel-badge.liquid, rendered from snippets/card-product.liquid. */
+
+.card__badge .seora-sale-li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.card .spc__badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 7.2rem;
+  height: 7.2rem;
+  border-radius: 50%;
+  background: #12306b;
+  color: #ffffff;
+  pointer-events: none;
+}
+
+.card .spc__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: seora-badge-spin 14s linear infinite;
+}
+
+.card .spc__ring text {
+  fill: currentColor;
+  font-size: 8.4px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  direction: ltr;
+  unicode-bidi: plaintext;
+}
+
+.card .spc__badge-main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  direction: ltr;
+}
+
+@keyframes seora-badge-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .card .spc__badge {
+    width: 5.8rem;
+    height: 5.8rem;
+  }
+
+  .card .spc__badge-main {
+    font-size: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card .spc__ring {
+    animation: none;
+  }
+}
