@@ -454,7 +454,8 @@
         "breakpoint_xxl": 4,
         "padding_top": 36,
         "padding_bottom": 64
-      }
+      },
+      "disabled": true
     },
     "seora_materials": {
       "type": "seora-split",
@@ -778,11 +779,71 @@
       "settings": {
         "enable": true
       }
+    },
+    "seora_video_reviews": {
+      "type": "seora-video-reviews",
+      "blocks": {
+        "video_1": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/IMG_7445.mp4",
+            "name": ""
+          }
+        },
+        "video_2": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/6d8f4924-be97-478f-b8b6-dadd7bd95947.MP4",
+            "name": ""
+          }
+        },
+        "video_3": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/bbf01170-e1f0-4c59-96d1-3b24994cc302.MP4",
+            "name": ""
+          }
+        },
+        "video_4": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/acf9637b-0bbb-4fd6-8ea8-ad0a6a0765b9.MP4",
+            "name": ""
+          }
+        },
+        "video_5": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/39e746bc-297b-47be-a01d-cc1a24fc2ebf.MP4",
+            "name": ""
+          }
+        }
+      },
+      "block_order": [
+        "video_1",
+        "video_2",
+        "video_3",
+        "video_4",
+        "video_5"
+      ],
+      "settings": {
+        "heading": "מה הלקוחות שלנו אומרים",
+        "subheading": "",
+        "card_width": 240,
+        "card_width_mobile": 62,
+        "gap": 10,
+        "radius": 12,
+        "bg_color": "",
+        "heading_color": "#111111",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
     "main",
     "seora_logos",
+    "seora_video_reviews",
     "shoppable_video_new_yQVWcy",
     "seora_materials",
     "seora_reviews",
