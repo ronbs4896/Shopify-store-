@@ -107,54 +107,94 @@
         "accessibility_info": "Slideshow about our brand"
       }
     },
-    "collection_list_hXDpgw": {
-      "type": "collection-list",
+    "seora_product_carousel": {
+      "type": "seora-product-carousel",
       "blocks": {
-        "featured_collection_YAEddW": {
-          "type": "featured_collection",
+        "collection_1": {
+          "type": "collection",
           "settings": {
-            "collection": "צמידי-יהלומי-מוסאנייט"
+            "collection": "טבעות-יהלומי-מוסאנייט",
+            "title": "טבעות",
+            "text": ""
           }
         },
-        "featured_collection_3AkzWy": {
-          "type": "featured_collection",
+        "collection_2": {
+          "type": "collection",
           "settings": {
-            "collection": "עגילי-יהלומי-מואסנייט"
+            "collection": "עגילי-יהלומי-מואסנייט",
+            "title": "עגילים",
+            "text": ""
           }
         },
-        "featured_collection_rE87mk": {
-          "type": "featured_collection",
+        "collection_3": {
+          "type": "collection",
           "settings": {
-            "collection": "שרשראות-יהלומי-מואסנייט"
+            "collection": "שרשראות-יהלומי-מואסנייט",
+            "title": "שרשראות",
+            "text": ""
           }
         },
-        "featured_collection_KHkxMX": {
-          "type": "featured_collection",
+        "collection_4": {
+          "type": "collection",
           "settings": {
-            "collection": "טבעות-יהלומי-מוסאנייט"
+            "collection": "צמידי-יהלומי-מוסאנייט",
+            "title": "צמידים",
+            "text": ""
+          }
+        },
+        "collection_5": {
+          "type": "collection",
+          "settings": {
+            "collection": "סט-תכשיטי-מוסאנייט",
+            "title": "סטים",
+            "text": ""
+          }
+        },
+        "collection_6": {
+          "type": "collection",
+          "settings": {
+            "collection": "שעונים-לגברים",
+            "title": "שעונים",
+            "text": ""
           }
         }
       },
       "block_order": [
-        "featured_collection_YAEddW",
-        "featured_collection_3AkzWy",
-        "featured_collection_rE87mk",
-        "featured_collection_KHkxMX"
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4",
+        "collection_5",
+        "collection_6"
       ],
-      "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "כל הקולקציות",
-        "heading_size": "h1",
-        "image_ratio": "square",
+        "heading": "הקולקציות שלנו",
+        "source": "collections",
+        "collection_button_label": "לצפייה בקולקציה",
+        "collection": "הנמכרים-ביותר",
+        "product_list": [],
+        "products_to_show": 10,
         "columns_desktop": 4,
-        "color_scheme": "",
-        "subtitle_center": false,
-        "show_arrow": false,
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "columns_mobile": 15,
+        "button_label": "לצפייה במוצר",
+        "show_price": false,
+        "show_reviews": false,
+        "image_fit": "contain",
+        "image_radius": 40,
+        "show_badge": true,
+        "badge_text": "{n}% OFF",
+        "badge_ring_text": "SALE IS HERE! • SEORA • SALE IS HERE! • SEORA •",
+        "badge_bg": "#12306b",
+        "badge_text_color": "#ffffff",
+        "bg_color": "",
+        "text_color": "#111111",
+        "line_color": "#1c3027",
+        "button_bg": "#d4b67a",
+        "button_hover_bg": "#e3cc9c",
+        "button_text_color": "#1c3027",
+        "star_color": "#d4b67a",
+        "padding_top": 40,
+        "padding_bottom": 48
       }
     },
     "rich_text_qQUy8k": {
@@ -178,104 +218,6 @@
         "full_width": true,
         "padding_top": 24,
         "padding_bottom": 0
-      }
-    },
-    "tabs_collection_qfp7rC": {
-      "type": "tabs-collection",
-      "blocks": {
-        "tab_H3PKEg": {
-          "type": "tab",
-          "disabled": true,
-          "settings": {
-            "heading": "הכי נמכר",
-            "collection": "",
-            "description": "",
-            "collection_text_alignment": "left",
-            "show_description": false,
-            "description_style": "body"
-          }
-        },
-        "tab_Ba9wyh": {
-          "type": "tab",
-          "settings": {
-            "heading": "טבעות",
-            "collection": "טבעות-יהלומי-מוסאנייט",
-            "description": "",
-            "collection_text_alignment": "center",
-            "show_description": false,
-            "description_style": "body"
-          }
-        },
-        "tab_piQnRt": {
-          "type": "tab",
-          "settings": {
-            "heading": "עגילים",
-            "collection": "עגילי-יהלומי-מואסנייט",
-            "description": "",
-            "collection_text_alignment": "left",
-            "show_description": true,
-            "description_style": "body"
-          }
-        },
-        "tab_XYGc7J": {
-          "type": "tab",
-          "settings": {
-            "heading": "שרשראות",
-            "collection": "שרשראות-יהלומי-מואסנייט",
-            "description": "",
-            "collection_text_alignment": "left",
-            "show_description": true,
-            "description_style": "body"
-          }
-        },
-        "tab_gkKCAw": {
-          "type": "tab",
-          "settings": {
-            "heading": "צמידים",
-            "collection": "צמידי-יהלומי-מוסאנייט",
-            "description": "",
-            "collection_text_alignment": "left",
-            "show_description": false,
-            "description_style": "body"
-          }
-        }
-      },
-      "block_order": [
-        "tab_H3PKEg",
-        "tab_Ba9wyh",
-        "tab_piQnRt",
-        "tab_XYGc7J",
-        "tab_gkKCAw"
-      ],
-      "custom_css": [
-        ".card__heading,.card__heading a,.product-card__title,.product-title,.price,.price-item,.price__current,.price__regular,.price__sale {direction: rtl; text-align: right; unicode-bidi: plaintext;}"
-      ],
-      "settings": {
-        "tabs_color_scheme": "background-1",
-        "tab_font": 16,
-        "tab_font_align": "center",
-        "tab_font_mb": 14,
-        "tab_font_mb_align": "center",
-        "show_border": false,
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "image_ratio": "adapt",
-        "image_no_crop": true,
-        "show_secondary_image": false,
-        "show_vendor": false,
-        "show_rating": false,
-        "show_scroll_tags": false,
-        "enable_quick_desc": false,
-        "quick_desc_legth": 90,
-        "quick_desc_size": 14,
-        "enable_quick_add": true,
-        "show_secondary_add": false,
-        "columns_mobile": "2",
-        "padding_top": 12,
-        "padding_bottom": 36
       }
     },
     "seora_video_reviews": {
@@ -375,6 +317,52 @@
         "heading_color": "#111111",
         "padding_top": 40,
         "padding_bottom": 40
+      }
+    },
+    "tabs_collection_qfp7rC": {
+      "type": "tabs-collection",
+      "blocks": {
+        "tab_m3p9FT": {
+          "type": "tab",
+          "settings": {
+            "heading": "המוצרים הנמכרים ביותר שלנו",
+            "collection": "הנמכרים-ביותר",
+            "description": "",
+            "collection_text_alignment": "left",
+            "show_description": false,
+            "description_style": "uppercase"
+          }
+        }
+      },
+      "block_order": [
+        "tab_m3p9FT"
+      ],
+      "settings": {
+        "tabs_color_scheme": "background-1",
+        "tab_font": 16,
+        "tab_font_align": "center",
+        "tab_font_mb": 14,
+        "tab_font_mb_align": "center",
+        "show_border": false,
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "image_ratio": "adapt",
+        "image_no_crop": true,
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "show_scroll_tags": false,
+        "enable_quick_desc": false,
+        "quick_desc_legth": 90,
+        "quick_desc_size": 14,
+        "enable_quick_add": true,
+        "show_secondary_add": false,
+        "columns_mobile": "2",
+        "padding_top": 12,
+        "padding_bottom": 36
       }
     },
     "shoppable_video_new_BdqjL9": {
@@ -753,7 +741,7 @@
         "bg_color": "#1f1d24",
         "card_color": "#26242c",
         "text_color": "#ffffff",
-        "accent_color": "#d4b67a",
+        "accent_color": "#FFFFFF",
         "padding_top": 56,
         "padding_bottom": 56
       }
@@ -798,99 +786,15 @@
         "margin_top": 0,
         "margin_bottom": 0
       }
-    },
-    "seora_product_carousel": {
-      "type": "seora-product-carousel",
-      "blocks": {
-        "collection_1": {
-          "type": "collection",
-          "settings": {
-            "collection": "טבעות-יהלומי-מוסאנייט",
-            "title": "טבעות"
-          }
-        },
-        "collection_2": {
-          "type": "collection",
-          "settings": {
-            "collection": "עגילי-יהלומי-מואסנייט",
-            "title": "עגילים"
-          }
-        },
-        "collection_3": {
-          "type": "collection",
-          "settings": {
-            "collection": "שרשראות-יהלומי-מואסנייט",
-            "title": "שרשראות"
-          }
-        },
-        "collection_4": {
-          "type": "collection",
-          "settings": {
-            "collection": "צמידי-יהלומי-מוסאנייט",
-            "title": "צמידים"
-          }
-        },
-        "collection_5": {
-          "type": "collection",
-          "settings": {
-            "collection": "סט-תכשיטי-מוסאנייט",
-            "title": "סטים"
-          }
-        },
-        "collection_6": {
-          "type": "collection",
-          "settings": {
-            "collection": "שעונים-לגברים",
-            "title": "שעונים"
-          }
-        }
-      },
-      "block_order": [
-        "collection_1",
-        "collection_2",
-        "collection_3",
-        "collection_4",
-        "collection_5",
-        "collection_6"
-      ],
-      "settings": {
-        "heading": "הקולקציות שלנו",
-        "collection": "הנמכרים-ביותר",
-        "products_to_show": 10,
-        "columns_desktop": 4,
-        "columns_mobile": 15,
-        "button_label": "לצפייה במוצר",
-        "show_price": false,
-        "show_reviews": false,
-        "image_radius": 40,
-        "show_badge": true,
-        "badge_text": "{n}% OFF",
-        "badge_ring_text": "SALE IS HERE! • SEORA • SALE IS HERE! • SEORA •",
-        "badge_bg": "#12306b",
-        "badge_text_color": "#ffffff",
-        "bg_color": "",
-        "text_color": "#111111",
-        "line_color": "#1c3027",
-        "button_bg": "#d4b67a",
-        "button_hover_bg": "#e3cc9c",
-        "button_text_color": "#1c3027",
-        "star_color": "#d4b67a",
-        "padding_top": 40,
-        "padding_bottom": 48,
-        "source": "collections",
-        "collection_button_label": "לצפייה בקולקציה",
-        "image_fit": "contain"
-      }
     }
   },
   "order": [
     "slideshow_jAXVC4",
     "slideshow_eBbReU",
     "seora_product_carousel",
-    "collection_list_hXDpgw",
     "rich_text_qQUy8k",
-    "tabs_collection_qfp7rC",
     "seora_video_reviews",
+    "tabs_collection_qfp7rC",
     "shoppable_video_new_BdqjL9",
     "collapsible_content_k74NUT",
     "featured_collection_HbUw9e",
