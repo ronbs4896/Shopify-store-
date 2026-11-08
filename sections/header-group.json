@@ -14,8 +14,8 @@
     "seora_announcement": {
       "type": "seora-announcement",
       "settings": {
-        "line_1": "<strong>20% הנחה על כל האתר</strong>",
-        "line_2": "<strong>משלוח חינם</strong> בהזמנה מעל 300 ₪",
+        "line_1": "<strong>40% הנחה על כל האתר</strong>",
+        "line_2": "<strong>משלוחים חינם</strong> בהזמנה מעל 300 ₪",
         "link": "",
         "bg_color": "#1c3027",
         "text_color": "#ffffff",
@@ -27,7 +27,6 @@
     },
     "lumin_scrolling_text_BRdDdB": {
       "type": "lumin-scrolling-text",
-      "disabled": true,
       "blocks": {
         "announcement_j8pyT6": {
           "type": "announcement",
@@ -46,6 +45,7 @@
       "block_order": [
         "announcement_j8pyT6"
       ],
+      "disabled": true,
       "settings": {
         "scroll_speed": 15,
         "reverse": false,

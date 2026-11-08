@@ -35,7 +35,7 @@
     "edit_mode": false,
     "drawer_size": "40rem",
     "cart_drawer_collection": "",
-    "head_message": "<p><strong>משלוח חינם בהזמנה מעל 299 ₪</strong></p>",
+    "head_message": "<p>40% הנחה על כל האתר&nbsp;</p>",
     "cart_head_text_style": "uppercase",
     "cart_message_bg": "#000000",
     "cart_message_text": "#ffffff",
@@ -702,8 +702,8 @@
       "form[data-testid=\"klaviyo-form-U9gS5n\"] h1 strong {font-weight: 900 !important;}",
       "form[data-testid=\"klaviyo-form-U9gS5n\"] button div {font-weight: 700 !important;}",
       "form[data-testid=\"klaviyo-form-U9gS5n\"] input[type=\"text\"],form[data-testid=\"klaviyo-form-U9gS5n\"] input[type=\"email\"] {padding-right: 16px !important; padding-left: 16px !important;}",
-      " /* SEORA phone IL only */ form[data-testid=\"klaviyo-form-U9gS5n\"] .klaviyo-phoneinput button[role=\"combobox\"]{display:none!important}",
-      " form[data-testid=\"klaviyo-form-U9gS5n\"] input[type=\"tel\"]{padding-right:16px!important;padding-left:16px!important}"
+      " /* SEORA phone IL only */form[data-testid=\"klaviyo-form-U9gS5n\"] .klaviyo-phoneinput button[role=\"combobox\"] {display: none !important;}",
+      "form[data-testid=\"klaviyo-form-U9gS5n\"] input[type=\"tel\"] {padding-right: 16px !important; padding-left: 16px !important;}"
     ]
   }
 }

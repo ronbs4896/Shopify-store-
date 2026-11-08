@@ -278,6 +278,97 @@
         "padding_bottom": 36
       }
     },
+    "seora_video_reviews": {
+      "type": "seora-video-reviews",
+      "blocks": {
+        "video_1": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/5E50AE8B-C85B-4725-ACF0-DBE2BF396EFB.mp4",
+            "name": "מור מוסרי"
+          }
+        },
+        "video_2": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/IMG_7445.mp4",
+            "name": "מוריה גולקין"
+          }
+        },
+        "video_3": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/IMG_3893.mov",
+            "name": "נועה טהר"
+          }
+        },
+        "video_4": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/IMG_2187.MOV",
+            "name": "מוריה גולקין"
+          }
+        },
+        "video_5": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/732270aea84e49faaa59f393c84927fc.MOV",
+            "name": ""
+          }
+        },
+        "video_6": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/6d8f4924-be97-478f-b8b6-dadd7bd95947.MP4",
+            "name": "אוראל אלקסלי"
+          }
+        },
+        "video_7": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/bbf01170-e1f0-4c59-96d1-3b24994cc302.MP4",
+            "name": "איתן ברקוביץ"
+          }
+        },
+        "video_8": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/acf9637b-0bbb-4fd6-8ea8-ad0a6a0765b9.MP4",
+            "name": "ברי שפס"
+          }
+        },
+        "video_9": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/39e746bc-297b-47be-a01d-cc1a24fc2ebf.MP4",
+            "name": "רון בן שושן"
+          }
+        }
+      },
+      "block_order": [
+        "video_1",
+        "video_2",
+        "video_3",
+        "video_4",
+        "video_5",
+        "video_6",
+        "video_7",
+        "video_8",
+        "video_9"
+      ],
+      "settings": {
+        "heading": "לקוחות ממליצים",
+        "subheading": "ככה זה נראה אצל הלקוחות שלנו",
+        "card_width": 240,
+        "card_width_mobile": 62,
+        "gap": 10,
+        "radius": 12,
+        "bg_color": "",
+        "heading_color": "#111111",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
     "shoppable_video_new_BdqjL9": {
       "type": "shoppable-video-new",
       "blocks": {
@@ -446,6 +537,7 @@
         "item_cWPRim",
         "item_jKdchp"
       ],
+      "disabled": true,
       "name": "Shoppable videos",
       "settings": {
         "color_scheme": "",
@@ -474,8 +566,7 @@
         "breakpoint_xxl": 4,
         "padding_top": 36,
         "padding_bottom": 32
-      },
-      "disabled": true
+      }
     },
     "collapsible_content_k74NUT": {
       "type": "collapsible-content",
@@ -596,47 +687,6 @@
         "padding_bottom": 36
       }
     },
-    "newsletter_EddyTa": {
-      "type": "newsletter",
-      "blocks": {
-        "heading_Xkkar4": {
-          "type": "heading",
-          "settings": {
-            "heading": "הצטרפו למועדון הלקוחות של SEORA",
-            "heading_size": "h2"
-          }
-        },
-        "paragraph_N8Uw3p": {
-          "type": "paragraph",
-          "settings": {
-            "text": "<p>נרשמים ומקבלים ראשונים הטבות ומבצעים.</p>"
-          }
-        },
-        "email_form_URQjkU": {
-          "type": "email_form",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "heading_Xkkar4",
-        "paragraph_N8Uw3p",
-        "email_form_URQjkU"
-      ],
-      "name": "t:sections.newsletter.presets.name",
-      "settings": {
-        "color_scheme": "background-2",
-        "full_width": true,
-        "text_align": "left",
-        "news_alignment": "horizontal",
-        "show_small_text": true,
-        "small_text": "* You can unsubscribe at any time.",
-        "padding_top": 40,
-        "padding_bottom": 44,
-        "margin_top": 0,
-        "margin_bottom": 0
-      },
-      "disabled": true
-    },
     "6b53f861-3aae-4cc4-a699-aca63db5c942": {
       "type": "timer",
       "settings": {
@@ -677,97 +727,68 @@
     },
     "seora_newsletter": {
       "type": "seora-newsletter",
-      "settings": {}
+      "settings": {
+        "eyebrow": "מועדון הלקוחות",
+        "heading": "הצטרפו למועדון הלקוחות של SEORA",
+        "text": "נרשמים ומקבלים ראשונים הטבות ומבצעים.",
+        "placeholder": "כתובת מייל",
+        "button_label": "הצטרפות",
+        "consent_text": "בהרשמה מאשרים לקבל דיוור מ-SEORA, ואפשר להסיר את ההרשמה בכל רגע.",
+        "success_text": "ההרשמה הצליחה, ההטבות הבאות יגיעו אליכם ראשונים.",
+        "error_text": "כדאי לבדוק את כתובת המייל ולנסות שוב.",
+        "perk_1": "הטבות בלעדיות",
+        "perk_1_sub": "מבצעים שמגיעים קודם לחברי המועדון",
+        "perk_2": "ראשונים לכל קולקציה",
+        "perk_2_sub": "כל תכשיט חדש מגיע אליכם לפני כולם",
+        "perk_3": "רק מה ששווה לפתוח",
+        "perk_3_sub": "בלי ספאם, והסרה בלחיצה אחת",
+        "bg_color": "#1f1d24",
+        "card_color": "#26242c",
+        "text_color": "#ffffff",
+        "accent_color": "#d4b67a",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
     },
-    "seora_video_reviews": {
-      "type": "seora-video-reviews",
+    "newsletter_EddyTa": {
+      "type": "newsletter",
       "blocks": {
-        "video_1": {
-          "type": "video",
+        "heading_Xkkar4": {
+          "type": "heading",
           "settings": {
-            "video": "shopify://files/videos/5E50AE8B-C85B-4725-ACF0-DBE2BF396EFB.mp4",
-            "name": ""
+            "heading": "הצטרפו למועדון הלקוחות של SEORA",
+            "heading_size": "h2"
           }
         },
-        "video_2": {
-          "type": "video",
+        "paragraph_N8Uw3p": {
+          "type": "paragraph",
           "settings": {
-            "video": "shopify://files/videos/IMG_7445.mp4",
-            "name": ""
+            "text": "<p>נרשמים ומקבלים ראשונים הטבות ומבצעים.</p>"
           }
         },
-        "video_3": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/IMG_3893.mov",
-            "name": ""
-          }
-        },
-        "video_4": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/IMG_2187.MOV",
-            "name": ""
-          }
-        },
-        "video_5": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/732270aea84e49faaa59f393c84927fc.MOV",
-            "name": ""
-          }
-        },
-        "video_6": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/6d8f4924-be97-478f-b8b6-dadd7bd95947.MP4",
-            "name": ""
-          }
-        },
-        "video_7": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/bbf01170-e1f0-4c59-96d1-3b24994cc302.MP4",
-            "name": ""
-          }
-        },
-        "video_8": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/acf9637b-0bbb-4fd6-8ea8-ad0a6a0765b9.MP4",
-            "name": ""
-          }
-        },
-        "video_9": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/39e746bc-297b-47be-a01d-cc1a24fc2ebf.MP4",
-            "name": ""
-          }
+        "email_form_URQjkU": {
+          "type": "email_form",
+          "settings": {}
         }
       },
       "block_order": [
-        "video_1",
-        "video_2",
-        "video_3",
-        "video_4",
-        "video_5",
-        "video_6",
-        "video_7",
-        "video_8",
-        "video_9"
+        "heading_Xkkar4",
+        "paragraph_N8Uw3p",
+        "email_form_URQjkU"
       ],
+      "disabled": true,
+      "name": "t:sections.newsletter.presets.name",
       "settings": {
-        "heading": "לקוחות ממליצים",
-        "subheading": "ככה זה נראה אצל הלקוחות שלנו",
-        "card_width": 240,
-        "card_width_mobile": 62,
-        "gap": 10,
-        "radius": 12,
-        "bg_color": "",
-        "heading_color": "#111111",
+        "color_scheme": "background-2",
+        "full_width": true,
+        "text_align": "left",
+        "news_alignment": "horizontal",
+        "show_small_text": true,
+        "small_text": "* You can unsubscribe at any time.",
         "padding_top": 40,
-        "padding_bottom": 40
+        "padding_bottom": 44,
+        "margin_top": 0,
+        "margin_bottom": 0
       }
     }
   },
