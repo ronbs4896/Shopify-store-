@@ -798,11 +798,40 @@
         "margin_top": 0,
         "margin_bottom": 0
       }
+    },
+    "seora_product_carousel": {
+      "type": "seora-product-carousel",
+      "settings": {
+        "heading": "הנמכרים ביותר",
+        "collection": "הנמכרים-ביותר",
+        "products_to_show": 10,
+        "columns_desktop": 4,
+        "columns_mobile": 15,
+        "button_label": "לצפייה במוצר",
+        "show_price": false,
+        "show_reviews": false,
+        "image_radius": 40,
+        "show_badge": true,
+        "badge_text": "{n}% OFF",
+        "badge_ring_text": "SALE IS HERE! • SEORA • SALE IS HERE! • SEORA •",
+        "badge_bg": "#12306b",
+        "badge_text_color": "#ffffff",
+        "bg_color": "",
+        "text_color": "#111111",
+        "line_color": "#1c3027",
+        "button_bg": "#d4b67a",
+        "button_hover_bg": "#e3cc9c",
+        "button_text_color": "#1c3027",
+        "star_color": "#d4b67a",
+        "padding_top": 40,
+        "padding_bottom": 48
+      }
     }
   },
   "order": [
     "slideshow_jAXVC4",
     "slideshow_eBbReU",
+    "seora_product_carousel",
     "collection_list_hXDpgw",
     "rich_text_qQUy8k",
     "tabs_collection_qfp7rC",
