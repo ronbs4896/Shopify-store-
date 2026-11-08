@@ -309,6 +309,13 @@
             "name": "מוריה גולקין"
           }
         },
+        "video_Aed3yT": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/IMG_4080_abbe9256-67f9-40b0-bc24-be94df60cb3e.mp4",
+            "name": "עדי דסקלוביץ׳"
+          }
+        },
         "video_5": {
           "type": "video",
           "settings": {
@@ -350,6 +357,7 @@
         "video_2",
         "video_3",
         "video_4",
+        "video_Aed3yT",
         "video_5",
         "video_6",
         "video_7",
