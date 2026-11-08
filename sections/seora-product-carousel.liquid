@@ -26,7 +26,7 @@
 <section
   id="SeoraProductCarousel-{{ sid }}"
   class="spc"
-  style="--spc-bg: {{ s.bg_color | default: 'transparent' }}; --spc-text: {{ s.text_color }}; --spc-line: {{ s.line_color }}; --spc-btn-bg: {{ s.button_bg }}; --spc-btn-text: {{ s.button_text_color }}; --spc-btn-hover: {{ s.button_hover_bg }}; --spc-badge-bg: {{ s.badge_bg }}; --spc-badge-text: {{ s.badge_text_color }}; --spc-star: {{ s.star_color }}; --spc-radius: {{ s.image_radius }}px; --spc-pt: {{ s.padding_top }}px; --spc-pb: {{ s.padding_bottom }}px;"
+  style="--spc-bg: {{ s.bg_color | default: 'transparent' }}; --spc-text: {{ s.text_color }}; --spc-line: {{ s.line_color }}; --spc-btn-bg: {{ s.button_bg }}; --spc-btn-text: {{ s.button_text_color }}; --spc-btn-hover: {{ s.button_hover_bg }}; --spc-badge-bg: {{ s.badge_bg }}; --spc-badge-text: {{ s.badge_text_color }}; --spc-star: {{ s.star_color }}; --spc-radius: {{ s.image_radius }}px; --spc-cols: {{ s.columns_desktop }}; --spc-cols-mobile: {{ s.columns_mobile | divided_by: 10.0 }}; --spc-pt: {{ s.padding_top }}px; --spc-pb: {{ s.padding_bottom }}px;"
 >
   {%- if s.heading != blank -%}
     <h2 class="spc__title">{{ s.heading | escape }}</h2>
@@ -155,7 +155,8 @@
   }
   #SeoraProductCarousel-{{ sid }} .spc__track {
     display: flex;
-    gap: clamp(2rem, 4.6vw, 6.8rem);
+    --spc-gap: clamp(1.6rem, 2.2vw, 3.2rem);
+    gap: var(--spc-gap);
     margin: 0;
     padding: 2.4rem 1.2rem 0.4rem;
     list-style: none;
@@ -170,7 +171,9 @@
   }
   #SeoraProductCarousel-{{ sid }} .spc__card {
     position: relative;
-    flex: 0 0 clamp(26rem, 22.5vw, 33.2rem);
+    /* exactly --spc-cols cards fit in the row; min-width 0 stops a large image from stretching the card */
+    flex: 0 0 calc((100% - (var(--spc-cols) - 1) * var(--spc-gap)) / var(--spc-cols));
+    min-width: 0;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -339,7 +342,7 @@
 
   #SeoraProductCarousel-{{ sid }} .spc__arrow {
     position: absolute;
-    top: calc(2.4rem + clamp(26rem, 22.5vw, 33.2rem) * 450 / 332 / 2);
+    top: var(--spc-arrow-top, 40%);
     z-index: 3;
     width: 4.8rem;
     height: 4.8rem;
@@ -383,12 +386,12 @@
       padding: 0;
     }
     #SeoraProductCarousel-{{ sid }} .spc__track {
-      gap: 1.6rem;
+      --spc-gap: 1.6rem;
       padding-inline: 1.6rem;
       scroll-padding-inline: 1.6rem;
     }
     #SeoraProductCarousel-{{ sid }} .spc__card {
-      flex-basis: 68vw;
+      flex-basis: calc((100% - (var(--spc-cols-mobile) - 1) * var(--spc-gap)) / var(--spc-cols-mobile));
     }
     #SeoraProductCarousel-{{ sid }} .spc__arrow {
       display: none;
@@ -432,6 +435,14 @@
       return perView * (card.offsetWidth + gap);
     }
 
+    function placeArrows() {
+      var media = track.querySelector('.spc__media');
+      if (!media) return;
+      var card = media.closest('.spc__card');
+      var top = card.offsetTop + media.offsetTop + media.offsetHeight / 2;
+      root.querySelector('.spc__wrap').style.setProperty('--spc-arrow-top', top + 'px');
+    }
+
     function update() {
       var max = track.scrollWidth - track.clientWidth;
       var pos = Math.abs(track.scrollLeft);
@@ -447,8 +458,10 @@
     prev.addEventListener('click', function () { move('prev'); });
     next.addEventListener('click', function () { move('next'); });
     track.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    window.addEventListener('resize', function () { update(); placeArrows(); });
     update();
+    placeArrows();
+    window.addEventListener('load', placeArrows);
   })();
 </script>
 
@@ -463,6 +476,8 @@
     { "type": "collection", "id": "collection", "label": "קטגוריה", "info": "בלי בחירה מוצגת הקטגוריה הנמכרים ביותר" },
     { "type": "product_list", "id": "product_list", "label": "או מוצרים לבחירה", "info": "אם בוחרים מוצרים כאן, הם מוצגים במקום הקטגוריה", "limit": 16 },
     { "type": "range", "id": "products_to_show", "label": "כמה מוצרים להציג", "min": 4, "max": 16, "step": 1, "default": 10 },
+    { "type": "range", "id": "columns_desktop", "label": "כמה מוצרים בשורה במחשב", "min": 3, "max": 6, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns_mobile", "label": "כמה מוצרים על המסך במובייל (15 = מוצר וחצי)", "min": 10, "max": 25, "step": 1, "default": 15 },
     { "type": "header", "content": "כרטיס" },
     { "type": "text", "id": "button_label", "label": "טקסט הכפתור", "default": "לצפייה במוצר" },
     { "type": "checkbox", "id": "show_price", "label": "הצגת מחיר", "default": false },
