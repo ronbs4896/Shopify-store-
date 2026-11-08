@@ -6,7 +6,19 @@
 <link rel="preload" href="https://cdn.shopify.com/s/files/1/0991/3434/1416/files/Birzia-Black.woff2?v=1782755766" as="font" type="font/woff2" crossorigin>
 
 <style>
-  /* Birzia covers Hebrew only; English letters and digits use the theme fonts. */
+  /* Birzia covers Hebrew only; English letters and digits use the theme fonts.
+     Four weights: Light 300, Medium 500, Bold 700, Black 900. Each element keeps the weight its
+     own CSS asks for, and the browser picks the nearest face: up to 300 Light, 400-500 Medium,
+     600-700 Bold, 800-900 Black. Headings default to Black. */
+  @font-face {
+    font-family: "Birzia";
+    src: url("https://cdn.shopify.com/s/files/1/0991/3434/1416/files/Birzia-Light.woff2?v=1787932101") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0590-05FF, U+FB1D-FB4F;
+  }
+
   @font-face {
     font-family: "Birzia";
     src: url("https://cdn.shopify.com/s/files/1/0991/3434/1416/files/Birzia-Medium.woff2?v=1782755766") format("woff2");
@@ -41,7 +53,15 @@
   h5,
   h6 {
     font-family: "Birzia", var(--font-heading-family), sans-serif !important;
-    font-weight: 900 !important;
+  }
+
+  html h1,
+  html h2,
+  html h3,
+  html h4,
+  html h5,
+  html h6 {
+    font-weight: 900;
   }
 
   p,
@@ -60,13 +80,11 @@
   textarea,
   small {
     font-family: "Birzia", var(--font-body-family), sans-serif !important;
-    font-weight: 500 !important;
   }
 
   strong,
-  b,
-  button {
-    font-weight: 700 !important;
+  b {
+    font-weight: 700;
   }
 </style>
     <meta charset="utf-8">
