@@ -890,10 +890,81 @@
       "settings": {
         "enable": true
       }
+    },
+    "seora_trust_orbit": {
+      "type": "seora-trust-orbit",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "icon": "gem",
+            "title": "מואסנייט D VVS1",
+            "text": "האבן מדורגת בדרגת הצבע הגבוהה ביותר (D) ובניקיון VVS1, עם ברק ופיזור אור שבולטים בכל תאורה."
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "icon": "cert",
+            "title": "תעודת GRA לכל תכשיט",
+            "text": "כל תכשיט מגיע עם תעודה גמולוגית וכרטיס מקוריות, כך שתמיד יודעים בדיוק מה קונים."
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "icon": "silver",
+            "title": "כסף סטרלינג 925",
+            "text": "925 חלקים של כסף טהור מכל 1,000, עמיד במים ומתאים לענידה יומיומית."
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "icon": "shield",
+            "title": "אחריות יבואן לשנה",
+            "text": "אחריות יבואן על כל תכשיט, והחלפה תוך 14 ימי עסקים כל עוד התכשיט לא נענד."
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4"
+      ],
+      "settings": {
+        "heading": "חשוב לנו שתדעו",
+        "image": "shopify://shop_images/seora-orbit-liel.png",
+        "use_product_image": true,
+        "image_rotate": -8,
+        "pill_1_icon": "spark",
+        "pill_1_text": "מואסנייט D VVS1",
+        "pill_1_text_mobile": "",
+        "pill_2_icon": "shield",
+        "pill_2_text": "אחריות יבואן לשנה",
+        "pill_2_text_mobile": "אחריות לשנה",
+        "pill_3_icon": "cert",
+        "pill_3_text": "תעודת GRA",
+        "pill_3_text_mobile": "",
+        "show_bursts": true,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "body_color": "#2b2b2b",
+        "icon_color": "#111111",
+        "ring_color": "#d3ded6",
+        "burst_color": "#cddbd0",
+        "pill_border_color": "#111111",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
     }
   },
   "order": [
     "main",
+    "seora_trust_orbit",
     "seora_logos",
     "seora_video_reviews",
     "shoppable_video_new_yQVWcy",

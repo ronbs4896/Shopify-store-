@@ -1,0 +1,225 @@
+{%- comment -%}
+  SEORA "חשוב לנו שתדעו": product image inside thin rings with small bursts and three pills,
+  next to a list of rows (icon, title, text). Built for the product page; works on any page.
+  Image: the picked image (a cut-out PNG with a transparent background looks best).
+  With no picked image and "use product image" on, the current product's main image is used;
+  multiply blending hides a white studio background.
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign img = section.settings.image
+  assign use_product_img = false
+  if img == blank and section.settings.use_product_image and product
+    assign img = product.featured_image
+    assign use_product_img = true
+  endif
+-%}
+
+<style>
+  #sto-{{ sid }}{
+    --sto-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --sto-text: {{ section.settings.text_color }};
+    --sto-muted: {{ section.settings.body_color }};
+    --sto-icon: {{ section.settings.icon_color }};
+    --sto-ring: {{ section.settings.ring_color }};
+    --sto-burst: {{ section.settings.burst_color }};
+    --sto-pill-border: {{ section.settings.pill_border_color }};
+    --sto-rot: {{ section.settings.image_rotate }}deg;
+    background: var(--sto-bg);
+    color: var(--sto-text);
+  }
+  #sto-{{ sid }} .sto{display:grid;grid-template-columns:1fr 1.05fr;align-items:center;gap:5rem;max-width:144rem;margin:0 auto;padding:{{ section.settings.padding_top }}px 4.8rem {{ section.settings.padding_bottom }}px}
+  #sto-{{ sid }} .sto__txt{text-align:start}
+  #sto-{{ sid }} .sto__title{margin:0 0 3.6rem;font-size:3.8rem;line-height:1.15;letter-spacing:-.01em;color:var(--sto-text)}
+  #sto-{{ sid }} .sto__item{display:grid;grid-template-columns:6rem 1fr;gap:2rem;align-items:start}
+  #sto-{{ sid }} .sto__item + .sto__item{margin-top:3.4rem}
+  #sto-{{ sid }} .sto__icon svg{display:block;width:6rem;height:6rem}
+  #sto-{{ sid }} .sto__item h3{margin:.2rem 0 .7rem;font-size:2rem;font-weight:700;line-height:1.3;color:var(--sto-text)}
+  #sto-{{ sid }} .sto__item p{margin:0;font-size:1.55rem;line-height:1.6;color:var(--sto-muted);max-width:52rem}
+  #sto-{{ sid }} .sto__orbit{position:relative;aspect-ratio:1/1;width:100%;max-width:64rem;margin-inline:auto}
+  #sto-{{ sid }} .sto__ring{position:absolute;border-radius:50%;border:1.5px solid var(--sto-ring);inset:var(--i)}
+  #sto-{{ sid }} .sto__burst{position:absolute;width:5.4rem;height:5.4rem;transform:translate(50%,-50%) rotate(var(--r,0deg))}
+  #sto-{{ sid }} .sto__burst svg{display:block;width:100%;height:100%}
+  #sto-{{ sid }} .sto__burst polygon{fill:var(--sto-burst)}
+  #sto-{{ sid }} .sto__prod{position:absolute;inset:16% 14% 14% 16%;display:grid;place-items:center}
+  #sto-{{ sid }} .sto__prod img{width:100%;height:100%;object-fit:contain;transform:rotate(var(--sto-rot))}
+  #sto-{{ sid }} .sto__prod--blend img{mix-blend-mode:multiply}
+  #sto-{{ sid }} .sto__shadow{position:absolute;left:30%;right:30%;bottom:15%;height:5%;border-radius:50%;background:radial-gradient(closest-side,rgba(28,48,39,.22),transparent);filter:blur(2px)}
+  #sto-{{ sid }} .sto__pill{position:absolute;right:var(--x);top:var(--y);display:inline-flex;align-items:center;gap:1.1rem;height:6.4rem;padding:0 2.4rem 0 2.8rem;border:1.5px solid var(--sto-pill-border);border-radius:999px;background:#fff;color:#111;font-size:1.7rem;font-weight:500;white-space:nowrap;transform:translate(50%,-50%);z-index:2}
+  #sto-{{ sid }} .sto__pill svg{flex:none;width:2.8rem;height:2.8rem}
+  #sto-{{ sid }} .sto__pill .sto__m{display:none}
+  @media (max-width:749px){
+    #sto-{{ sid }} .sto{grid-template-columns:1fr;padding:{{ section.settings.padding_top_mobile }}px 1.6rem {{ section.settings.padding_bottom_mobile }}px;gap:2.8rem}
+    #sto-{{ sid }} .sto__txt{order:2}
+    #sto-{{ sid }} .sto__title{font-size:2.8rem;margin-bottom:2.6rem}
+    #sto-{{ sid }} .sto__pill{right:var(--xm);top:var(--ym);height:4.6rem;font-size:1.35rem;padding:0 1.5rem 0 1.7rem;gap:.7rem}
+    #sto-{{ sid }} .sto__pill svg{width:2.1rem;height:2.1rem}
+    #sto-{{ sid }} .sto__pill .sto__d{display:none}
+    #sto-{{ sid }} .sto__pill .sto__m{display:inline}
+    #sto-{{ sid }} .sto__burst{width:3.6rem;height:3.6rem}
+    #sto-{{ sid }} .sto__item{grid-template-columns:4.8rem 1fr;gap:1.4rem}
+    #sto-{{ sid }} .sto__icon svg{width:4.8rem;height:4.8rem}
+    #sto-{{ sid }} .sto__item h3{font-size:1.75rem}
+    #sto-{{ sid }} .sto__item p{font-size:1.45rem}
+  }
+</style>
+
+<div id="sto-{{ sid }}" class="sto-wrap">
+  <div class="sto">
+    <div class="sto__txt">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sto__title">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        <div class="sto__item" {{ block.shopify_attributes }}>
+          <span class="sto__icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="var(--sto-icon)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+              {%- case block.settings.icon -%}
+                {%- when 'cert' -%}
+                  <path d="M12 6h28l10 10v24"/><path d="M40 6v10h10"/><path d="M12 6v48h22"/><path d="M19 18h14M19 25h22M19 32h18M19 39h10"/>
+                  <path d="M46 36l2.2 1.6 2.7-.3 1.1 2.5 2.5 1.1-.3 2.7L56 46l-1.6 2.2.3 2.7-2.5 1.1-1.1 2.5-2.7-.3L46 56l-2.2-1.6-2.7.3-1.1-2.5-2.5-1.1.3-2.7L36 46l1.6-2.2-.3-2.7 2.5-1.1 1.1-2.5 2.7.3z"/>
+                  <circle cx="46" cy="46" r="4.5"/><path d="M41 55l-2 8 7-3 7 3-2-8"/>
+                {%- when 'silver' -%}
+                  <ellipse cx="32" cy="36" rx="23" ry="15"/><ellipse cx="32" cy="36" rx="17.5" ry="10.5"/><path d="M9 36v5c0 8.3 10.3 15 23 15s23-6.7 23-15v-5"/>
+                  <path d="M14.5 36v4.5c0 5.8 7.8 10.5 17.5 10.5s17.5-4.7 17.5-10.5V36" opacity=".55"/>
+                  <rect x="22.5" y="5" width="19" height="11" rx="5.5"/><text x="32" y="13.3" text-anchor="middle" font-family="Georgia,serif" font-size="7.4" font-weight="700" fill="var(--sto-icon)" stroke="none">925</text><path d="M32 16v5"/>
+                {%- when 'shield' -%}
+                  <path d="M32 6l20 7.5v14c0 12.5-8.7 21.5-20 26-11.3-4.5-20-13.5-20-26v-14z"/><path d="M32 12l14 5.3v10.2c0 9.2-6 15.9-14 19.5"/>
+                  <path d="M25 26h14l4 5-11 11-11-11z"/><path d="M21 31h22M28.5 26l3.5 5 3.5-5M32 42v-11"/>
+                {%- when 'truck' -%}
+                  <path d="M5 16h32v26H5z"/><path d="M37 24h11l9 10v8H37z"/><path d="M42 24v10h15"/>
+                  <circle cx="15" cy="46" r="5"/><circle cx="47" cy="46" r="5"/><path d="M11 22h14M11 28h10"/>
+                {%- when 'gift' -%}
+                  <path d="M9 24h46v9H9z"/><path d="M13 33h38v23H13z"/><path d="M32 24v32"/>
+                  <path d="M32 24c-3-8-13-12-15-6-1.6 4.6 6 6 15 6zM32 24c3-8 13-12 15-6 1.6 4.6-6 6-15 6z"/>
+                {%- when 'return' -%}
+                  <path d="M18 22h22a13 13 0 0 1 0 26H20"/><path d="M25 14l-8 8 8 8"/><path d="M47 6v6M44 9h6"/>
+                {%- else -%}
+                  <path d="M19 16h26l12 13-25 28L7 29z"/><path d="M7 29h50"/><path d="M19 16l7 13 6-13 6 13 7-13"/><path d="M26 29l6 28 6-28"/><path d="M13 22.5l6 6.5M51 22.5l-6 6.5"/>
+                  <path d="M49 6v6M46 9h6M12 8v4M10 10h4M56 36v4M54 38h4"/>
+              {%- endcase -%}
+            </svg>
+          </span>
+          <div>
+            {%- if block.settings.title != blank -%}<h3>{{ block.settings.title | escape }}</h3>{%- endif -%}
+            {%- if block.settings.text != blank -%}<p>{{ block.settings.text | escape }}</p>{%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="sto__orbit" aria-hidden="true">
+      <span class="sto__ring" style="--i:0%"></span>
+      <span class="sto__ring" style="--i:12%"></span>
+      <span class="sto__ring" style="--i:24%"></span>
+      {%- if section.settings.show_bursts -%}
+        {%- capture burst -%}<svg viewBox="0 0 40 40"><polygon points="40.00,20.00 30.89,21.57 39.19,25.63 30.01,24.57 36.83,30.81 28.31,27.20 33.10,35.11 25.95,29.25 28.31,38.19 23.10,30.55 22.85,39.80 20.00,31.00 17.15,39.80 16.90,30.55 11.69,38.19 14.05,29.25 6.90,35.11 11.69,27.20 3.17,30.81 9.99,24.57 0.81,25.63 9.11,21.57 0.00,20.00 9.11,18.43 0.81,14.37 9.99,15.43 3.17,9.19 11.69,12.80 6.90,4.89 14.05,10.75 11.69,1.81 16.90,9.45 17.15,0.20 20.00,9.00 22.85,0.20 23.10,9.45 28.31,1.81 25.95,10.75 33.10,4.89 28.31,12.80 36.83,9.19 30.01,15.43 39.19,14.37 30.89,18.43"/></svg>{%- endcapture -%}
+        <span class="sto__burst" style="right:50%;top:0%;--r:0deg">{{ burst }}</span>
+        <span class="sto__burst" style="right:1.5%;top:46%;--r:12deg">{{ burst }}</span>
+        <span class="sto__burst" style="right:97%;top:56%;--r:20deg">{{ burst }}</span>
+        <span class="sto__burst" style="right:44%;top:100%;--r:6deg">{{ burst }}</span>
+      {%- endif -%}
+      <span class="sto__shadow"></span>
+      <div class="sto__prod{% if use_product_img %} sto__prod--blend{% endif %}">
+        {%- if img != blank -%}
+          {{ img | image_url: width: 1200 | image_tag: widths: '400, 600, 800, 1000, 1200', sizes: '(min-width: 750px) 40vw, 80vw', loading: 'lazy', alt: '' }}
+        {%- endif -%}
+      </div>
+
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign k_text = 'pill_' | append: i | append: '_text'
+          assign k_text_m = 'pill_' | append: i | append: '_text_mobile'
+          assign k_icon = 'pill_' | append: i | append: '_icon'
+          assign p_text = section.settings[k_text]
+          assign p_text_m = section.settings[k_text_m] | default: p_text
+          assign p_icon = section.settings[k_icon]
+          case i
+            when 1
+              assign pos = '--x:74%;--y:22%;--xm:68%;--ym:19%'
+            when 2
+              assign pos = '--x:8%;--y:50%;--xm:22%;--ym:50%'
+            else
+              assign pos = '--x:60%;--y:84%;--xm:57%;--ym:85%'
+          endcase
+        -%}
+        {%- if p_text != blank -%}
+          <span class="sto__pill" style="{{ pos }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+              {%- case p_icon -%}
+                {%- when 'shield' -%}<path d="M12 3l7.5 3v5.5c0 4.7-3.3 8-7.5 9.5-4.2-1.5-7.5-4.8-7.5-9.5V6z"/><path d="m8.8 12 2.2 2.2 4.4-4.4"/>
+                {%- when 'cert' -%}<path d="M5 3h9l4 4v6"/><path d="M5 3v17h8"/><path d="M8 8h6M8 11.5h7M8 15h4"/><circle cx="17" cy="17" r="3.2"/><path d="M15.2 19.7 14.5 22.5l2.5-1.1 2.5 1.1-.7-2.8"/>
+                {%- when 'truck' -%}<path d="M2.5 6.5h12v10h-12z"/><path d="M14.5 9.5h4l3 3.5v3.5h-7z"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/>
+                {%- else -%}<path d="M12 3c.8 4.6 2.4 6.2 7 7-4.6.8-6.2 2.4-7 7-.8-4.6-2.4-6.2-7-7 4.6-.8 6.2-2.4 7-7z"/><path d="M19 15.5c.3 1.6.9 2.2 2.5 2.5-1.6.3-2.2.9-2.5 2.5-.3-1.6-.9-2.2-2.5-2.5 1.6-.3 2.2-.9 2.5-2.5z"/>
+              {%- endcase -%}
+            </svg>
+            <span class="sto__d">{{ p_text | escape }}</span><span class="sto__m">{{ p_text_m | escape }}</span>
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SEORA חשוב לנו שתדעו",
+  "tag": "section",
+  "class": "section seora-trust-orbit",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "כותרת", "default": "חשוב לנו שתדעו" },
+    { "type": "header", "content": "תמונה" },
+    { "type": "image_picker", "id": "image", "label": "תמונת מוצר", "info": "הכי יפה עם PNG שקוף (בלי רקע)" },
+    { "type": "checkbox", "id": "use_product_image", "label": "בלי תמונה נבחרת: להציג את תמונת המוצר של הדף", "default": true, "info": "רקע לבן בתמונה נבלע ברקע הסקשן" },
+    { "type": "range", "id": "image_rotate", "label": "סיבוב התמונה", "min": -20, "max": 20, "step": 1, "unit": "°", "default": -8 },
+    { "type": "header", "content": "תגיות סביב התמונה" },
+    { "type": "select", "id": "pill_1_icon", "label": "תגית 1: אייקון", "default": "spark", "options": [ { "value": "spark", "label": "ניצוץ" }, { "value": "shield", "label": "מגן" }, { "value": "cert", "label": "תעודה" }, { "value": "truck", "label": "משלוח" } ] },
+    { "type": "text", "id": "pill_1_text", "label": "תגית 1: טקסט", "default": "מואסנייט D VVS1" },
+    { "type": "text", "id": "pill_1_text_mobile", "label": "תגית 1: טקסט במובייל (לא חובה)" },
+    { "type": "select", "id": "pill_2_icon", "label": "תגית 2: אייקון", "default": "shield", "options": [ { "value": "spark", "label": "ניצוץ" }, { "value": "shield", "label": "מגן" }, { "value": "cert", "label": "תעודה" }, { "value": "truck", "label": "משלוח" } ] },
+    { "type": "text", "id": "pill_2_text", "label": "תגית 2: טקסט", "default": "אחריות יבואן לשנה" },
+    { "type": "text", "id": "pill_2_text_mobile", "label": "תגית 2: טקסט במובייל (לא חובה)", "default": "אחריות לשנה" },
+    { "type": "select", "id": "pill_3_icon", "label": "תגית 3: אייקון", "default": "cert", "options": [ { "value": "spark", "label": "ניצוץ" }, { "value": "shield", "label": "מגן" }, { "value": "cert", "label": "תעודה" }, { "value": "truck", "label": "משלוח" } ] },
+    { "type": "text", "id": "pill_3_text", "label": "תגית 3: טקסט", "default": "תעודת GRA" },
+    { "type": "text", "id": "pill_3_text_mobile", "label": "תגית 3: טקסט במובייל (לא חובה)" },
+    { "type": "header", "content": "צבעים" },
+    { "type": "checkbox", "id": "show_bursts", "label": "להציג כוכבים סביב הטבעות", "default": true },
+    { "type": "color", "id": "bg_color", "label": "רקע", "default": "#ffffff" },
+    { "type": "color", "id": "text_color", "label": "כותרות", "default": "#111111" },
+    { "type": "color", "id": "body_color", "label": "טקסט", "default": "#2b2b2b" },
+    { "type": "color", "id": "icon_color", "label": "אייקונים", "default": "#111111" },
+    { "type": "color", "id": "ring_color", "label": "טבעות", "default": "#d3ded6" },
+    { "type": "color", "id": "burst_color", "label": "כוכבים", "default": "#cddbd0" },
+    { "type": "color", "id": "pill_border_color", "label": "מסגרת תגיות", "default": "#111111" },
+    { "type": "header", "content": "ריווח" },
+    { "type": "range", "id": "padding_top", "label": "ריווח עליון (מחשב)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "ריווח תחתון (מחשב)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top_mobile", "label": "ריווח עליון (מובייל)", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "ריווח תחתון (מובייל)", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32 }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "שורה",
+      "limit": 6,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "אייקון", "default": "gem", "options": [ { "value": "gem", "label": "יהלום" }, { "value": "cert", "label": "תעודה" }, { "value": "silver", "label": "כסף 925" }, { "value": "shield", "label": "אחריות" }, { "value": "truck", "label": "משלוח" }, { "value": "gift", "label": "מתנה" }, { "value": "return", "label": "החלפה" } ] },
+        { "type": "text", "id": "title", "label": "כותרת" },
+        { "type": "textarea", "id": "text", "label": "טקסט" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SEORA חשוב לנו שתדעו",
+      "blocks": [
+        { "type": "row", "settings": { "icon": "gem", "title": "מואסנייט D VVS1", "text": "האבן מדורגת בדרגת הצבע הגבוהה ביותר (D) ובניקיון VVS1, עם ברק ופיזור אור שבולטים בכל תאורה." } },
+        { "type": "row", "settings": { "icon": "cert", "title": "תעודת GRA לכל תכשיט", "text": "כל תכשיט מגיע עם תעודה גמולוגית וכרטיס מקוריות, כך שתמיד יודעים בדיוק מה קונים." } },
+        { "type": "row", "settings": { "icon": "silver", "title": "כסף סטרלינג 925", "text": "925 חלקים של כסף טהור מכל 1,000, עמיד במים ומתאים לענידה יומיומית." } },
+        { "type": "row", "settings": { "icon": "shield", "title": "אחריות יבואן לשנה", "text": "אחריות יבואן על כל תכשיט, והחלפה תוך 14 ימי עסקים כל עוד התכשיט לא נענד." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
