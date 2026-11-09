@@ -54,6 +54,7 @@
   #sto-{{ sid }} .sto__prod{position:absolute;inset:16% 14% 14% 16%;display:grid;place-items:center}
   #sto-{{ sid }} .sto__prod img{width:100%;height:100%;object-fit:contain;transform:rotate(var(--sto-rot))}
   #sto-{{ sid }} .sto__prod--blend img{mix-blend-mode:multiply}
+  #sto-{{ sid }} .sto__prod--cut{inset:22% 20% 20% 22%}
   #sto-{{ sid }} .sto__prod--photo{inset:22%}
   #sto-{{ sid }} .sto__prod--photo img{object-fit:cover;border-radius:50%;transform:none;mix-blend-mode:normal}
   #sto-{{ sid }} .sto__shadow{position:absolute;left:30%;right:30%;bottom:15%;height:5%;border-radius:50%;background:radial-gradient(closest-side,rgba(28,48,39,.22),transparent);filter:blur(2px)}
@@ -247,6 +248,7 @@
             target.removeAttribute('srcset'); target.removeAttribute('sizes');
             target.src = URL.createObjectURL(blob);
             box.classList.remove('sto__prod--blend');
+            box.classList.add('sto__prod--cut');
           }, 'image/png');
         });
       })();
