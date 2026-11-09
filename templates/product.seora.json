@@ -970,8 +970,8 @@
       ],
       "settings": {
         "heading": "חשוב לנו שתדעו",
+        "image_source": "product",
         "image": "shopify://shop_images/seora-orbit-liel.png",
-        "use_product_image": true,
         "image_rotate": -8,
         "pill_1_icon": "spark",
         "pill_1_text": "מואסנייט D VVS1",

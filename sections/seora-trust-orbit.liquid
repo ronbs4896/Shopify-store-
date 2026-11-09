@@ -8,9 +8,18 @@
 
 {%- liquid
   assign sid = section.id
-  assign img = section.settings.image
+  # image: "product" = the page product's own photo, background removed in the browser;
+  # "custom" = the picked image on every page. Either way the other one is the fallback.
+  assign img = blank
   assign use_product_img = false
-  if img == blank and section.settings.use_product_image and product
+  if section.settings.image_source == 'product' and product and product.featured_image
+    assign img = product.featured_image
+    assign use_product_img = true
+  endif
+  if img == blank
+    assign img = section.settings.image
+  endif
+  if img == blank and product and product.featured_image
     assign img = product.featured_image
     assign use_product_img = true
   endif
@@ -45,6 +54,8 @@
   #sto-{{ sid }} .sto__prod{position:absolute;inset:16% 14% 14% 16%;display:grid;place-items:center}
   #sto-{{ sid }} .sto__prod img{width:100%;height:100%;object-fit:contain;transform:rotate(var(--sto-rot))}
   #sto-{{ sid }} .sto__prod--blend img{mix-blend-mode:multiply}
+  #sto-{{ sid }} .sto__prod--photo{inset:22%}
+  #sto-{{ sid }} .sto__prod--photo img{object-fit:cover;border-radius:50%;transform:none;mix-blend-mode:normal}
   #sto-{{ sid }} .sto__shadow{position:absolute;left:30%;right:30%;bottom:15%;height:5%;border-radius:50%;background:radial-gradient(closest-side,rgba(28,48,39,.22),transparent);filter:blur(2px)}
   #sto-{{ sid }} .sto__pill{position:absolute;right:var(--x);top:var(--y);display:inline-flex;align-items:center;gap:1.1rem;height:6.4rem;padding:0 2.4rem 0 2.8rem;border:1.5px solid var(--sto-pill-border);border-radius:999px;background:#fff;color:#111;font-size:1.7rem;font-weight:500;white-space:nowrap;transform:translate(50%,-50%);z-index:2}
   #sto-{{ sid }} .sto__pill svg{flex:none;width:2.8rem;height:2.8rem}
@@ -121,7 +132,12 @@
         <span class="sto__burst" style="right:44%;top:100%;--r:6deg">{{ burst }}</span>
       {%- endif -%}
       <span class="sto__shadow"></span>
-      <div class="sto__prod{% if use_product_img %} sto__prod--blend{% endif %}">
+      {%- capture cut_list -%}
+        {%- if use_product_img -%}
+          {%- for im in product.images limit: 4 -%}{{ im | image_url: width: 900 }}{% unless forloop.last %}|{% endunless %}{%- endfor -%}
+        {%- endif -%}
+      {%- endcapture -%}
+      <div class="sto__prod{% if use_product_img %} sto__prod--blend{% endif %}"{% if use_product_img %} data-sto-cut="{{ cut_list | strip | escape }}"{% endif %}>
         {%- if img != blank -%}
           {{ img | image_url: width: 1200 | image_tag: widths: '400, 600, 800, 1000, 1200', sizes: '(min-width: 750px) 40vw, 80vw', loading: 'lazy', alt: '' }}
         {%- endif -%}
@@ -162,6 +178,88 @@
   </div>
 </div>
 
+{%- if use_product_img -%}
+<script>
+  (function () {
+    var box = document.querySelector('#sto-{{ sid }} [data-sto-cut]');
+    if (!box || box.dataset.stoDone) return;
+    box.dataset.stoDone = '1';
+    var target = box.querySelector('img');
+    var urls = box.getAttribute('data-sto-cut').split('|').filter(Boolean);
+    if (!target || !urls.length) return;
+
+    // near-white studio background -> transparent (soft edge), then crop to the item
+    function cutout(img) {
+      var scale = Math.min(1, 900 / Math.max(img.naturalWidth, img.naturalHeight));
+      var W = Math.round(img.naturalWidth * scale), H = Math.round(img.naturalHeight * scale);
+      var c = document.createElement('canvas'); c.width = W; c.height = H;
+      var x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(img, 0, 0, W, H);
+      var d; try { d = x.getImageData(0, 0, W, H); } catch (e) { return null; }
+      var a = d.data, N = W * H, lo = 212, hi = 244;
+      function mn(i) { var r = a[i * 4], g = a[i * 4 + 1], b = a[i * 4 + 2]; return r < g ? (r < b ? r : b) : (g < b ? g : b); }
+      var edge = 0, white = 0, i, j;
+      for (i = 0; i < W; i++) { edge += 2; if (mn(i) >= lo) white++; if (mn((H - 1) * W + i) >= lo) white++; }
+      for (j = 0; j < H; j++) { edge += 2; if (mn(j * W) >= lo) white++; if (mn(j * W + W - 1) >= lo) white++; }
+      if (white / edge < 0.85) return null;
+      var lab = new Uint8Array(N), stack = new Int32Array(N), comp = new Int32Array(N);
+      for (var s = 0; s < N; s++) {
+        if (lab[s] || mn(s) < lo) continue;
+        var sp = 0, cn = 0; stack[sp++] = s; lab[s] = 1;
+        while (sp) {
+          var p = stack[--sp]; comp[cn++] = p; var px = p % W;
+          if (px > 0 && !lab[p - 1] && mn(p - 1) >= lo) { lab[p - 1] = 1; stack[sp++] = p - 1; }
+          if (px < W - 1 && !lab[p + 1] && mn(p + 1) >= lo) { lab[p + 1] = 1; stack[sp++] = p + 1; }
+          if (p >= W && !lab[p - W] && mn(p - W) >= lo) { lab[p - W] = 1; stack[sp++] = p - W; }
+          if (p < N - W && !lab[p + W] && mn(p + W) >= lo) { lab[p + W] = 1; stack[sp++] = p + W; }
+        }
+        if (cn > N * 0.01) {
+          for (var k = 0; k < cn; k++) { var q = comp[k], m = mn(q); a[q * 4 + 3] = m >= hi ? 0 : Math.round(255 * (hi - m) / (hi - lo)); }
+        }
+      }
+      var x0 = W, y0 = H, x1 = -1, y1 = -1;
+      for (j = 0; j < H; j++) for (i = 0; i < W; i++) if (a[(j * W + i) * 4 + 3] > 24) { if (i < x0) x0 = i; if (i > x1) x1 = i; if (j < y0) y0 = j; if (j > y1) y1 = j; }
+      if (x1 < 0) return null;
+      x.putImageData(d, 0, 0);
+      var pad = Math.round(Math.max(x1 - x0, y1 - y0) * 0.04);
+      x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad); x1 = Math.min(W - 1, x1 + pad); y1 = Math.min(H - 1, y1 + pad);
+      var o = document.createElement('canvas'); o.width = x1 - x0 + 1; o.height = y1 - y0 + 1;
+      o.getContext('2d').drawImage(c, x0, y0, o.width, o.height, 0, 0, o.width, o.height);
+      return o;
+    }
+
+    function load(url) {
+      return new Promise(function (res) {
+        var im = new Image(); im.crossOrigin = 'anonymous';
+        im.onload = function () { res(im); }; im.onerror = function () { res(null); };
+        im.src = url;
+      });
+    }
+
+    function run() {
+      var n = 0;
+      (function next() {
+        if (n >= urls.length) { box.classList.remove('sto__prod--blend'); box.classList.add('sto__prod--photo'); return; }
+        load(urls[n++]).then(function (im) {
+          var out = im && cutout(im);
+          if (!out) return next();
+          out.toBlob(function (blob) {
+            if (!blob) return next();
+            target.removeAttribute('srcset'); target.removeAttribute('sizes');
+            target.src = URL.createObjectURL(blob);
+            box.classList.remove('sto__prod--blend');
+          }, 'image/png');
+        });
+      })();
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); run(); } }, { rootMargin: '600px 0px' });
+      io.observe(box);
+    } else { run(); }
+  })();
+</script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "SEORA חשוב לנו שתדעו",
@@ -170,8 +268,8 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "כותרת", "default": "חשוב לנו שתדעו" },
     { "type": "header", "content": "תמונה" },
-    { "type": "image_picker", "id": "image", "label": "תמונת מוצר", "info": "הכי יפה עם PNG שקוף (בלי רקע)" },
-    { "type": "checkbox", "id": "use_product_image", "label": "בלי תמונה נבחרת: להציג את תמונת המוצר של הדף", "default": true, "info": "רקע לבן בתמונה נבלע ברקע הסקשן" },
+    { "type": "select", "id": "image_source", "label": "איזו תמונה להציג", "options": [ { "value": "product", "label": "התמונה של המוצר בדף (הרקע מוסר אוטומטית)" }, { "value": "custom", "label": "התמונה שנבחרה כאן, בכל הדפים" } ], "default": "product", "info": "כשאי אפשר להסיר את הרקע (תמונה בלי רקע לבן) מוצגת התמונה בעיגול" },
+    { "type": "image_picker", "id": "image", "label": "תמונה נבחרת", "info": "הכי יפה עם PNG שקוף (בלי רקע). משמשת גם כגיבוי למוצר בלי תמונה" },
     { "type": "range", "id": "image_rotate", "label": "סיבוב התמונה", "min": -20, "max": 20, "step": 1, "unit": "°", "default": -8 },
     { "type": "header", "content": "תגיות סביב התמונה" },
     { "type": "select", "id": "pill_1_icon", "label": "תגית 1: אייקון", "default": "spark", "options": [ { "value": "spark", "label": "ניצוץ" }, { "value": "shield", "label": "מגן" }, { "value": "cert", "label": "תעודה" }, { "value": "truck", "label": "משלוח" } ] },
